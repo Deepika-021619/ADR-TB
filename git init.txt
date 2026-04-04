@@ -1,0 +1,28 @@
+  25 git init
+  28 New-Item .gitignore
+  29 notepad .\.gitignore
+  30 git add .
+  31 git commit -m "Stable working version before deployment"
+  34 git config --global user.name "Deepika S"
+  37 git config --global user.email "deepika235114@gmail.com"
+  38 git commit -m "Stable working version before deployment"
+  39 git checkout v1-stable
+  40 git tag v1-stable
+  41 git tag
+  42 git checkout v1-stable
+  43 git checkout -b deployment-fix
+  44 git tag v1-stable
+  45 git tag
+  46 git remote add origin https://github.com/Deepika-021619/TacTB.git
+  47 git branch -M main
+  48 git push -u origin main
+  49 git push origin v1-stable
+  50 git push -u origin deployment-fix
+  51 git push -u origin deployment-fix
+  52 git commit --allow-empty -m "Initialize deployment branch"
+  53 git commit --allow-empty -m "Initialize deployment branch"
+  54 git push -u origin deployment-fix
+  55 git branch
+  56 git checkout -b deployment-fix
+  57 git branch
+  58 git push -u origin deployment-fix
