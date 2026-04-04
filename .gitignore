@@ -1,0 +1,18 @@
+# Python virtual environment
+adr_env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Flutter
+repotb_1_0_0/build/
+repotb_1_0_0/.dart_tool/
+repotb_1_0_0/.idea/
+
+# OS
+Thumbs.db
+.DS_Store

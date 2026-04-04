@@ -1,0 +1,139 @@
+DROP DATABASE IF EXISTS tbadr_app;
+CREATE DATABASE tbadr_app;
+USE tbadr_app;
+
+CREATE TABLE patient_details (
+    p_id VARCHAR(50) UNIQUE DEFAULT NULL,
+    nik_id VARCHAR(50) NOT NULL,
+    p_name VARCHAR(150) NOT NULL,
+    gender ENUM('Male','Female','Other') NOT NULL,
+    p_state VARCHAR(50) NOT NULL,
+    PRIMARY KEY (nik_id)
+);
+
+CREATE TABLE treatment_types (
+    treatment_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    treatment_name VARCHAR(150) UNIQUE NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+
+INSERT INTO treatment_types (treatment_name) VALUES
+('HRZE'),
+('H-mono DR TB regimen'),
+('Shorter oral BDQ MDR TB regimen'),
+('Shorter injectable MDR TB regimen'),
+('Oral longer XDR TB regimen'),
+('TB preventive therapy'),
+('Tailored therapy');
+
+CREATE TABLE tb_regimens (
+    regimen_id INT AUTO_INCREMENT PRIMARY KEY,
+    regimen_name VARCHAR(200) UNIQUE NOT NULL,
+    regimen_type ENUM('FLD', 'SLD', 'Other') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO tb_regimens (regimen_name, regimen_type) VALUES
+-- First Line
+('Isoniazid', 'FLD'),
+('Isoniazid, Rifampicin', 'FLD'),
+('Isoniazid, Rifampicin, Ethambutol', 'FLD'),
+('Isoniazid, Rifapentine', 'FLD'),
+('Rifampicin', 'FLD'),
+('Isoniazid, Rifampicin, Pyrazinamide, Ethambutol', 'FLD'),
+('Levofloxacin, Rifampicin, Pyrazinamide, Ethambutol', 'FLD'),
+
+-- Second Line  
+('Levofloxacin, Clofazamine, Pyrazinamide, Ethambutol', 'SLD'),
+('Bedaquiline', 'SLD'),
+('Bedaquiline, Pretomanid, Linezolid, Moxifloxacin', 'SLD'),
+('Bedaquiline, Pretomanid, Linezolid', 'SLD'),
+('Bedaquiline, Levofloxacin, Linezolid, Clofazimine, Pyrazinamide, Ethambutol', 'SLD'),
+('Bedaquiline, Moxifloxacin, Linezolid, Clofazimine, Pyrazinamide, Ethambutol', 'SLD'),
+('Moxifloxacin, Clofazimine, Pyrazinamide, Ethambutol', 'SLD'),
+('Bedaquiline, Levofloxacin, Linezolid, Clofazimine, Cycloserine', 'SLD'),
+('Bedaquiline, Moxifloxacin, Linezolid, Clofazimine, Cycloserine', 'SLD'),
+('Bedaquiline, Levofloxacin, Linezolid, Clofazimine, Delamanid', 'SLD'),
+('Bedaquiline, Moxifloxacin, Linezolid, Clofazimine, Delamanid', 'SLD'),
+('Levofloxacin, Linezolid, Clofazimine, Cycloserine, Pyrazinamide', 'SLD'),
+('Moxifloxacin, Linezolid, Clofazimine, Cycloserine, Pyrazinamide', 'SLD'),
+('Delamanid, Levofloxacin, Linezolid, Clofazimine', 'SLD'),
+('Delamanid, Moxifloxacin, Linezolid, Clofazimine', 'SLD'),
+('Bedaquiline, Delamanid, Linezolid, Clofazimine', 'SLD'),
+('Cycloserine, Linezolid, Clofazimine, Fluoroquinolone', 'SLD'),
+('Terizidone, Linezolid, Clofazimine, Fluoroquinolone', 'SLD');
+
+CREATE TABLE reports (
+    report_id VARCHAR(25) NOT NULL,
+    nik_id VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    portal ENUM('Physician','Patient') NOT NULL,
+    PRIMARY KEY (report_id),
+    KEY nik_id (nik_id),
+    CONSTRAINT fk_reports_nik_id  FOREIGN KEY (nik_id) REFERENCES patient_details(nik_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE reporter_details (
+    report_id VARCHAR(25) PRIMARY KEY,
+    r_name VARCHAR(150),
+    r_type ENUM('Physician','Nurse','Other HCP'),
+    hospital_address TEXT,
+    r_state VARCHAR(50),
+   constraint fk_reporter_report FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE patient_event_details (
+    report_id VARCHAR(25) NOT NULL,
+    age_years INT NOT NULL,
+    height_cm DECIMAL(5,2) DEFAULT NULL,
+    weight_kg DECIMAL(5,2) DEFAULT NULL,
+    tb_treatment_sd DATE NOT NULL,
+    treatment_type_id INT NOT NULL,
+    PRIMARY KEY (report_id),
+   constraint fk_patientevent_report FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_treatment_type FOREIGN KEY (treatment_type_id) REFERENCES treatment_types(treatment_type_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE drug_details (
+    report_id VARCHAR(25) PRIMARY KEY,
+    drug_regimen TEXT NOT NULL,
+    time_since_value INT,
+    time_since_unit ENUM('Days','Weeks','Months'),
+    is_fdc ENUM('Yes','No'),
+    brand_name TEXT NOT NULL,
+    batch_number TEXT NOT NULL,
+    dose_description TEXT NOT NULL,
+    tablet_frequency INT,
+    oral_only ENUM('Yes','No') NOT NULL,
+    injectable_details TEXT DEFAULT NULL,
+    previous_regimen_taken ENUM('Yes','No') NOT NULL,
+    previous_regimen_details TEXT NOT NULL,
+    duration_previous_regimen INT NOT NULL,
+    regimen_id INT,
+   constraint fk_drug_report FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE adr_data (
+    report_id VARCHAR(25) NOT NULL,
+    ADR_experienced ENUM('Yes','No','Unsure') NOT NULL,
+    PRIMARY KEY (report_id),
+    constraint fk_adr_report FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE system_types (
+    system_id INT AUTO_INCREMENT PRIMARY KEY,
+    report_id VARCHAR(25) NOT NULL,
+    system_name ENUM(
+        'Gastrointestinal', 'Skin and soft tissue', 'Centralnervous',
+        'Musculoskeletal', 'Peripheral nervous', 'Respiratory',
+        'Hematological', 'Cardiovascular', 'Ocular', 'Miscellaneous'
+    ) NOT NULL,
+    symptom_name VARCHAR(100) NOT NULL,
+    symptom_present ENUM('Yes','No') NOT NULL,
+    severity ENUM('mild','moderate','severe') NOT NULL,
+    constraint system_report_fk FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+ALTER TABLE drug_details 
+ADD CONSTRAINT fdrug_regimen_fk
+FOREIGN KEY (regimen_id) REFERENCES tb_regimens(regimen_id) ON DELETE SET NULL;
