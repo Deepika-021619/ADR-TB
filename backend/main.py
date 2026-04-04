@@ -3,16 +3,16 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
 
-from database import get_db_connection
-from patients import router as patient_router
-from reports import router as reports_router
-from treatment_types import router as treatment_router
-from event import router as event_router
-from reporter_details import router as reporter_router
-from drug_details import router as drug_details_router
-from adr_data import router as adr_router
-from system_types import router as system_type_router
-from tb_regimen import router as tb_regimen_router
+from backend.database import get_db_connection
+from backend.patients import router as patient_router
+from backend.reports import router as reports_router
+from backend.treatment_types import router as treatment_router
+from backend.event import router as event_router
+from backend.reporter_details import router as reporter_router
+from backend.drug_details import router as drug_details_router
+from backend.adr_data import router as adr_router
+from backend.system_types import router as system_type_router
+from backend.tb_regimen import router as tb_regimen_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
