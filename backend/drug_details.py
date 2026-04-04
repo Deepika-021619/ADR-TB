@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from database import get_db_connection
+from backend.database import get_db_connection
 
 router = APIRouter(prefix="/tb_regimen", tags=["TB Regimen"])  # ✅ Matches Flutter
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, validator
-from database import get_db_connection
+from backend.database import get_db_connection
 from typing import Optional
 
 router = APIRouter(prefix="/systems", tags=["System Symptoms"])

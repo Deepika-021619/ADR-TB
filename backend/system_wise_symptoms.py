@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from database import get_db_connection
+from backend.database import get_db_connection
 
 router = APIRouter(prefix="/system_wise_symptoms", tags=["System Wise symptoms"])
 

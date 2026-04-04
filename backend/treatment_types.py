@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from database import get_db_connection
+from backend.database import get_db_connection
 import uuid #--used to generate universally unique IDs for treatment types
 
 router = APIRouter(prefix="/treatment-types", tags=["Treatment Types"])
