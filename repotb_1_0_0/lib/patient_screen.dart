@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'reporter.dart';
+import '../api_config.dart';
 
 class StartPatientScreen extends StatefulWidget {
   final String portal;
@@ -68,7 +69,7 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
 
     try {
       final patientResponse = await http.post(
-        Uri.parse("http://192.168.0.124:8000/reports/${widget.reportId}/event"),
+        Uri.parse("${ApiConfig.baseUrl}/reports/${widget.reportId}/event"),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'fld_questionnaire_screen.dart';
 import 'sld_questionnaire_screen.dart';
-
+import '../api_config.dart';
 class DrugDetailsScreen extends StatefulWidget {
   final String portal;
   final String reportId;
@@ -60,7 +60,7 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
   Future<void> loadRegimens() async {
     try {
       final response = await http.get(
-        Uri.parse("http://192.168.0.124:8000/tb_regimen/regimens"),
+        Uri.parse("${ApiConfig.baseUrl}/tb_regimen/regimens"),
         headers: {"Accept": "application/json"},
       ).timeout(const Duration(seconds: 10));
 
@@ -95,7 +95,7 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse("http://192.168.0.124:8000/tb_regimen/drug_details"),
+        Uri.parse("${ApiConfig.baseUrl}/tb_regimen/drug_details"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
         "report_id": widget.reportId,
