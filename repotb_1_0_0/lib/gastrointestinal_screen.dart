@@ -16,6 +16,19 @@ class GastrointestinalScreen extends StatefulWidget {
 }
 
 class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
+
+
+   String normalizeSeverity(String? input) {
+    if (input == null) return "mild";
+
+    final val = input.toLowerCase();
+
+    if (val.contains("mild")) return "mild";
+    if (val.contains("moderate")) return "moderate";
+    if (val.contains("severe")) return "severe";
+
+    return "mild"; // fallback
+  }
   // Nausea (2-2.8)
   String? q2Answer;       // Yes/No
   String? q21Answer;      // Severity
@@ -138,10 +151,10 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   number: "3.1",
                   question: "What was the highest number of vomiting episodes in a 24-hour period?",
                   options: [
-                    'Mild – 1–2 episodes in 24 hours',
-                    'Moderate – 3–5 episodes in 24 hours',
-                    'Severe – 6 or more episodes in 24 hours or required medical attention',
-                    'Life-threatening – Required urgent medical intervention'
+                    'Mild- 1-2 episodes in 24 hours',
+                    'Moderate - 3–5 episodes in 24 hours',
+                    'Severe - 6 or more episodes in 24 hours or required medical attention',
+                    'Life-threatening - Required urgent medical intervention'
                   ],
                   value: q31Answer,
                   onChanged: (val) => setState(() => q31Answer = val),
@@ -389,102 +402,91 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
     return true;
   }
 
- void _saveGastrointestinal() async {
+void _saveGastrointestinal() async {
   print('🔥 GASTROINTESTINAL SAVE - reportId: ${widget.reportId}');
   
   List<Map<String, String>> yesSymptoms = [];
 
-  // ═══════════════════════════════════════════════════════════════
-  // 2. NAUSEA - ALL "Yes" answers
-  // ═══════════════════════════════════════════════════════════════
+  // NAUSEA
   if (q2Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Nausea', 'severity': q21Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Nausea', 'severity': q21Answer ?? 'mild'});
     
-    // Follow-up Yes answers
-    if (q23Answer == 'Yes') yesSymptoms.add({'name': 'Nausea after medication', 'severity': 'Post-medication'});
-    if (q24Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing nausea', 'severity': 'Pre-existing'});
-    if (q25Answer == 'Yes') yesSymptoms.add({'name': 'Nausea improved after stopping', 'severity': 'De-challenged'});
-    if (q26Answer == 'Yes') yesSymptoms.add({'name': 'Nausea returned after restart', 'severity': 'Re-challenged'});
-    if (q27Diet == 'Yes') yesSymptoms.add({'name': 'Recent diet change', 'severity': 'Diet trigger'});
-    if (q28OtherMeds == 'Yes') yesSymptoms.add({'name': 'Other nausea-causing meds', 'severity': 'Drug interaction'});
+    if (q23Answer == 'Yes') yesSymptoms.add({'name': 'Nausea after medication', 'severity': 'mild'});
+    if (q24Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing nausea', 'severity': 'mild'});
+    if (q25Answer == 'Yes') yesSymptoms.add({'name': 'Nausea improved after stopping', 'severity': 'mild'});
+    if (q26Answer == 'Yes') yesSymptoms.add({'name': 'Nausea returned after restart', 'severity': 'mild'});
+    if (q27Diet == 'Yes') yesSymptoms.add({'name': 'Recent diet change', 'severity': 'mild'});
+    if (q28OtherMeds == 'Yes') yesSymptoms.add({'name': 'Other nausea-causing meds', 'severity': 'mild'});
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // 3. VOMITING - ALL "Yes" answers  
-  // ═══════════════════════════════════════════════════════════════
+  // VOMITING
   if (q3Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Vomiting', 'severity': q31Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Vomiting', 'severity': q31Answer ?? 'mild'});
     
-    if (q32Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting after medication', 'severity': 'Post-medication'});
-    if (q33Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting improved after stopping', 'severity': 'De-challenged'});
-    if (q34Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting returned after restart', 'severity': 'Re-challenged'});
-    if (q35OtherMeds == 'Yes') yesSymptoms.add({'name': 'Other vomiting-causing meds', 'severity': 'Drug interaction'});
+    if (q32Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting after medication', 'severity': 'mild'});
+    if (q33Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting improved after stopping', 'severity': 'mild'});
+    if (q34Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting returned after restart', 'severity': 'mild'});
+    if (q35OtherMeds == 'Yes') yesSymptoms.add({'name': 'Other vomiting-causing meds', 'severity': 'mild'});
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // 4. ABDOMINAL PAIN - ALL "Yes" answers
-  // ═══════════════════════════════════════════════════════════════
+  // ABDOMINAL PAIN
   if (q4Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Abdominal pain', 'severity': q41Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Abdominal pain', 'severity': q41Answer ?? 'mild'});
     
-    if (q43Answer == 'Yes') yesSymptoms.add({'name': 'Abdominal pain after medication', 'severity': 'Post-medication'});
-    if (q44Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing abdominal pain', 'severity': 'Pre-existing'});
-    if (q45Answer == 'Yes') yesSymptoms.add({'name': 'Pain improved after stopping', 'severity': 'De-challenged'});
-    if (q46Answer == 'Yes') yesSymptoms.add({'name': 'Pain returned after restart', 'severity': 'Re-challenged'});
-    if (q47GIHistory == 'Yes') yesSymptoms.add({'name': 'GI history (ulcers/IBS)', 'severity': 'Comorbidity'});
-    if (q48Stress == 'Yes') yesSymptoms.add({'name': 'Recent stress event', 'severity': 'Stress trigger'});
+    if (q43Answer == 'Yes') yesSymptoms.add({'name': 'Abdominal pain after medication', 'severity': 'mild'});
+    if (q44Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing abdominal pain', 'severity': 'mild'});
+    if (q45Answer == 'Yes') yesSymptoms.add({'name': 'Pain improved after stopping', 'severity': 'mild'});
+    if (q46Answer == 'Yes') yesSymptoms.add({'name': 'Pain returned after restart', 'severity': 'mild'});
+    if (q47GIHistory == 'Yes') yesSymptoms.add({'name': 'GI history (ulcers/IBS)', 'severity': 'mild'});
+    if (q48Stress == 'Yes') yesSymptoms.add({'name': 'Recent stress event', 'severity': 'mild'});
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // 5. CONSTIPATION - ALL "Yes" answers
-  // ═══════════════════════════════════════════════════════════════
+  // CONSTIPATION
   if (q5Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Constipation', 'severity': q51Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Constipation', 'severity': q51Answer ?? 'mild'});
     
-    if (q53Answer == 'Yes') yesSymptoms.add({'name': 'Constipation after medication', 'severity': 'Post-medication'});
-    if (q54Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing constipation', 'severity': 'Pre-existing'});
-    if (q55Answer == 'Yes') yesSymptoms.add({'name': 'Constipation improved after stopping', 'severity': 'De-challenged'});
-    if (q56Answer == 'Yes') yesSymptoms.add({'name': 'Constipation returned after restart', 'severity': 'Re-challenged'});
+    if (q53Answer == 'Yes') yesSymptoms.add({'name': 'Constipation after medication', 'severity': 'mild'});
+    if (q54Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing constipation', 'severity': 'mild'});
+    if (q55Answer == 'Yes') yesSymptoms.add({'name': 'Constipation improved after stopping', 'severity': 'mild'});
+    if (q56Answer == 'Yes') yesSymptoms.add({'name': 'Constipation returned after restart', 'severity': 'mild'});
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // 6. DIARRHEA - ALL "Yes" answers
-  // ═══════════════════════════════════════════════════════════════
+  // DIARRHEA
   if (q6Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Diarrhea', 'severity': q61Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Diarrhea', 'severity': q61Answer ?? 'mild'});
     
-    if (q63Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea after medication', 'severity': 'Post-medication'});
-    if (q64Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing diarrhea', 'severity': 'Pre-existing'});
-    if (q65Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea improved after stopping', 'severity': 'De-challenged'});
-    if (q66Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea returned after restart', 'severity': 'Re-challenged'});
+    if (q63Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea after medication', 'severity': 'mild'});
+    if (q64Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing diarrhea', 'severity': 'mild'});
+    if (q65Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea improved after stopping', 'severity': 'mild'});
+    if (q66Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea returned after restart', 'severity': 'mild'});
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // 7. GASTRITIS - ALL "Yes" answers
-  // ═══════════════════════════════════════════════════════════════
+  // GASTRITIS
   if (q7Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Gastritis symptoms', 'severity': q71Answer ?? 'Moderate'});
+    yesSymptoms.add({'name': 'Gastritis symptoms', 'severity': q71Answer ?? 'mild'});
     
-    if (q73Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis after medication', 'severity': 'Post-medication'});
-    if (q74Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing gastritis', 'severity': 'Pre-existing'});
-    if (q75Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis improved after stopping', 'severity': 'De-challenged'});
-    if (q76Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis returned after restart', 'severity': 'Re-challenged'});
+    if (q73Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis after medication', 'severity': 'mild'});
+    if (q74Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing gastritis', 'severity': 'mild'});
+    if (q75Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis improved after stopping', 'severity': 'mild'});
+    if (q76Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis returned after restart', 'severity': 'mild'});
   }
 
-  print('📦 Saving ${yesSymptoms.length} "Yes" GI symptoms');
+  print('📦 Saving ${yesSymptoms.length} GI symptoms');
 
-  // SAVE ALL "Yes" symptoms
   int savedCount = 0;
+
   for (var symptom in yesSymptoms) {
     bool success = await SystemsApi.saveSymptom(
       reportId: widget.reportId,
       questionnaireSystem: "GASTROINTESTINAL SYSTEM",
       symptomName: symptom["name"]!,
       symptomPresent: "Yes",
-      severity: symptom["severity"]!,
+      severity: normalizeSeverity(symptom["severity"]),
+      durationWeeks:symptom['duration'] ?? '',
     );
+
     print('✅ ${symptom["name"]}: $success');
-    savedCount++;  // Count all - DB saves anyway
+    savedCount++;
   }
 
   _showSaveMessage(savedCount);

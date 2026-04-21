@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'systems_api.dart';
 
 class GeneralSymptomsScreen extends StatefulWidget {
   final String reportId;
@@ -185,7 +186,7 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blue[600],
         foregroundColor: Colors.white,
-        label: const Text('Save & Complete Report', style: TextStyle(fontWeight: FontWeight.bold)),
+        label: const Text('Save & next', style: TextStyle(fontWeight: FontWeight.bold)),
         heroTag: "save_general_next",
         onPressed: _isComplete() 
             ? () {
@@ -321,14 +322,63 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
     return true;
   }
 
-  void _saveGeneral() {
+  void _saveGeneral() async {
+  print('🔥 GENERAL SAVE - reportId: ${widget.reportId}');
+
+  final data = {
+    "report_id": widget.reportId,
+
+    // 24. MALAISE
+    "malaise_present": q24Answer,
+    "malaise_duration_weeks": int.tryParse(q241Weeks ?? ""),
+    "malaise_severity": q242Severity,
+    "malaise_onset": q243Answer,
+    "malaise_pre_existing": q244Answer,
+    "malaise_improved": q245Answer,
+    "malaise_recurred": q246Answer,
+
+    // 25. FEVER
+    "fever_present": q25Answer,
+    "fever_duration": q251Duration,
+    "fever_severity": q252Severity,
+    "fever_onset": q253Answer,
+    "fever_pre_existing": q254Answer,
+    "fever_improved": q255Answer,
+    "fever_recurred": q256Answer,
+
+    // 26. FATIGUE
+    "fatigue_present": q26Answer,
+    "fatigue_duration_weeks": int.tryParse(q261Weeks ?? ""),
+    "fatigue_severity": q262Severity,
+    "fatigue_onset": q263Answer,
+    "fatigue_pre_existing": q264Answer,
+    "fatigue_improved": q265Answer,
+    "fatigue_recurred": q266Answer,
+    "fatigue_lifestyle": q267Lifestyle,
+    "fatigue_other_issues": q268OtherIssues,
+
+    // 27 & 28
+    "discoloration_present": q27Answer,
+    "other_symptoms": q28OtherSymptoms,
+  };
+
+  print('📦 GENERAL DATA: $data');
+
+  bool success = await SystemsApi.saveGeneralSymptoms(data);
+
+  print('✅ Saved: $success');
+
+  if (mounted) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('General Symptoms data saved! Report Complete!'),
-        backgroundColor: Colors.green,
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(
+          success
+              ? '✅ General symptoms saved successfully'
+              : '❌ Failed to save general symptoms',
+        ),
+        backgroundColor: success ? Colors.green : Colors.red,
       ),
     );
-    // TODO: Save to backend API
+  }
   }
 }

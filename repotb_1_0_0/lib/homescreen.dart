@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "TacTB: Enhancing TB Care with Smart ADR Monitoring",
+                      "ADR-TB: Enhancing TB Care with Smart ADR Monitoring",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w700,
@@ -48,13 +48,13 @@ class HomeScreen extends StatelessWidget{
               child: Image.asset(
                 "assets/images/logo.png",
                 fit: BoxFit.contain,
-                opacity: const AlwaysStoppedAnimation(0.5),  // ✅ Transparent logo
+                opacity: const AlwaysStoppedAnimation(1),  // ✅ Transparent logo
               ),
             ),
           ),
           // 3. Button OVER everything
           Padding(
-            padding: const EdgeInsets.only(top: 170),
+            padding: const EdgeInsets.only(top: 100),
             child: Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(

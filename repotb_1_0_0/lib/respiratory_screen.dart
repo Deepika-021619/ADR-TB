@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'systems_api.dart'; 
+import '../services/grading_report.dart';
 
 class RespiratoryScreen extends StatefulWidget {
   final String reportId;
@@ -21,12 +22,13 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
   String? q12Weeks;      // Numeric weeks
   String? q13Answer;     // Yes/No
   String? q14Answer;     // Yes/No/Not sure
-  String? q15Answer;     // Yes/No/Not applicable
-  String? q16Answer;     // Yes/No/Not applicable
-  String? q17Answer;     // Yes/No
-  String? q18Answer;     // Yes/No
+  String? q141Answer;    // Yes/No/Not applicable (1.4.1)
+  String? q142Answer;    // Yes/No/Not applicable (1.4.2)
+  String? q15Answer;     // Yes/No (now 1.5)
+  String? q16Answer;     // Yes/No (now 1.6)
   
   bool get showFollowup => q1Answer == 'Yes';
+  bool get showQ141Q142 => showFollowup && q14Answer == 'Yes';
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                   options: [
                     'Mild - I can perform my usual daily activities',
                     'Moderate - It interferes with my daily activities', 
-                    'Severe - I have difficulty performing routine activities or need medical attention'
+                    'Severe - I have difficulty performing routine activities'
                   ],
                   value: q11Answer,
                   onChanged: (val) => setState(() => q11Answer = val),
@@ -75,7 +77,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                   onChanged: (val) => setState(() => q12Weeks = val),
                 ),
                 
-                // 1.3-1.8 Yes/No questions
+                // 1.3 Pre-existing
                 _buildRadioQuestion(
                   number: "1.3",
                   question: "Did the shortness of breath begin or was present before starting the medication?",
@@ -83,6 +85,8 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                   value: q13Answer,
                   onChanged: (val) => setState(() => q13Answer = val),
                 ),
+                
+                // 1.4 After medication
                 _buildRadioQuestion(
                   number: "1.4",
                   question: "Did the shortness of breath begin or worsen after starting the medication?",
@@ -90,33 +94,46 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                   value: q14Answer,
                   onChanged: (val) => setState(() => q14Answer = val),
                 ),
+                
+                // 1.4.1 & 1.4.2 (conditional)
+                if (showQ141Q142) ...[
+                  const SizedBox(height: 20),
+                  Text("If 1.4 is yes continue:", 
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue[700])),
+                  const SizedBox(height: 20),
+                  
+                  _buildRadioQuestion(
+                    number: "1.4.1",
+                    question: "Did the symptoms improve after the medication was stopped or after you received treatment for it?",
+                    options: ['Yes', 'No', 'Not applicable'],
+                    value: q141Answer,
+                    onChanged: (val) => setState(() => q141Answer = val),
+                  ),
+                  _buildRadioQuestion(
+                    number: "1.4.2",
+                    question: "Did the shortness of breath return after restarting the medication?",
+                    options: ['Yes', 'No', 'Not applicable'],
+                    value: q142Answer,
+                    onChanged: (val) => setState(() => q142Answer = val),
+                  ),
+                ],
+                
+                // 1.5 Pre-existing lung conditions
                 _buildRadioQuestion(
                   number: "1.5",
-                  question: "Did the symptom improve after the medication was stopped or after you received treatment for it?",
-                  options: ['Yes', 'No', 'Not applicable'],
+                  question: "Do you have any pre-existing lung conditions such as asthma, COPD, or prior lung disease?",
+                  options: ['Yes', 'No'],
                   value: q15Answer,
                   onChanged: (val) => setState(() => q15Answer = val),
                 ),
+                
+                // 1.6 Recent infection/exposure
                 _buildRadioQuestion(
                   number: "1.6",
-                  question: "Did the shortness of breath return after restarting the medication?",
-                  options: ['Yes', 'No', 'Not applicable'],
-                  value: q16Answer,
-                  onChanged: (val) => setState(() => q16Answer = val),
-                ),
-                _buildRadioQuestion(
-                  number: "1.7",
-                  question: "Do you have any pre-existing lung conditions such as asthma, COPD, or prior lung disease?",
-                  options: ['Yes', 'No'],
-                  value: q17Answer,
-                  onChanged: (val) => setState(() => q17Answer = val),
-                ),
-                _buildRadioQuestion(
-                  number: "1.8",
                   question: "Have you recently had a respiratory infection or been exposed to dust, smoke, or allergens?",
                   options: ['Yes', 'No'],
-                  value: q18Answer,
-                  onChanged: (val) => setState(() => q18Answer = val),
+                  value: q16Answer,
+                  onChanged: (val) => setState(() => q16Answer = val),
                 ),
               ],
               
@@ -229,6 +246,20 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
       _showSaveMessage(0);
       return;
     }
+    final data = {
+    'q1Answer': q1Answer ?? '',
+    'q11Answer': q11Answer ?? '',
+    'q12Weeks': q12Weeks ?? '',
+    'q13Answer': q13Answer ?? '',
+    'q14Answer': q14Answer ?? '',
+    'q141Answer': q141Answer ?? '',
+    'q142Answer': q142Answer ?? '',
+    'q15Answer': q15Answer ?? '',
+    'q16Answer': q16Answer ?? '',
+  };
+  final report = GradingReportGenerator.generateRespiratoryReport(data);
+  print('📄 RESPIRATORY REPORT:\n$report');
+  // ============================================
 
     // Main symptom + followups
     List<Map<String, String>> yesSymptoms = [];
@@ -237,59 +268,60 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
     yesSymptoms.add({
       'name': 'Shortness of breath',
       'severity': (q11Answer ?? 'moderate').split(' ')[0].toLowerCase(),
-      'extra': q12Weeks ?? '',
+      'duration': q12Weeks ?? '',
     });
 
     // Q1.3: Pre-existing
     if (q13Answer == 'Yes') {
       yesSymptoms.add({
         'name': 'Pre-existing shortness of breath',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
 
     // Q1.4: After medication
     if (q14Answer == 'Yes') {
-      yesSymptoms.add({
-        'name': 'Shortness of breath after medication',
-        
-        'extra': '',
-      });
+     yesSymptoms.add({
+     'name': 'Shortness of breath',
+     'severity': (q11Answer ?? 'moderate').split(' ')[0].toLowerCase(),
+     'duration': q12Weeks ?? '',
+     });
     }
+    
 
-    // Q1.5: Improved after stopping
-    if (q15Answer == 'Yes') {
+    // Q1.4.1: Improved after stopping
+    if (q141Answer == 'Yes') {
       yesSymptoms.add({
         'name': 'Shortness improved after stopping medication',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
 
-    // Q1.6: Returned after restart
-    if (q16Answer == 'Yes') {
+    // Q1.4.2: Returned after restart
+    if (q142Answer == 'Yes') {
       yesSymptoms.add({
         'name': 'Shortness returned after medication restart',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
 
-    // Q1.7: Pre-existing lung disease
-    if (q17Answer == 'Yes') {
+    // Q1.5: Pre-existing lung disease
+    if (q15Answer == 'Yes') {
       yesSymptoms.add({
         'name': 'Pre-existing lung conditions (asthma/COPD)',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
 
-    // Q1.8: Recent infection/exposure
-    if (q18Answer == 'Yes') {
+    // Q1.6: Recent infection/exposure
+    if (q16Answer == 'Yes') {
       yesSymptoms.add({
         'name': 'Recent respiratory infection/exposure',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
@@ -306,7 +338,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
           symptomName: symptom['name']!,
           symptomPresent: "Yes",
           severity: symptom['severity']!,
-          // Pass duration as extra field if your API supports it
+          durationWeeks: symptom['duration'] ?? '',   //new
         );
         print('✅ ${symptom['name']}: $success');
         if (success) savedCount++;
@@ -322,17 +354,17 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
   Future<void> _saveYesFollowups() async {
     List<Map<String, String>> followupYes = [];
 
-    if (q17Answer == 'Yes') {
+    if (q15Answer == 'Yes') {
       followupYes.add({
         'name': 'Pre-existing lung conditions (asthma/COPD)',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
-    if (q18Answer == 'Yes') {
+    if (q16Answer == 'Yes') {
       followupYes.add({
         'name': 'Recent respiratory infection/exposure',
-        
+        'severity': 'mild',
         'extra': '',
       });
     }
@@ -340,7 +372,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
     for (var symptom in followupYes) {
       await SystemsApi.saveSymptom(
         reportId: widget.reportId,
-        questionnaireSystem: "Respiratory",
+        questionnaireSystem: "RESPIRATORY SYSTEM",
         symptomName: symptom['name']!,
         symptomPresent: "Yes",
         severity: symptom['severity']!,
@@ -363,3 +395,5 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
     }
   }
 }
+
+

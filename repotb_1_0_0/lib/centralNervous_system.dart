@@ -16,6 +16,19 @@ class CentralnervousSystemScreen extends StatefulWidget {
 }
 
 class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen> {
+
+String normalizeSeverity(String? input) {
+  if (input == null) return "mild";
+
+  final val = input.toLowerCase();
+  if (val.contains("life")) return "life-threatening";
+  if (val.contains("mild")) return "mild";
+  if (val.contains("moderate")) return "moderate";
+  if (val.contains("severe")) return "severe";
+
+  return "mild"; // fallback
+}
+
   // Numbness/Tingling (8-8.8)
   String? q8Answer;        
   String? q81Answer;       
@@ -76,10 +89,10 @@ class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen>
                   number: "8.1",
                   question: "How severe is the condition?",
                   options: [
-                    'Mild / Asymptomatic – No symptoms or only mild symptoms; detected clinically or on investigations; does not interfere with daily activities',
-                    'Moderate – Symptoms interfere with daily activities and require medical treatment',
-                    'Severe – Marked limitation of daily functioning; hospitalization or intensive treatment required',
-                    'Life-threatening – Life-threatening consequences; urgent medical intervention required'
+                    'Mild / Asymptomatic - No symptoms or only mild symptoms; detected clinically or on investigations; does not interfere with daily activities',
+                    'Moderate - Symptoms interfere with daily activities and require medical treatment',
+                    'Severe - Marked limitation of daily functioning; hospitalization or intensive treatment required',
+                    'Life threatening - Life threatening consequences; urgent medical intervention required'
                   ],
                   value: q81Answer,
                   onChanged: (val) => setState(() => q81Answer = val),
@@ -111,9 +124,9 @@ class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen>
                   number: "9.1",
                   question: "How severe is the headache?",
                   options: [
-                    'Mild – Present but does not interfere with daily activities',
-                    'Moderate – Interferes with routine daily activities (e.g., work, household tasks)',
-                    'Severe – Interferes with self-care activities (e.g., bathing, dressing) or requires medical attention'
+                    'Mild - Present but does not interfere with daily activities',
+                    'Moderate - Interferes with routine daily activities (e.g., work, household tasks)',
+                    'Severe - Interferes with self-care activities (e.g., bathing, dressing) or requires medical attention'
                   ],
                   value: q91Answer,
                   onChanged: (val) => setState(() => q91Answer = val),
@@ -143,10 +156,10 @@ class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen>
                   number: "10.1",
                   question: "What was the most severe seizure episode experienced?",
                   options: [
-                    'Mild – Brief partial seizure without loss of consciousness',
-                    'Moderate – Brief generalized seizure',
-                    'Severe – New-onset seizure (partial or generalized) or multiple seizures despite medical treatment',
-                    'Life-threatening – Prolonged or repeated seizures requiring urgent medical intervention'
+                    'Mild - Brief partial seizure without loss of consciousness',
+                    'Moderate - Brief generalized seizure',
+                    'Severe - New-onset seizure (partial or generalized) or multiple seizures despite medical treatment',
+                    'Life threatening - Prolonged or repeated seizures requiring urgent medical intervention'
                   ],
                   value: q101Answer,
                   onChanged: (val) => setState(() => q101Answer = val),
@@ -326,7 +339,7 @@ class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen>
           questionnaireSystem: "CENTRAL NERVOUS SYSTEM",
           symptomName: symptom['name']!,
           symptomPresent: "Yes",
-          severity: symptom['severity']!,
+          severity: normalizeSeverity(symptom['severity']),
         );
         print('✅ ${symptom['name']}: $success');
         if (success) savedCount++;
@@ -343,7 +356,7 @@ class _CentralnervousSystemScreenState extends State<CentralnervousSystemScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(savedCount > 0 
-            ? '✅ Saved $savedCount "Yes" symptoms' 
+            ? '✅ Saved $savedCount CNS symptoms' 
             : 'ℹ️ No symptoms to save (only "Yes" answers are saved)'
           ),
           backgroundColor: savedCount > 0 ? Colors.green : Colors.blue,
