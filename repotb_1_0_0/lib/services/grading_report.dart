@@ -45,7 +45,7 @@ No new/worsening shortness of breath reported.
 RESPIRATORY SYSTEM REPORT
 
 Symptom: Shortness of Breath
-Status: POSITIVE
+//Status: POSITIVE
 ------------------------
 Severity: $severityGrade
 Duration: $duration weeks
@@ -77,57 +77,120 @@ Causality: $causality
 
     return 'UNKNOWN';
   }
-    static String generateGastroReport(List<dynamic> giList) {
+  // ===============================
+// 🔹 GI CAUSALITY
+// ===============================
+static String calculateGICausality(Map<String, String> g) {
 
-   if (giList.isEmpty) {
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  if (g["after"] == "Yes") {
+    if (g["improved"] == "Yes") {
+      if (g["returned"] == "Yes") return "CERTAIN";
+      return "PROBABLE";
+    }
+    return "POSSIBLE";
+  }
+
+  if (g["diet"] == "Yes" || g["other"] == "Yes") {
+    return "CONDITIONAL";
+  }
+
+  return "UNKNOWN";
+}
+  // ===============================
+// 🔹 STRING HELPER
+// ===============================
+static String _capitalize(String s) {
+  if (s.isEmpty) return s;
+  return s[0].toUpperCase() + s.substring(1);
+}
+   static Map<String, Map<String, String>> buildGastroGroups(List<dynamic> giList) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in giList) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+    final duration = item['duration_weeks'];
+
+    String base = "";
+
+    if (raw.contains("nausea")) base = "nausea";
+    else if (raw.contains("vomiting")) base = "vomiting";
+    else if (raw.contains("abdominal")) base = "abdominal pain";
+    else if (raw.contains("constipation")) base = "constipation";
+    else if (raw.contains("diarrhea")) base = "diarrhea";
+    else if (raw.contains("gastritis")) base = "gastritis";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+   
+    // ✅ ONLY exact match (main symptom)
+if (raw == base || raw == "$base symptoms") {
+
+  if (severity == "mild") g["severity"] = "GRADE 1";
+  if (severity == "moderate") g["severity"] = "GRADE 2";
+  if (severity == "severe") g["severity"] = "GRADE 3";
+
+  if (duration != null) {
+    g["duration"] = duration.toString();
+  }
+}
+
+    // ✅ causality flags
+    if (raw.contains("after medication")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+    if (raw.contains("diet")) g["diet"] = "Yes";
+    if (raw.contains("other")) g["other"] = "Yes";
+  }
+
+  print("✅ GROUPED GI: $grouped");
+  return grouped;
+}
+   static String generateGastroReport(List<dynamic> giList) {
+
+  if (giList.isEmpty) {
     return '''
 GASTROINTESTINAL SYSTEM SUMMARY
 ==============================
-Status: NEGATIVE
+//Status: NEGATIVE
 No GI symptoms reported.
 ''';
   }
+
+  final grouped = buildGastroGroups(giList);
+
   final StringBuffer r = StringBuffer();
 
   r.writeln('GASTROINTESTINAL SYSTEM REPORT');
   r.writeln('==============================');
 
-  for (var item in giList) {
+  grouped.forEach((symptom, data) {
 
-    final symptom = item['symptom'] ?? '';
-    final severity = item['severity'] ?? 'unknown';
-    final duration = item['duration_weeks'];
-    // 🔹 severity mapping
-    String grade = "GRADE UNKNOWN";
-    if (severity == "mild") grade = "GRADE 1";
-    if (severity == "moderate") grade = "GRADE 2";
-    if (severity == "severe") grade = "GRADE 3";
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateGICausality(data);
 
-    // 🔹 causality (simple logic for now)
-    String causality = "UNKNOWN";
-
-    if (symptom.toLowerCase().contains("after medication")) {
-      causality = "POSSIBLE";
-    }
-    if (symptom.toLowerCase().contains("improved")) {
-      causality = "PROBABLE";
-    }
-    if (symptom.toLowerCase().contains("returned")) {
-      causality = "CERTAIN";
-    }
-
-    r.writeln('Symptom: $symptom');
-    r.writeln('Status: POSITIVE');
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+   // r.writeln('Status: POSITIVE');
     r.writeln('------------------------');
-    r.writeln('Severity: $grade');
-    r.writeln('Duration: ${duration ?? "N/A"} weeks');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
     r.writeln('Causality: $causality');
     r.writeln('------------------------');
     r.writeln('');
-  }
+  });
 
   return r.toString();
 }
+
 
     
 
@@ -313,10 +376,8 @@ if (symptom.toLowerCase().contains("returned")) {
 }
  if (systems.containsKey('Gastrointestinal')) {
 
-      final List<dynamic> giList = systems['Gastrointestinal'] ?? [];
-
-      final gastroList = systems['Gastrointestinal'] ?? [];
-      r.writeln(generateGastroReport(gastroList));
+      final giList = systems['Gastrointestinal'] ?? [];
+      r.writeln(generateGastroReport(giList));
       r.writeln('');
     }
 

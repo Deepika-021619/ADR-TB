@@ -338,7 +338,9 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
           symptomName: symptom['name']!,
           symptomPresent: "Yes",
           severity: symptom['severity']!,
-          durationWeeks: symptom['duration'] ?? '',   //new
+          durationWeeks: symptom["duration"] != null && symptom["duration"]!.isNotEmpty
+      ? int.tryParse(symptom["duration"]!)
+      : null,   //new
         );
         print('✅ ${symptom['name']}: $success');
         if (success) savedCount++;

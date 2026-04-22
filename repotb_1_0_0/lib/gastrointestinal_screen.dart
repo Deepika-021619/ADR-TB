@@ -409,7 +409,7 @@ void _saveGastrointestinal() async {
 
   // NAUSEA
   if (q2Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Nausea', 'severity': q21Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Nausea', 'severity': q21Answer ?? 'mild', 'duration': q22Weeks ?? ''});
     
     if (q23Answer == 'Yes') yesSymptoms.add({'name': 'Nausea after medication', 'severity': 'mild'});
     if (q24Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing nausea', 'severity': 'mild'});
@@ -421,7 +421,7 @@ void _saveGastrointestinal() async {
 
   // VOMITING
   if (q3Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Vomiting', 'severity': q31Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Vomiting', 'severity': q31Answer ?? 'mild', 'duration': q3Duration ?? ''});
     
     if (q32Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting after medication', 'severity': 'mild'});
     if (q33Answer == 'Yes') yesSymptoms.add({'name': 'Vomiting improved after stopping', 'severity': 'mild'});
@@ -431,7 +431,7 @@ void _saveGastrointestinal() async {
 
   // ABDOMINAL PAIN
   if (q4Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Abdominal pain', 'severity': q41Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Abdominal pain', 'severity': q41Answer ?? 'mild', 'duration': q42Weeks ?? ''});
     
     if (q43Answer == 'Yes') yesSymptoms.add({'name': 'Abdominal pain after medication', 'severity': 'mild'});
     if (q44Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing abdominal pain', 'severity': 'mild'});
@@ -443,7 +443,7 @@ void _saveGastrointestinal() async {
 
   // CONSTIPATION
   if (q5Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Constipation', 'severity': q51Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Constipation', 'severity': q51Answer ?? 'mild', 'duration': q52Weeks ?? ''});
     
     if (q53Answer == 'Yes') yesSymptoms.add({'name': 'Constipation after medication', 'severity': 'mild'});
     if (q54Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing constipation', 'severity': 'mild'});
@@ -453,7 +453,7 @@ void _saveGastrointestinal() async {
 
   // DIARRHEA
   if (q6Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Diarrhea', 'severity': q61Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Diarrhea', 'severity': q61Answer ?? 'mild', 'duration': q62Weeks ?? ''});
     
     if (q63Answer == 'Yes') yesSymptoms.add({'name': 'Diarrhea after medication', 'severity': 'mild'});
     if (q64Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing diarrhea', 'severity': 'mild'});
@@ -463,7 +463,7 @@ void _saveGastrointestinal() async {
 
   // GASTRITIS
   if (q7Answer == 'Yes') {
-    yesSymptoms.add({'name': 'Gastritis symptoms', 'severity': q71Answer ?? 'mild'});
+    yesSymptoms.add({'name': 'Gastritis symptoms', 'severity': q71Answer ?? 'mild', 'duration': q72Weeks ?? ''});
     
     if (q73Answer == 'Yes') yesSymptoms.add({'name': 'Gastritis after medication', 'severity': 'mild'});
     if (q74Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing gastritis', 'severity': 'mild'});
@@ -477,13 +477,15 @@ void _saveGastrointestinal() async {
 
   for (var symptom in yesSymptoms) {
     bool success = await SystemsApi.saveSymptom(
-      reportId: widget.reportId,
-      questionnaireSystem: "GASTROINTESTINAL SYSTEM",
-      symptomName: symptom["name"]!,
-      symptomPresent: "Yes",
-      severity: normalizeSeverity(symptom["severity"]),
-      durationWeeks:symptom['duration'] ?? '',
-    );
+  reportId: widget.reportId,
+  questionnaireSystem: "GASTROINTESTINAL SYSTEM",
+  symptomName: symptom["name"]!,
+  symptomPresent: "Yes",
+  severity: normalizeSeverity(symptom["severity"]),
+  durationWeeks: symptom["duration"] != null && symptom["duration"]!.isNotEmpty
+      ? int.tryParse(symptom["duration"]!)
+      : null,
+);
 
     print('✅ ${symptom["name"]}: $success');
     savedCount++;
