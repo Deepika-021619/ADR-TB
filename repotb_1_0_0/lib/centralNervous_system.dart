@@ -287,10 +287,10 @@ String normalizeSeverity(String? input) {
     // 8. NUMBNESS/TINGLING
     if (q8Answer == 'Yes') {
       yesSymptoms.add({
-        'name': 'Numbness/tingling in hands/feet',
-        'severity': q81Answer ?? 'Moderate',
-        'extra': q82Weeks ?? '',
-      });
+  'name': 'Numbness/tingling in hands/feet',
+  'severity': q81Answer ?? 'Moderate',
+  'duration': q82Weeks ?? '',
+});
       
       // Follow-up Yes answers
       if (q83Answer == 'Yes') yesSymptoms.add({'name': 'Numbness after medication', 'severity': 'Post-medication onset', 'extra': ''});
@@ -304,10 +304,11 @@ String normalizeSeverity(String? input) {
     // 9. HEADACHES
     if (q9Answer == 'Yes') {
       yesSymptoms.add({
-        'name': 'Headaches',
-        'severity': q91Answer ?? 'Moderate',
-        'extra': q92Weeks ?? '',
-      });
+  'name': 'Headaches',
+  'severity': q91Answer ?? 'Moderate',
+  'duration': q92Weeks ?? '',
+});
+      
       
       if (q93Answer == 'Yes') yesSymptoms.add({'name': 'Headache after medication', 'severity': 'Post-medication onset', 'extra': ''});
       if (q94Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing headaches', 'severity': 'Pre-existing condition', 'extra': ''});
@@ -317,11 +318,11 @@ String normalizeSeverity(String? input) {
 
     // 10. SEIZURES
     if (q10Answer == 'Yes') {
-      yesSymptoms.add({
-        'name': 'Seizures',
-        'severity': q101Answer ?? 'Severe',
-        'extra': '${q102Weeks ?? ''} weeks, ${q103Episodes ?? '0'} episodes',
-      });
+     yesSymptoms.add({
+  'name': 'Seizures',
+  'severity': q101Answer ?? 'Severe',
+  'duration': q102Weeks ?? '',
+});
       
       if (q104Answer == 'Yes') yesSymptoms.add({'name': 'Seizure after medication', 'severity': 'Post-medication onset', 'extra': ''});
       if (q105History == 'Yes') yesSymptoms.add({'name': 'Pre-existing seizure history', 'severity': 'Pre-existing condition', 'extra': ''});
@@ -335,12 +336,13 @@ String normalizeSeverity(String? input) {
     for (var symptom in yesSymptoms) {
       try {
         bool success = await SystemsApi.saveSymptom(
-          reportId: widget.reportId,
-          questionnaireSystem: "CENTRAL NERVOUS SYSTEM",
-          symptomName: symptom['name']!,
-          symptomPresent: "Yes",
-          severity: normalizeSeverity(symptom['severity']),
-        );
+  reportId: widget.reportId,
+  questionnaireSystem: "CENTRAL NERVOUS SYSTEM",
+  symptomName: symptom['name']!,
+  symptomPresent: "Yes",
+  severity: normalizeSeverity(symptom['severity']),
+  durationWeeks: int.tryParse(symptom['duration'] ?? ''),
+);
         print('✅ ${symptom['name']}: $success');
         if (success) savedCount++;
       } catch (e) {

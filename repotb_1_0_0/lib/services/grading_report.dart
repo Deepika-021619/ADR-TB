@@ -98,6 +98,60 @@ static String calculateGICausality(Map<String, String> g) {
 
   return "UNKNOWN";
 }
+
+ static String calculateCNSCausality(Map<String, String> g) {
+
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  if (g["after"] == "Yes") {
+    if (g["improved"] == "Yes") {
+      if (g["returned"] == "Yes") return "CERTAIN";
+      return "PROBABLE";
+    }
+    return "POSSIBLE";
+  }
+
+  if (g["condition"] == "Yes" || g["trigger"] == "Yes") {
+    return "CONDITIONAL";
+  }
+
+  return "UNKNOWN";
+}
+  static String generateCNSReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+CENTRAL NERVOUS SYSTEM SUMMARY
+==============================
+Status: NEGATIVE
+No CNS symptoms reported.
+''';
+  }
+
+  final grouped = buildCNSGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('CENTRAL NERVOUS SYSTEM REPORT');
+  r.writeln('==============================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateCNSCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
   // ===============================
 // 🔹 STRING HELPER
 // ===============================
@@ -136,6 +190,7 @@ if (raw == base || raw == "$base symptoms") {
   if (severity == "mild") g["severity"] = "GRADE 1";
   if (severity == "moderate") g["severity"] = "GRADE 2";
   if (severity == "severe") g["severity"] = "GRADE 3";
+  if (severity == "life-threatening") g["severity"] = "GRADE 4";
 
   if (duration != null) {
     g["duration"] = duration.toString();
@@ -154,6 +209,62 @@ if (raw == base || raw == "$base symptoms") {
   print("✅ GROUPED GI: $grouped");
   return grouped;
 }
+  static Map<String, Map<String, String>> buildCNSGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+    final duration = item['duration_weeks'];
+
+    String base = "";
+
+    if (raw.contains("numbness")) base = "numbness";
+    else if (raw.contains("headache")) base = "headache";
+    else if (raw.contains("seizure")) base = "seizure";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // MAIN symptom only
+  if (
+  (base == "numbness" &&
+    (raw.startsWith("numbness/") || raw == "numbness")) ||
+
+  (base == "headache" &&
+    (raw == "headache" || raw == "headaches")) ||
+
+  (base == "seizure" &&
+    (raw == "seizure" || raw == "seizures"))
+) {
+  if (severity == "mild") g["severity"] = "GRADE 1";
+  if (severity == "moderate") g["severity"] = "GRADE 2";
+  if (severity == "severe") g["severity"] = "GRADE 3";
+  if (severity == "life-threatening") g["severity"] = "GRADE 4";
+
+  if (duration != null) {
+    g["duration"] = duration.toString();
+  }
+}
+
+
+    // causality flags
+    if (raw.contains("after medication")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+    if (raw.contains("diabetes")) g["condition"] = "Yes";
+    if (raw.contains("injury")) g["trigger"] = "Yes";
+  }
+
+  print("✅ GROUPED CNS: $grouped");
+  return grouped;
+}
+
    static String generateGastroReport(List<dynamic> giList) {
 
   if (giList.isEmpty) {
@@ -228,6 +339,7 @@ No GI symptoms reported.
     print("✅ FINAL GI MAP: $gi");
     return gi;
   }
+  
   // ===============================
   // 🔹 FULL REPORT
   // ===============================
@@ -380,6 +492,13 @@ if (symptom.toLowerCase().contains("returned")) {
       r.writeln(generateGastroReport(giList));
       r.writeln('');
     }
+    if (systems.containsKey('Centralnervous')) {
+
+  final List<dynamic> cnsList = systems['Centralnervous'] ?? [];
+
+  r.writeln(generateCNSReport(cnsList));
+  r.writeln('');
+}
 
     return r.toString();
     
