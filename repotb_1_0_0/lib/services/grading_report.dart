@@ -98,7 +98,7 @@ static String calculateGICausality(Map<String, String> g) {
 
   return "UNKNOWN";
 }
-
+//CNS CAUSALITY
  static String calculateCNSCausality(Map<String, String> g) {
 
   if (g["before"] == "Yes") return "UNLIKELY";
@@ -111,6 +111,34 @@ static String calculateGICausality(Map<String, String> g) {
     return "POSSIBLE";
   }
 
+  if (g["condition"] == "Yes" || g["trigger"] == "Yes") {
+    return "CONDITIONAL";
+  }
+
+  return "UNKNOWN";
+}
+// OCULAR CAUSALITY
+static String calculateOcularCausality(Map<String, String> g) {
+
+  // ❌ UNLIKELY (pre-existing condition)
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  // ✅ POSSIBLE / PROBABLE / CERTAIN
+  if (g["after"] == "Yes") {
+
+    if (g["improved"] == "Yes") {
+
+      if (g["returned"] == "Yes") {
+        return "CERTAIN";
+      }
+
+      return "PROBABLE";
+    }
+
+    return "POSSIBLE";
+  }
+
+  // ⚠️ CONDITIONAL (other explanations)
   if (g["condition"] == "Yes" || g["trigger"] == "Yes") {
     return "CONDITIONAL";
   }
@@ -140,6 +168,42 @@ No CNS symptoms reported.
     final severity = data["severity"] ?? "GRADE UNKNOWN";
     final duration = data["duration"] ?? "";
     final causality = calculateCNSCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+//generate ocular report
+static String generateOcularReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+OCULAR INVOLVEMENT SUMMARY
+=========================
+Status: NEGATIVE
+No ocular symptoms reported.
+''';
+  }
+
+  final grouped = buildOcularGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('OCULAR INVOLVEMENT REPORT');
+  r.writeln('=========================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateOcularCausality(data);
 
     r.writeln('Symptom: ${_capitalize(symptom)}');
     r.writeln('------------------------');
@@ -262,6 +326,58 @@ if (raw == base || raw == "$base symptoms") {
   }
 
   print("✅ GROUPED CNS: $grouped");
+  return grouped;
+}
+
+static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+    final duration = item['duration_weeks'];
+
+    String base = "";
+
+    if (raw.contains("blurring") || raw.contains("vision")) base = "blurring vision";
+    else if (raw.contains("color")) base = "color vision";
+    else if (raw.contains("patchy")) base = "patchy vision";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // ✅ MAIN symptom ONLY (very important)
+    if (
+      (base == "blurring vision" && raw.contains("blurring")) ||
+      (base == "color vision" && raw.contains("color")) ||
+      (base == "patchy vision" && raw.contains("patchy"))
+    ) {
+
+      // severity mapping
+      if (severity == "mild") g["severity"] = "GRADE 1";
+      if (severity == "moderate") g["severity"] = "GRADE 2";
+      if (severity == "severe") g["severity"] = "GRADE 3";
+
+      // duration (optional for ocular)
+      if (duration != null) {
+        g["duration"] = duration.toString();
+      }
+    }
+
+    // ✅ causality flags
+    if (raw.contains("after medication")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("recurred") || raw.contains("returned")) g["returned"] = "Yes";
+    if (raw.contains("eye condition")) g["condition"] = "Yes";
+    if (raw.contains("strain") || raw.contains("light")) g["trigger"] = "Yes";
+  }
+
+  print("✅ GROUPED OCULAR: $grouped");
   return grouped;
 }
 
@@ -499,9 +615,14 @@ if (symptom.toLowerCase().contains("returned")) {
   r.writeln(generateCNSReport(cnsList));
   r.writeln('');
 }
+   if (systems.containsKey('Ocular')) {
 
-    return r.toString();
-    
+  final List<dynamic> ocularList = systems['Ocular'] ?? [];
+
+  r.writeln(generateOcularReport(ocularList));
+  r.writeln('');
+} 
+return r.toString();
   }
   
 }

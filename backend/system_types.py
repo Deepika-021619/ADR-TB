@@ -12,7 +12,7 @@ VALID_SYSTEMS = [
     'Ocular', 'Miscellaneous', 'Psychiatric', 'Genitourinary'
 ]
 VALID_PRESENT = ['Yes', 'No']
-VALID_SEVERITY = ['mild', 'moderate', 'severe']
+VALID_SEVERITY = ['mild', 'moderate', 'severe', 'life-threatening']
 
 class SystemCreateRequest(BaseModel):
     report_id: str
@@ -20,6 +20,8 @@ class SystemCreateRequest(BaseModel):
     symptom_name: str
     symptom_present: str
     severity: str = "N/A"
+    duration_weeks: int | None = None   # ✅ NEW
+    
     
     @validator('system_name')
     def validate_system(cls, v):
@@ -58,14 +60,15 @@ def create_system_entry(data: SystemCreateRequest):
         # INSERT with explicit columns
         cursor.execute("""
             INSERT INTO system_types 
-            (report_id, system_name, symptom_name, symptom_present, severity)
-            VALUES (%s, %s, %s, %s, %s)
+            (report_id, system_name, symptom_name, symptom_present, severity, duration_weeks)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """, (
             data.report_id,
             data.system_name,
             data.symptom_name[:99],  # Truncate if too long
             data.symptom_present,
-            data.severity
+            data.severity,
+            data.duration_weeks
         ))
         
         conn.commit()

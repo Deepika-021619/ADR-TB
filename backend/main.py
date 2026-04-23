@@ -13,7 +13,10 @@ from backend.drug_details import router as drug_details_router
 from backend.adr_data import router as adr_router
 from backend.system_types import router as system_type_router
 from backend.tb_regimen import router as tb_regimen_router
+from backend.general_symptoms import router as general_router
+from backend.investigations import router as investigations_router
 from fastapi.middleware.cors import CORSMiddleware
+
 
 
 
@@ -37,7 +40,8 @@ app.include_router(drug_details_router)
 app.include_router(adr_router)
 app.include_router(system_type_router)
 app.include_router(tb_regimen_router)
-
+app.include_router(general_router)
+app.include_router(investigations_router)
 
 
 # --------------------

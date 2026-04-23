@@ -108,11 +108,12 @@ CREATE TABLE drug_details (
     oral_only ENUM('Yes','No') NOT NULL,
     injectable_details TEXT DEFAULT NULL,
     previous_regimen_taken ENUM('Yes','No') NOT NULL,
-    previous_regimen_details TEXT NOT NULL,
-    duration_previous_regimen INT NOT NULL,
+    previous_regimen_details TEXT ,
+    duration_previous_regimen INT ,
     regimen_id INT,
    constraint fk_drug_report FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER TABLE system_types ADD COLUMN duration_weeks INT;
 
 CREATE TABLE adr_data (
     report_id VARCHAR(25) NOT NULL,
@@ -134,6 +135,123 @@ CREATE TABLE system_types (
     severity ENUM('mild','moderate','severe') NOT NULL,
     constraint system_report_fk FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER TABLE system_types 
+MODIFY COLUMN symptom_present ENUM('Yes', 'No', 'Not sure', 'Not applicable') NOT NULL;
+
 ALTER TABLE drug_details 
 ADD CONSTRAINT fdrug_regimen_fk
 FOREIGN KEY (regimen_id) REFERENCES tb_regimens(regimen_id) ON DELETE SET NULL;
+
+ALTER TABLE system_types 
+MODIFY COLUMN system_name ENUM(
+    'Gastrointestinal', 
+    'Skin and Subcutaneous', 
+    'Centralnervous',
+    'Musculoskeletal', 
+    'Peripheral nervous', 
+    'Respiratory',
+    'Hematological', 
+    'Cardiovascular', 
+    'Ocular', 
+    'Miscellaneous',
+    'Psychiatric',           
+    'Genitourinary'         
+);
+
+
+CREATE TABLE general_symptoms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    
+    report_id VARCHAR(50) NOT NULL,
+
+    -- 24. MALAISE
+    malaise_present VARCHAR(10),
+    malaise_duration_weeks INT,
+    malaise_severity VARCHAR(20),
+    malaise_onset VARCHAR(20),
+    malaise_pre_existing VARCHAR(10),
+    malaise_improved VARCHAR(20),
+    malaise_recurred VARCHAR(20),
+
+    -- 25. FEVER
+    fever_present VARCHAR(10),
+    fever_duration VARCHAR(20),
+    fever_severity VARCHAR(30),
+    fever_onset VARCHAR(20),
+    fever_pre_existing VARCHAR(10),
+    fever_improved VARCHAR(20),
+    fever_recurred VARCHAR(20),
+
+    -- 26. FATIGUE
+    fatigue_present VARCHAR(10),
+    fatigue_duration_weeks INT,
+    fatigue_severity VARCHAR(20),
+    fatigue_onset VARCHAR(20),
+    fatigue_pre_existing VARCHAR(10),
+    fatigue_improved VARCHAR(20),
+    fatigue_recurred VARCHAR(20),
+    fatigue_lifestyle VARCHAR(20),
+    fatigue_other_issues TEXT,
+
+    -- 27. ORANGE DISCOLORATION
+    discoloration_present VARCHAR(10),
+
+    -- 28. OTHER SYMPTOMS
+    other_symptoms TEXT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE investigations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    report_id VARCHAR(50) NOT NULL,
+
+    -- 29. LFT
+    lft_done VARCHAR(10),
+
+    ast_value FLOAT,
+    ast_uln FLOAT,
+    ast_baseline FLOAT,
+
+    alt_value FLOAT,
+    alt_uln FLOAT,
+    alt_baseline FLOAT,
+
+    alp_value FLOAT,
+    alp_uln FLOAT,
+    alp_baseline FLOAT,
+
+    bilirubin_total FLOAT,
+    bilirubin_total_uln FLOAT,
+    bilirubin_total_baseline FLOAT,
+
+    bilirubin_direct FLOAT,
+    bilirubin_direct_uln FLOAT,
+    bilirubin_direct_baseline FLOAT,
+
+    -- 30. Hemoglobin
+    hgb_done VARCHAR(10),
+
+    hgb_value FLOAT,
+    hgb_lln FLOAT,
+    hgb_baseline FLOAT,
+
+    -- 31. Platelets
+    platelet_done VARCHAR(10),
+
+    platelet_value FLOAT,
+    platelet_lln FLOAT,
+    platelet_baseline FLOAT,
+
+    -- 32. Uric Acid
+    uric_acid_done VARCHAR(10),
+
+    uric_acid_value FLOAT,
+    uric_acid_uln FLOAT,
+    uric_acid_baseline FLOAT,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE system_types ADD COLUMN duration_weeks INT;

@@ -1,33 +1,4 @@
-#-------from fastapi import APIRouter, HTTPException
-#from pydantic import BaseModel
-#from database import get_db_connection
-#import uuid
 
-#router = APIRouter(prefix="/reports", tags=["Reports"])
-
-#class ReportCreateRequest(BaseModel):
-   # report_id: str = "R" + uuid.uuid4().hex[:10]
-    #nik_id: str
-   #portal: str
-
-#@router.post("/reports")
-#def create_report(data: ReportCreateRequest):
-  #  conn = get_db_connection() 
-   # cursor = conn.cursor()
-
-   # cursor.execute(
-    #    "INSERT INTO reports (report_id, nik_id, portal) VALUES (%s,%s,%s)",
-    #    (data.report_id, data.nik_id, data.portal)
-    #)
-
-    #conn.commit()
-    #cursor.close()
-    #conn.close()
-
-    #return {
-     #   "message": "Report created successfully",
-     #   "report_id": data.report_id
-    #------}
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -121,8 +92,8 @@ def get_full_report(report_id: str):
             s.system_name,
             s.symptom_name,
             s.symptom_present,
-            s.severity
-
+            s.severity,
+            s.duration_weeks
         FROM reports r
 
         JOIN patient_details p 
@@ -216,7 +187,8 @@ def get_full_report(report_id: str):
 
         report["systems"][system].append({
             "symptom": row["symptom_name"],
-            "severity": row["severity"]
+            "severity": row["severity"],
+            "duration_weeks": row["duration_weeks"],
         })
 
     return report
