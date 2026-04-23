@@ -145,6 +145,27 @@ static String calculateOcularCausality(Map<String, String> g) {
 
   return "UNKNOWN";
 }
+
+// SKIN CAUSALITY
+   static String calculateSkinCausality(Map<String, String> g) {
+
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  if (g["after"] == "Yes") {
+    if (g["improved"] == "Yes") {
+      if (g["returned"] == "Yes") return "CERTAIN";
+      return "PROBABLE";
+    }
+    return "POSSIBLE";
+  }
+
+  if (g["condition"] == "Yes" || g["trigger"] == "Yes") {
+    return "CONDITIONAL";
+  }
+
+  return "UNKNOWN";
+}
+
   static String generateCNSReport(List<dynamic> list) {
 
   if (list.isEmpty) {
@@ -202,13 +223,47 @@ No ocular symptoms reported.
   grouped.forEach((symptom, data) {
 
     final severity = data["severity"] ?? "GRADE UNKNOWN";
-    final duration = data["duration"] ?? "";
+   
     final causality = calculateOcularCausality(data);
 
     r.writeln('Symptom: ${_capitalize(symptom)}');
     r.writeln('------------------------');
     r.writeln('Severity: $severity');
-    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+   
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+// SKIN REPORT
+   static String generateSkinReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+SKIN AND SUBCUTANEOUS SYSTEM SUMMARY
+===================================
+Status: NEGATIVE
+No skin symptoms reported.
+''';
+  }
+
+  final grouped = buildSkinGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('SKIN AND SUBCUTANEOUS SYSTEM REPORT');
+  r.writeln('===================================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final causality = calculateSkinCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
     r.writeln('Causality: $causality');
     r.writeln('------------------------');
     r.writeln('');
@@ -254,7 +309,7 @@ if (raw == base || raw == "$base symptoms") {
   if (severity == "mild") g["severity"] = "GRADE 1";
   if (severity == "moderate") g["severity"] = "GRADE 2";
   if (severity == "severe") g["severity"] = "GRADE 3";
-  if (severity == "life-threatening") g["severity"] = "GRADE 4";
+  if (severity == "life threatening") g["severity"] = "GRADE 4";
 
   if (duration != null) {
     g["duration"] = duration.toString();
@@ -262,7 +317,7 @@ if (raw == base || raw == "$base symptoms") {
 }
 
     // ✅ causality flags
-    if (raw.contains("after medication")) g["after"] = "Yes";
+    if (raw.contains("after")) g["after"] = "Yes";
     if (raw.contains("pre-existing")) g["before"] = "Yes";
     if (raw.contains("improved")) g["improved"] = "Yes";
     if (raw.contains("returned")) g["returned"] = "Yes";
@@ -308,7 +363,7 @@ if (raw == base || raw == "$base symptoms") {
   if (severity == "mild") g["severity"] = "GRADE 1";
   if (severity == "moderate") g["severity"] = "GRADE 2";
   if (severity == "severe") g["severity"] = "GRADE 3";
-  if (severity == "life-threatening") g["severity"] = "GRADE 4";
+  if (severity == "life threatening") g["severity"] = "GRADE 4";
 
   if (duration != null) {
     g["duration"] = duration.toString();
@@ -330,6 +385,7 @@ if (raw == base || raw == "$base symptoms") {
 }
 
 static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
+  
 
   final Map<String, Map<String, String>> grouped = {};
 
@@ -337,13 +393,13 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
 
     final raw = (item['symptom'] ?? '').toLowerCase();
     final severity = item['severity'] ?? '';
-    final duration = item['duration_weeks'];
+    
 
     String base = "";
 
-    if (raw.contains("blurring") || raw.contains("vision")) base = "blurring vision";
-    else if (raw.contains("color")) base = "color vision";
+    if (raw.contains("color")) base = "color vision";
     else if (raw.contains("patchy")) base = "patchy vision";
+    else if (raw.contains("blurring") || raw.contains("decrease")) base = "blurring vision";
 
     if (base.isEmpty) continue;
 
@@ -352,27 +408,30 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
 
     // ✅ MAIN symptom ONLY (very important)
     if (
-      (base == "blurring vision" && raw.contains("blurring")) ||
-      (base == "color vision" && raw.contains("color")) ||
-      (base == "patchy vision" && raw.contains("patchy"))
-    ) {
+  (base == "blurring vision" && raw.contains("blurring")) ||
+  (base == "color vision" && raw.contains("color")) ||
+  (base == "patchy vision" && raw.contains("patchy"))
+) {
 
-      // severity mapping
-      if (severity == "mild") g["severity"] = "GRADE 1";
-      if (severity == "moderate") g["severity"] = "GRADE 2";
-      if (severity == "severe") g["severity"] = "GRADE 3";
+  // 🔥 PRIORITY: Grade 0 (must come first)
+  if (raw.contains("Grade 0")) {
+    g["severity"] = "GRADE 0";
+  }
 
-      // duration (optional for ocular)
-      if (duration != null) {
-        g["duration"] = duration.toString();
-      }
-    }
+  // 🔹 Normal mapping (only if not Grade 0)
+  else {
+    if (severity == "mild") g["severity"] = "GRADE 1";
+    if (severity == "moderate") g["severity"] = "GRADE 2";
+    if (severity == "severe") g["severity"] = "GRADE 3";
+    if (severity == "life threatening") g["severity"] = "GRADE 4";
+  }
+}
 
     // ✅ causality flags
     if (raw.contains("after medication")) g["after"] = "Yes";
     if (raw.contains("pre-existing")) g["before"] = "Yes";
     if (raw.contains("improved")) g["improved"] = "Yes";
-    if (raw.contains("recurred") || raw.contains("returned")) g["returned"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
     if (raw.contains("eye condition")) g["condition"] = "Yes";
     if (raw.contains("strain") || raw.contains("light")) g["trigger"] = "Yes";
   }
@@ -380,6 +439,51 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
   print("✅ GROUPED OCULAR: $grouped");
   return grouped;
 }
+   static Map<String, Map<String, String>> buildSkinGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+
+    String base = "";
+
+    if (raw.contains("rash")) base = "rash";
+    else if (raw.contains("itch")) base = "itching";
+    else if (raw.contains("jaundice") || raw.contains("yellow")) base = "jaundice";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // ✅ MAIN symptom ONLY
+    if (
+      (base == "rash" && raw == "rash") ||
+      (base == "itching" && raw == "itching") ||
+      (base == "jaundice" && raw == "jaundice")
+    ) {
+      if (severity == "mild") g["severity"] = "GRADE 1";
+      if (severity == "moderate") g["severity"] = "GRADE 2";
+      if (severity == "severe") g["severity"] = "GRADE 3";
+      if (severity == "life threatening") g["severity"] = "GRADE 4";
+    }
+
+    // ✅ causality flags
+    if (raw.contains("after")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+    if (raw.contains("allergy")) g["condition"] = "Yes";
+    if (raw.contains("trigger")) g["trigger"] = "Yes";
+  }
+
+  print("✅ GROUPED SKIN: $grouped");
+  return grouped;
+}
+
 
    static String generateGastroReport(List<dynamic> giList) {
 
@@ -622,6 +726,11 @@ if (symptom.toLowerCase().contains("returned")) {
   r.writeln(generateOcularReport(ocularList));
   r.writeln('');
 } 
+   if (systems.containsKey('SkinSubcutaneous')) {
+  final skinList = systems['SkinSubcutaneous'] ?? [];
+  r.writeln(generateSkinReport(skinList));
+  r.writeln('');
+}
 return r.toString();
   }
   

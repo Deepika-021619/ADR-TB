@@ -72,7 +72,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                     'Mild: <10% BSA',
                     'Moderate: 10–30% BSA',
                     'Severe: >30% BSA',
-                    'Life-threatening (SJS/TEN)'
+                    'Life threatening (SJS/TEN)'
                   ],
                   value: q142Severity,
                   onChanged: (v) => setState(() => q142Severity = v),
@@ -102,7 +102,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                 _buildRadioQuestion(
                   number: "15.1",
                   question: "Severity",
-                  options: ['Mild','Moderate','Severe','Life-threatening'],
+                  options: ['Mild','Moderate','Severe','Life threatening (SJS/TEN)'],
                   value: q151Severity,
                   onChanged: (v)=>setState(()=>q151Severity=v),
                 ),
@@ -129,7 +129,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                 _buildRadioQuestion(
                   number: "16.1",
                   question: "Severity",
-                  options: ['Mild','Moderate','Severe','Life-threatening'],
+                  options: ['Mild','Moderate','Severe','Life threatening (SJS/TEN)'],
                   value: q161Severity,
                   onChanged: (v)=>setState(()=>q161Severity=v),
                 ),
@@ -246,38 +246,94 @@ Widget _buildRadioQuestion({
     return q14Answer != null && q15Answer != null && q16Answer != null;
   }
 
-  void _saveSkin() async {
-     print('SKIN SAVE - reportId: ${widget.reportId}');
-    List<Map<String, String>> symptoms = [];
+   void _saveSkin() async {
+  print('SKIN SAVE - reportId: ${widget.reportId}');
+  
+  List<Map<String, String>> symptoms = [];
 
-    if (q14Answer == 'Yes') {
-      symptoms.add({'name': 'Rash', 'severity': _mapSeverity(q142Severity)});
-    }
-    if (q15Answer == 'Yes') {
-      symptoms.add({'name': 'Itching', 'severity': _mapSeverity(q151Severity)});
-    }
-    if (q16Answer == 'Yes') {
-      symptoms.add({'name': 'Jaundice', 'severity': _mapSeverity(q161Severity)});
-    }
+  // ===== RASH =====
+  if (q14Answer == 'Yes') {
+    symptoms.add({'name': 'Rash', 'severity': _mapSeverity(q142Severity)});
 
-     print('📦 Saving ${symptoms.length} symptoms');
-    for (var s in symptoms) {
-      await SystemsApi.saveSymptom(
-        reportId: widget.reportId,
-        questionnaireSystem: "SKIN AND SUBCUTANEOUS TISSUE RELATED SYMPTOMS",
-        symptomName: s['name']!,
-        symptomPresent: "Yes",
-        severity: s['severity']!,
-      );
-    
+    if (q143Answer == 'Yes') {
+      symptoms.add({'name': 'Rash after medication', 'severity': 'mild'});
+    }
+    if (q144Answer == 'Yes') {
+      symptoms.add({'name': 'Pre-existing rash', 'severity': 'mild'});
+    }
+    if (q145Answer == 'Yes') {
+      symptoms.add({'name': 'Rash improved after stopping', 'severity': 'mild'});
+    }
+    if (q146Answer == 'Yes') {
+      symptoms.add({'name': 'Rash returned after restart', 'severity': 'mild'});
+    }
+    if (q147Products == 'Yes') {
+      symptoms.add({'name': 'Skincare trigger', 'severity': 'mild'});
+    }
+    if (q148Allergies == 'Yes') {
+      symptoms.add({'name': 'Allergy condition', 'severity': 'mild'});
     }
   }
+
+  // ===== ITCHING =====
+  if (q15Answer == 'Yes') {
+    symptoms.add({'name': 'Itching', 'severity': _mapSeverity(q151Severity)});
+
+    if (q152Answer == 'Yes') {
+      symptoms.add({'name': 'Itching after medication', 'severity': 'mild'});
+    }
+    if (q153Answer == 'Yes') {
+      symptoms.add({'name': 'Pre-existing itching', 'severity': 'mild'});
+    }
+    if (q154Answer == 'Yes') {
+      symptoms.add({'name': 'Itching improved', 'severity': 'mild'});
+    }
+    if (q155Answer == 'Yes') {
+      symptoms.add({'name': 'Itching returned', 'severity': 'mild'});
+    }
+  }
+
+  // ===== JAUNDICE =====
+  if (q16Answer == 'Yes') {
+    symptoms.add({'name': 'Jaundice', 'severity': _mapSeverity(q161Severity)});
+
+    if (q163Answer == 'Yes') {
+      symptoms.add({'name': 'Jaundice after medication', 'severity': 'mild'});
+    }
+    if (q164Answer == 'Yes') {
+      symptoms.add({'name': 'Pre-existing jaundice', 'severity': 'mild'});
+    }
+    if (q165Answer == 'Yes') {
+      symptoms.add({'name': 'Jaundice improved', 'severity': 'mild'});
+    }
+    if (q166Answer == 'Yes') {
+      symptoms.add({'name': 'Jaundice returned', 'severity': 'mild'});
+    }
+  }
+
+  print('📦 Saving ${symptoms.length} symptoms');
+
+  for (var s in symptoms) {
+    await SystemsApi.saveSymptom(
+      reportId: widget.reportId,
+      questionnaireSystem: "SKIN AND SUBCUTANEOUS TISSUE RELATED SYMPTOMS",
+      symptomName: s['name']!,
+      symptomPresent: "Yes",
+      severity: s['severity']!,
+    );
+  }
+}
 
   String _mapSeverity(String? s) {
-    if (s == null) return 'moderate';
-    s = s.toLowerCase();
-    if (s.contains('mild')) return 'mild';
-    if (s.contains('severe')) return 'severe';
-    return 'moderate';
-  }
+  if (s == null) return 'moderate';
+
+  s = s.toLowerCase();
+
+  if (s.contains('life')) return 'life threatening'; // ✅ FIX
+  if (s.contains('severe')) return 'severe';
+  if (s.contains('moderate')) return 'moderate';
+  if (s.contains('mild')) return 'mild';
+
+  return 'moderate';
+}
 }

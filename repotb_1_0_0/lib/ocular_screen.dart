@@ -100,7 +100,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
                 _buildRadioQuestion(number: "11.4", question: "Did the visual symptoms begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q114Answer, onChanged: (val) => setState(() => q114Answer = val)),
                 _buildRadioQuestion(number: "11.5", question: "Did you have similar visual problems before starting treatment?", options: ['Yes', 'No'], value: q115Answer, onChanged: (val) => setState(() => q115Answer = val)),
                 _buildRadioQuestion(number: "11.6", question: "Did vision improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q116Answer, onChanged: (val) => setState(() => q116Answer = val)),
-                _buildRadioQuestion(number: "11.7", question: "Did symptoms recur after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q117Answer, onChanged: (val) => setState(() => q117Answer = val)),
+                _buildRadioQuestion(number: "11.7", question: "Did symptoms return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q117Answer, onChanged: (val) => setState(() => q117Answer = val)),
                 _buildRadioQuestion(number: "11.8", question: "Do you have any pre-existing eye conditions (e.g., glaucoma, cataract)?", options: ['Yes', 'No'], value: q118Answer, onChanged: (val) => setState(() => q118Answer = val)),
                 _buildRadioQuestion(number: "11.9", question: "Have you recently experienced visual strain or bright light exposure?", options: ['Yes', 'No'], value: q119Strain, onChanged: (val) => setState(() => q119Strain = val)),
               ],
@@ -391,50 +391,66 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
     // ✅ Backend-compatible follow-ups ONLY
     if (q114Answer == 'Yes') yesSymptoms.add({
       'name': 'Vision symptoms began after medication', 
-      'severity': 'N/A',  // ✅ Valid
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
     if (q115Answer == 'Yes') yesSymptoms.add({
       'name': 'Pre-existing vision problems', 
-      'severity': 'Pre-existing condition',  // ✅ Valid
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
     if (q116Answer == 'Yes') yesSymptoms.add({
       'name': 'Vision improved after stopping medication', 
-      'severity': 'De-challenged',  // ✅ Valid
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
     if (q117Answer == 'Yes') yesSymptoms.add({
-      'name': 'Vision symptoms recurred after restart', 
-      'severity': 'Re-challenged',  // ✅ Valid
+      'name': 'Vision symptoms returned after restart', 
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
     if (q118Answer == 'Yes') yesSymptoms.add({
       'name': 'Pre-existing eye conditions', 
-      'severity': 'Comorbidity',  // ✅ Valid
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
     if (q119Strain == 'Yes') yesSymptoms.add({
       'name': 'Recent visual strain/light exposure', 
-      'severity': 'Environmental trigger',  // ✅ Valid
+      'severity': 'mild',  // ✅ Valid
       'extra': '',
     });
   }
 
   // 12. COLOR VISION (same pattern)
-  if (q12Answer == 'Yes') {
-    String severity = _mapSeverityToBackend(q123Severity);
-    yesSymptoms.add({
-      'name': 'Color Vision Change',
-      'severity': severity,
-      'extra': 'Ishihara: ${q122Plates ?? 'Not tested'}',
-    });
+bool isGrade0 = q123Severity?.contains('Grade 0') == true;
 
-    if (q124Answer == 'Yes') yesSymptoms.add({'name': 'Color vision after medication', 'severity': 'N/A', 'extra': ''});
-    if (q125Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing color vision issues', 'severity': 'Pre-existing condition', 'extra': ''});
-    if (q126Answer == 'Yes') yesSymptoms.add({'name': 'Color vision improved after stopping', 'severity': 'De-challenged', 'extra': ''});
-    if (q127Answer == 'Yes') yesSymptoms.add({'name': 'Color vision recurred after restart', 'severity': 'Re-challenged', 'extra': ''});
-  }
+yesSymptoms.add({
+  'name': isGrade0
+      ? 'Color Vision Change (grade0)'   // 👈 MUST be here
+      : 'Color Vision Change',
+  'severity': _mapSeverityToBackend(q123Severity),
+  'extra': 'Ishihara: ${q122Plates ?? 'Not tested'}',
+});
+
+    if (q124Answer == 'Yes') yesSymptoms.add({
+  'name': 'Color vision after medication',
+  'severity': 'mild',
+});
+
+if (q125Answer == 'Yes') yesSymptoms.add({
+  'name': 'Pre-existing color vision issues',
+  'severity': 'mild',
+});
+
+if (q126Answer == 'Yes') yesSymptoms.add({
+  'name': 'Color vision improved after stopping',
+  'severity': 'mild',
+});
+
+if (q127Answer == 'Yes') yesSymptoms.add({
+  'name': 'Color vision returned after restart',
+  'severity': 'mild',
+});
 
   // 13. PATCHY VISION LOSS
   if (q13Answer == 'Yes') {
@@ -445,10 +461,10 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
       'extra': 'Area: ${q131Area ?? 'Not specified'}',
     });
 
-    if (q133Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision after medication', 'severity': 'N/A', 'extra': ''});
-    if (q134Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing patchy vision', 'severity': 'Pre-existing condition', 'extra': ''});
-    if (q135Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision improved after stopping', 'severity': 'De-challenged', 'extra': ''});
-    if (q136Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision recurred after restart', 'severity': 'Re-challenged', 'extra': ''});
+    if (q133Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision after medication', 'severity': 'mild', 'extra': ''});
+    if (q134Answer == 'Yes') yesSymptoms.add({'name': 'Pre-existing patchy vision', 'severity': 'mild', 'extra': ''});
+    if (q135Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision improved after stopping', 'severity': 'mild', 'extra': ''});
+    if (q136Answer == 'Yes') yesSymptoms.add({'name': 'Patchy vision returned after restart', 'severity': 'mild', 'extra': ''});
   }
 
   print('📦 Saving ${yesSymptoms.length} "Yes" symptoms');
