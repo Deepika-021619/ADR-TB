@@ -114,7 +114,7 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
                     'Mild -  Mild unusual thoughts, mild suspiciousness, or brief perceptual disturbances; no significant impairment in daily functioning.',
                     'Moderate - Clear psychotic symptoms such as disorganized speech, impaired reality testing, hallucinations, or delusions; noticeable impact on functioning but no hospitalization required.',
                     'Severe - Marked psychotic symptoms such as paranoia, extreme disorganization, or severe behavioral disturbance; significant impairment in functioning; hospitalization not yet required.',
-                    'Life-threatening - Psychotic symptoms associated with risk of harm to self or others; hospitalization or urgent psychiatric intervention required.'
+                    'Life threatening - Psychotic symptoms associated with risk of harm to self or others; hospitalization or urgent psychiatric intervention required.'
                   ],
                   value: q181Severity,
                   onChanged: (val) => setState(() => q181Severity = val),
@@ -212,19 +212,55 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
 
     // Depression - only if Q17 = Yes
     if (q17Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Depression',
-        'severity': _mapSeverity(q172Severity ?? q171Frequency ?? 'moderate')
-      });
-    }
+
+  // MAIN symptom
+  symptoms.add({
+    'name': 'Depression',
+    'severity': _mapSeverity(q172Severity),
+  });
+
+  // causality flags
+  if (q174Answer == 'Yes') {
+    symptoms.add({'name': 'Depression after medication', 'severity': 'mild'});
+  }
+
+  if (q175Answer == 'Yes') {
+    symptoms.add({'name': 'Pre-existing depression', 'severity': 'mild'});
+  }
+
+  if (q176Answer == 'Yes') {
+    symptoms.add({'name': 'Depression improved', 'severity': 'mild'});
+  }
+
+  if (q177Answer == 'Yes') {
+    symptoms.add({'name': 'Depression returned', 'severity': 'mild'});
+  }
+}
 
     // Psychosis - only if Q18 = Yes  
     if (q18Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Psychosis', 
-        'severity': _mapSeverity(q181Severity)
-      });
-    }
+
+  symptoms.add({
+    'name': 'Psychosis',
+    'severity': _mapSeverity(q181Severity),
+  });
+
+  if (q182Answer == 'Yes') {
+    symptoms.add({'name': 'Psychosis after medication', 'severity': 'mild'});
+  }
+
+  if (q183Answer == 'Yes') {
+    symptoms.add({'name': 'Pre-existing psychosis', 'severity': 'mild'});
+  }
+
+  if (q184Answer == 'Yes') {
+    symptoms.add({'name': 'Psychosis improved', 'severity': 'mild'});
+  }
+
+  if (q185Answer == 'Yes') {
+    symptoms.add({'name': 'Psychosis returned', 'severity': 'mild'});
+  }
+}
     
     print('📦 Saving ${symptoms.length} symptoms');
     
@@ -253,11 +289,15 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
   }
 
   String _mapSeverity(String? s) {
-    if (s == null) return 'moderate';
-    s = s.toLowerCase();
-    if (s.contains('mild')) return 'mild';
-    if (s.contains('severe') || s.contains('life-threatening') || s.contains('very severe')) return 'severe';
-    if (s.contains('moderate')) return 'moderate';
-    return 'moderate';
+  if (s == null) return 'moderate';
+
+  s = s.toLowerCase();
+
+  if (s.contains('life')) return 'life threatening'; // ✅ FIX
+  if (s.contains('severe')) return 'severe';
+  if (s.contains('moderate')) return 'moderate';
+  if (s.contains('mild')) return 'mild';
+
+  return 'moderate';
   }
 }
