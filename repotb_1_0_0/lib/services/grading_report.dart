@@ -165,6 +165,21 @@ static String calculateOcularCausality(Map<String, String> g) {
 
   return "UNKNOWN";
 }
+//psychiatric causality
+  static String calculatePsychiatricCausality(Map<String, String> g) {
+
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  if (g["after"] == "Yes") {
+    if (g["improved"] == "Yes") {
+      if (g["returned"] == "Yes") return "CERTAIN";
+      return "PROBABLE";
+    }
+    return "POSSIBLE";
+  }
+
+  return "UNKNOWN";
+}
 
   static String generateCNSReport(List<dynamic> list) {
 
@@ -271,6 +286,41 @@ No skin symptoms reported.
 
   return r.toString();
 }
+// PSYCHIATRIC REPORT
+  static String generatePsychiatricReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+PSYCHIATRIC DISORDERS SUMMARY
+=============================
+Status: NEGATIVE
+No psychiatric symptoms reported.
+''';
+  }
+
+  final grouped = buildPsychiatricGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('PSYCHIATRIC DISORDERS REPORT');
+  r.writeln('============================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final causality = calculatePsychiatricCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+
   // ===============================
 // 🔹 STRING HELPER
 // ===============================
@@ -481,6 +531,43 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
   }
 
   print("✅ GROUPED SKIN: $grouped");
+  return grouped;
+}  
+  static Map<String, Map<String, String>> buildPsychiatricGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+
+    String base = "";
+
+    if (raw.contains("depression")) base = "depression";
+    else if (raw.contains("psychosis")) base = "psychosis";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // MAIN symptom
+    if (raw == base) {
+      if (severity == "mild") g["severity"] = "GRADE 1";
+      if (severity == "moderate") g["severity"] = "GRADE 2";
+      if (severity == "severe") g["severity"] = "GRADE 3";
+      if (severity == "life threatening") g["severity"] = "GRADE 4";
+    }
+
+    // causality flags
+    if (raw.contains("after")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+  }
+
+  print("✅ GROUPED PSYCHIATRIC: $grouped");
   return grouped;
 }
 
@@ -729,6 +816,13 @@ if (symptom.toLowerCase().contains("returned")) {
    if (systems.containsKey('SkinSubcutaneous')) {
   final skinList = systems['SkinSubcutaneous'] ?? [];
   r.writeln(generateSkinReport(skinList));
+  r.writeln('');
+}
+  if (systems.containsKey('Psychiatric')) {
+
+  final List<dynamic> psychList = systems['Psychiatric'] ?? [];
+
+  r.writeln(generatePsychiatricReport(psychList));
   r.writeln('');
 }
 return r.toString();
