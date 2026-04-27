@@ -311,58 +311,168 @@ class _GenitourinaryScreenState extends State<GenitourinaryScreen> {
     return true;
   }
 
-  Future<void> _saveGenitourinary() async {
-    print('Genitourinary SAVE - reportId: ${widget.reportId}');
-    List<Map<String, String>> symptoms = [];
+   Future<void> _saveGenitourinary() async {
+  print('Genitourinary SAVE - reportId: ${widget.reportId}');
 
-    // Hematuria - only if Q21 = Yes
-    if (q21Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Hematuria',
-        'severity': _mapSeverity(q212Severity)
-      });
-    }
+  // ================= HEMATURIA =================
+  if (q21Answer == 'Yes') {
 
-    // Flank Pain - only if Q22 = Yes
-    if (q22Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Flank Pain', 
-        'severity': _mapSeverity(q222Severity)
-      });
-    }
+    await SystemsApi.saveSymptom(
+      reportId: widget.reportId,
+      questionnaireSystem: "Genitourinary",
+      symptomName: "Hematuria",
+      symptomPresent: "Yes",
+      severity: _mapSeverity(q212Severity),
+      durationWeeks: int.tryParse(q211Weeks ?? ""),
+    );
 
-    // Urinary Frequency - only if Q23 = Yes
-    if (q23Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Urinary Frequency', 
-        'severity': _mapSeverity(q232Severity)
-      });
-    }
-    
-    print('📦 Saving ${symptoms.length} symptoms');
-    
-    for (var s in symptoms) {
-      final success = await SystemsApi.saveSymptom(
+    if (q213Answer == "Yes") {
+      await SystemsApi.saveSymptom(
         reportId: widget.reportId,
         questionnaireSystem: "Genitourinary",
-        symptomName: s['name']!,
+        symptomName: "Hematuria after medication",
         symptomPresent: "Yes",
-        severity: s['severity']!,
+        severity: "mild",
       );
-      print('✅ Symptom saved: ${s['name']} -> $success');
     }
 
-    // ✅ MOUNTED CHECK - No crashes!
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Genitourinary data saved!'),
-          backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
-        ),
+    if (q214Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Hematuria pre-existing",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q215Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Hematuria improved",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q216Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Hematuria returned",
+        symptomPresent: "Yes",
+        severity: "mild",
       );
     }
   }
+
+  // ================= FLANK PAIN =================
+  if (q22Answer == 'Yes') {
+
+    await SystemsApi.saveSymptom(
+      reportId: widget.reportId,
+      questionnaireSystem: "Genitourinary",
+      symptomName: "Flank Pain",
+      symptomPresent: "Yes",
+      severity: _mapSeverity(q222Severity),
+      durationWeeks: int.tryParse(q221Weeks ?? ""),
+    );
+
+    if (q223Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Flank pain after medication",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q224Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Flank pain pre-existing",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q225Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Flank pain improved",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q226Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Flank pain returned",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+  }
+
+  // ================= FREQUENCY =================
+  if (q23Answer == 'Yes') {
+
+    await SystemsApi.saveSymptom(
+      reportId: widget.reportId,
+      questionnaireSystem: "Genitourinary",
+      symptomName: "Urinary Frequency",
+      symptomPresent: "Yes",
+      severity: _mapSeverity(q232Severity),
+      durationWeeks: int.tryParse(q231Weeks ?? ""),
+    );
+
+    if (q233Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Frequency after medication",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q234Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Frequency pre-existing",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q235Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Frequency improved",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+
+    if (q236Answer == "Yes") {
+      await SystemsApi.saveSymptom(
+        reportId: widget.reportId,
+        questionnaireSystem: "Genitourinary",
+        symptomName: "Frequency returned",
+        symptomPresent: "Yes",
+        severity: "mild",
+      );
+    }
+  }
+}
 
   String _mapSeverity(String? s) {
     if (s == null) return 'moderate';
