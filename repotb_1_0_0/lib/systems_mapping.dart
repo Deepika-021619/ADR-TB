@@ -20,6 +20,8 @@ class SystemMapper {
         return 'Genitourinary';  // Map as needed
       case 'GENERAL NONSPECIFIC SYMPTOMS':
         return 'General';  // DB ENUM value 10
+      case 'CARDIOVASCULAR SYSTEM':
+        return 'Cardiovascular';  // DB ENUM value 1 for sld 
       default:
         return 'General';
     }

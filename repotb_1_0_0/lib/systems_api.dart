@@ -14,6 +14,7 @@ class SystemsApi {
     required String symptomName,
     required String symptomPresent,
     String severity = "N/A",
+    String? regimenType, //new
     int? durationWeeks,
   }) async {
     final systemEnum = SystemMapper.getSystemEnum(questionnaireSystem);
@@ -25,6 +26,7 @@ class SystemsApi {
       "symptom_present": symptomPresent,
       "severity": severity,
       "duration_weeks": durationWeeks,  // new
+      "regimen_type": regimenType ?? "FLD",
     };
 
     print('🔵 SENDING to FastAPI: ${data.toString()}');

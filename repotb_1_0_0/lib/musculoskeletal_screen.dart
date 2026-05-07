@@ -252,33 +252,67 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
   // ✅ FIXED: Mounted-safe save + backend keys match
   Future<void> _saveMusculoskeletal() async {
     print('MUSCULOSKELETAL SAVE - reportId: ${widget.reportId}');
-    List<Map<String, String>> symptoms = [];
+    List<Map<String, dynamic>> symptoms = [];
 
     // Joint Pain - only if Q19 = Yes
-    if (q19Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Joint Pain',
-        'severity': _mapSeverity(q192Severity)
-      });
-    }
+   if (q19Answer == 'Yes') {
+  symptoms.add({
+    'name': 'Joint Pain',
+    'severity': _mapSeverity(q192Severity)
+  });
+
+  if (q194Answer == 'Yes') {
+    symptoms.add({'name': 'Joint pain after medication', 'severity': 'mild'});
+  }
+
+  if (q195Answer == 'Yes') {
+    symptoms.add({'name': 'Pre-existing joint pain', 'severity': 'mild'});
+  }
+
+  if (q196Answer == 'Yes') {
+    symptoms.add({'name': 'Joint pain improved', 'severity': 'mild'});
+  }
+
+  if (q197Answer == 'Yes') {
+    symptoms.add({'name': 'Joint pain returned', 'severity': 'mild'});
+  }
+}
 
     // Arthritis - only if Q20 = Yes
     if (q20Answer == 'Yes') {
-      symptoms.add({
-        'name': 'Arthritis', 
-        'severity': _mapSeverity(q202Severity)
-      });
-    }
+  symptoms.add({
+    'name': 'Arthritis',
+    'severity': _mapSeverity(q202Severity)
+  });
+
+  if (q204Answer == 'Yes') {
+    symptoms.add({'name': 'Arthritis after medication', 'severity': 'mild'});
+  }
+
+  if (q205Answer == 'Yes') {
+    symptoms.add({'name': 'Pre-existing arthritis', 'severity': 'mild'});
+  }
+
+  if (q206Answer == 'Yes') {
+    symptoms.add({'name': 'Arthritis improved', 'severity': 'mild'});
+  }
+
+  if (q207Answer == 'Yes') {
+    symptoms.add({'name': 'Arthritis returned', 'severity': 'mild'});
+  }
+}
     
     print('📦 Saving ${symptoms.length} symptoms');
     
     for (var s in symptoms) {
+       final duration = int.tryParse(q191Weeks ?? '');
       final success = await SystemsApi.saveSymptom(
         reportId: widget.reportId,
         questionnaireSystem: "MUSCULOSKELETAL",  // ✅ Fixed: Matches your SystemMapper
         symptomName: s['name']!,
         symptomPresent: "Yes",
         severity: s['severity']!,
+         durationWeeks: s['duration'],  // ✅ Added duration
       );
       print('✅ Symptom saved: ${s['name']} -> $success');
     }

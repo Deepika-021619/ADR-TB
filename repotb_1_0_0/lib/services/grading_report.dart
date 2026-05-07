@@ -180,6 +180,21 @@ static String calculateOcularCausality(Map<String, String> g) {
 
   return "UNKNOWN";
 }
+// MUSCULOSKELETAL CAUSALITY
+  static String calculateMusculoskeletalCausality(Map<String, String> g) {
+
+  if (g["before"] == "Yes") return "UNLIKELY";
+
+  if (g["after"] == "Yes") {
+    if (g["improved"] == "Yes") {
+      if (g["returned"] == "Yes") return "CERTAIN";
+      return "PROBABLE";
+    }
+    return "POSSIBLE";
+  }
+
+  return "UNKNOWN";
+}
 
   static String generateCNSReport(List<dynamic> list) {
 
@@ -230,6 +245,16 @@ No ocular symptoms reported.
 
   final grouped = buildOcularGroups(list);
 
+  // ✅ ADD THIS BLOCK (CRITICAL FIX)
+  if (grouped.isEmpty) {
+    return '''
+OCULAR INVOLVEMENT SUMMARY
+=========================
+Status: NEGATIVE
+No ocular symptoms reported.
+''';
+  }
+
   final StringBuffer r = StringBuffer();
 
   r.writeln('OCULAR INVOLVEMENT REPORT');
@@ -238,13 +263,11 @@ No ocular symptoms reported.
   grouped.forEach((symptom, data) {
 
     final severity = data["severity"] ?? "GRADE UNKNOWN";
-   
     final causality = calculateOcularCausality(data);
 
     r.writeln('Symptom: ${_capitalize(symptom)}');
     r.writeln('------------------------');
     r.writeln('Severity: $severity');
-   
     r.writeln('Causality: $causality');
     r.writeln('------------------------');
     r.writeln('');
@@ -320,6 +343,337 @@ No psychiatric symptoms reported.
 
   return r.toString();
 }
+// MUSCULOSKELETAL REPORT
+   static String generateMusculoskeletalReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+MUSCULOSKELETAL SYSTEM SUMMARY
+==============================
+Status: NEGATIVE
+No musculoskeletal symptoms reported.
+''';
+  }
+
+  final grouped = buildMusculoskeletalGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('MUSCULOSKELETAL SYSTEM REPORT');
+  r.writeln('==============================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateMusculoskeletalCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+// GENITOURINARY REPORT
+static String generateGenitourinaryReport(List<dynamic> list) {
+
+  if (list.isEmpty) {
+    return '''
+GENITOURINARY SYSTEM SUMMARY
+===========================
+Status: NEGATIVE
+No genitourinary symptoms reported.
+''';
+  }
+
+  final grouped = buildGenitourinaryGroups(list);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('GENITOURINARY SYSTEM REPORT');
+  r.writeln('===========================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateMusculoskeletalCausality(data);
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+// general report
+static String generateGeneralReport(Map<String, dynamic> gData) {
+
+  if (gData == null || gData.isEmpty) {
+    return '''
+GENERAL SYMPTOMS SUMMARY
+========================
+Status: NEGATIVE
+No general symptoms reported.
+''';
+  }
+
+  final grouped = buildGeneralGroups(gData);
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('GENERAL SYMPTOMS REPORT');
+  r.writeln('========================');
+
+  grouped.forEach((symptom, data) {
+
+    final severity = data["severity"] ?? "GRADE UNKNOWN";
+    final duration = data["duration"] ?? "";
+    final causality = calculateGICausality(data); // reuse logic
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('Duration: ${duration.isEmpty ? "N/A" : "$duration weeks"}');
+    r.writeln('Causality: $causality');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+ // INVESTIGATIONS REPORT
+ static String generateInvestigationsReport(Map<String, dynamic> data) {
+
+  if (data == null || data.isEmpty) {
+    return '''
+INVESTIGATIONS SUMMARY
+======================
+Status: NOT AVAILABLE
+''';
+  }
+
+  final StringBuffer r = StringBuffer();
+
+  r.writeln('INVESTIGATIONS REPORT');
+  r.writeln('======================');
+
+  final grouped = buildInvestigationsGroups(data);
+
+  grouped.forEach((symptom, g) {
+
+    final severity = g["severity"] ?? "GRADE UNKNOWN";
+
+    r.writeln('Symptom: ${_capitalize(symptom)}');
+    r.writeln('------------------------');
+    r.writeln('Severity: $severity');
+    r.writeln('------------------------');
+    r.writeln('');
+  });
+
+  return r.toString();
+}
+
+//general symptoms grouping
+static Map<String, Map<String, String>> buildGeneralGroups(Map<String, dynamic> gData) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  // =========================
+  // 🔸 MALAISE
+  // =========================
+  if ((gData["malaise_present"] ?? "").toLowerCase() == "yes") {
+
+    final g = <String, String>{};
+
+    if (gData["malaise_severity"] == "mild") g["severity"] = "GRADE 1";
+    if (gData["malaise_severity"] == "moderate") g["severity"] = "GRADE 2";
+    if (gData["malaise_severity"] == "severe") g["severity"] = "GRADE 3";
+
+    if (gData["malaise_duration_weeks"] != null) {
+      g["duration"] = gData["malaise_duration_weeks"].toString();
+    }
+
+    if ((gData["malaise_onset"] ?? "").toLowerCase() == "yes") g["after"] = "Yes";
+    if ((gData["malaise_pre_existing"] ?? "").toLowerCase() == "yes") g["before"] = "Yes";
+    if ((gData["malaise_improved"] ?? "").toLowerCase() == "yes") g["improved"] = "Yes";
+    if ((gData["malaise_recurred"] ?? "").toLowerCase() == "yes") g["returned"] = "Yes";
+
+    grouped["malaise"] = g;
+  }
+
+  // =========================
+  // 🔸 FEVER
+  // =========================
+  if ((gData["fever_present"] ?? "").toLowerCase() == "yes") {
+
+    final g = <String, String>{};
+
+    if (gData["fever_severity"] == "mild") g["severity"] = "GRADE 1";
+    if (gData["fever_severity"] == "moderate") g["severity"] = "GRADE 2";
+    if (gData["fever_severity"] == "severe") g["severity"] = "GRADE 3";
+
+    // duration (string → number safe)
+    if (gData["fever_duration"] != null) {
+      g["duration"] = gData["fever_duration"].toString();
+    }
+
+    if ((gData["fever_onset"] ?? "").toLowerCase() == "yes") g["after"] = "Yes";
+    if ((gData["fever_pre_existing"] ?? "").toLowerCase() == "yes") g["before"] = "Yes";
+    if ((gData["fever_improved"] ?? "").toLowerCase() == "yes") g["improved"] = "Yes";
+    if ((gData["fever_recurred"] ?? "").toLowerCase() == "yes") g["returned"] = "Yes";
+
+    grouped["fever"] = g;
+  }
+
+  // =========================
+  // 🔸 FATIGUE
+  // =========================
+  if ((gData["fatigue_present"] ?? "").toLowerCase() == "yes") {
+
+    final g = <String, String>{};
+
+    if (gData["fatigue_severity"] == "mild") g["severity"] = "GRADE 1";
+    if (gData["fatigue_severity"] == "moderate") g["severity"] = "GRADE 2";
+    if (gData["fatigue_severity"] == "severe") g["severity"] = "GRADE 3";
+
+    if (gData["fatigue_duration_weeks"] != null) {
+      g["duration"] = gData["fatigue_duration_weeks"].toString();
+    }
+
+    if ((gData["fatigue_onset"] ?? "").toLowerCase() == "yes") g["after"] = "Yes";
+    if ((gData["fatigue_pre_existing"] ?? "").toLowerCase() == "yes") g["before"] = "Yes";
+    if ((gData["fatigue_improved"] ?? "").toLowerCase() == "yes") g["improved"] = "Yes";
+    if ((gData["fatigue_recurred"] ?? "").toLowerCase() == "yes") g["returned"] = "Yes";
+
+    // conditional flags
+    if ((gData["fatigue_lifestyle"] ?? "").toLowerCase() == "yes") g["condition"] = "Yes";
+
+    grouped["fatigue"] = g;
+  }
+
+  // =========================
+  // 🔸 ORANGE DISCOLORATION
+  // =========================
+  if ((gData["discoloration_present"] ?? "").toLowerCase() == "yes") {
+
+    final g = <String, String>{};
+
+
+    grouped["orange discoloration"] = g;
+  }
+
+  print("✅ GROUPED GENERAL: $grouped");
+  return grouped;
+}
+// INVESTIGATIONS GROUPING
+   static Map<String, Map<String, String>> buildInvestigationsGroups(Map<String, dynamic> d) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  // =========================
+  // 🔹 AST
+  // =========================
+  if (
+  d["lft_done"] == "Yes" &&
+  d["ast_value"] != null &&
+  d["ast_uln"] != null &&
+  d["ast_uln"] > 0
+) {
+
+    final ratio = d["ast_value"] / d["ast_uln"];
+
+    grouped["AST elevation"] = {
+      "severity": _gradeFromRatio(ratio, type: "liver")
+    };
+  }
+
+  // =========================
+  // 🔹 ALT
+  // =========================
+  if (
+  d["lft_done"] == "Yes" &&
+  d["alt_value"] != null &&
+  d["alt_uln"] != null &&
+  d["alt_uln"] > 0
+) {
+
+    final ratio = d["alt_value"] / d["alt_uln"];
+
+    grouped["ALT elevation"] = {
+      "severity": _gradeFromRatio(ratio, type: "liver")
+    };
+  }
+
+  // =========================
+  // 🔹 BILIRUBIN
+  // =========================
+ if (
+  d["lft_done"] == "Yes" &&
+  d["bilirubin_total"] != null &&
+  d["bilirubin_total_uln"] != null &&
+  d["bilirubin_total_uln"] > 0
+) {
+
+    final ratio = d["bilirubin_total"] / d["bilirubin_total_uln"];
+
+    grouped["Bilirubin elevation"] = {
+      "severity": _gradeFromRatio(ratio, type: "bilirubin")
+    };
+  }
+
+  // =========================
+  // 🔹 HEMOGLOBIN
+  // =========================
+  if (
+  d["uric_acid_done"] == "Yes" &&
+  d["uric_acid_value"] != null &&
+  d["uric_acid_uln"] != null &&
+  d["uric_acid_uln"] > 0
+) {
+
+    final hgb = d["hgb_value"];
+
+    grouped["Hemoglobin decrease"] = {
+      "severity": _gradeHemoglobin(hgb)
+    };
+  }
+
+  // =========================
+  // 🔹 PLATELETS
+  // =========================
+  if (d["platelet_done"] == "Yes" && d["platelet_value"] != null) {
+
+    final plt = d["platelet_value"];
+
+    grouped["Platelet decrease"] = {
+      "severity": _gradePlatelets(plt)
+    };
+  }
+
+  // =========================
+  // 🔹 URIC ACID
+  // =========================
+  if (d["uric_acid_done"] == "Yes" && d["uric_acid_value"] != null && d["uric_acid_uln"] != null) {
+
+    final ratio = d["uric_acid_value"] / d["uric_acid_uln"];
+
+    grouped["Uric acid elevation"] = {
+      "severity": _gradeFromRatio(ratio, type: "uric")
+    };
+  }
+
+  return grouped;
+}
 
   // ===============================
 // 🔹 STRING HELPER
@@ -327,6 +681,48 @@ No psychiatric symptoms reported.
 static String _capitalize(String s) {
   if (s.isEmpty) return s;
   return s[0].toUpperCase() + s.substring(1);
+}
+//investigations helper
+  static String _gradeFromRatio(double ratio, {required String type}) {
+
+  if (type == "liver") {
+    if (ratio > 20) return "GRADE 4";
+    if (ratio > 5) return "GRADE 3";
+    if (ratio > 3) return "GRADE 2";
+    if (ratio > 1) return "GRADE 1";
+  }
+
+  if (type == "bilirubin") {
+    if (ratio > 10) return "GRADE 4";
+    if (ratio > 3) return "GRADE 3";
+    if (ratio > 1.5) return "GRADE 2";
+    if (ratio > 1) return "GRADE 1";
+  }
+
+  if (type == "uric") {
+    if (ratio > 3) return "GRADE 4";
+    if (ratio > 2) return "GRADE 3";
+    if (ratio > 1.5) return "GRADE 2";
+    if (ratio > 1) return "GRADE 1";
+  }
+
+  return "GRADE UNKNOWN";
+}
+
+
+static String _gradeHemoglobin(double hgb) {
+  if (hgb < 6.5) return "GRADE 4";
+  if (hgb < 8) return "GRADE 3";
+  if (hgb < 10) return "GRADE 2";
+  return "GRADE 1";
+}
+
+
+static String _gradePlatelets(double plt) {
+  if (plt < 25000) return "GRADE 4";
+  if (plt < 50000) return "GRADE 3";
+  if (plt < 75000) return "GRADE 2";
+  return "GRADE 1";
 }
    static Map<String, Map<String, String>> buildGastroGroups(List<dynamic> giList) {
 
@@ -436,12 +832,16 @@ if (raw == base || raw == "$base symptoms") {
 
 static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
   
+if (list.isEmpty) return {};
 
   final Map<String, Map<String, String>> grouped = {};
 
   for (var item in list) {
+     if ((item['symptom_present'] ?? '').toLowerCase() != 'yes') {
+      continue;
+    }
 
-    final raw = (item['symptom'] ?? '').toLowerCase();
+    final raw = (item['symptom'] ?? '').toLowerCase().trim();
     final severity = item['severity'] ?? '';
     
 
@@ -458,9 +858,11 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
 
     // ✅ MAIN symptom ONLY (very important)
     if (
-  (base == "blurring vision" && raw.contains("blurring")) ||
-  (base == "color vision" && raw.contains("color")) ||
-  (base == "patchy vision" && raw.contains("patchy"))
+  (base == "blurring vision" && raw == "blurring/decrease vision") ||
+
+  (base == "color vision" && raw == "color vision change") ||
+
+  (base == "patchy vision" && raw == "patchy vision loss")
 ) {
 
   // 🔥 PRIORITY: Grade 0 (must come first)
@@ -489,6 +891,7 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
   print("✅ GROUPED OCULAR: $grouped");
   return grouped;
 }
+//skin grouping
    static Map<String, Map<String, String>> buildSkinGroups(List<dynamic> list) {
 
   final Map<String, Map<String, String>> grouped = {};
@@ -568,6 +971,91 @@ static Map<String, Map<String, String>> buildOcularGroups(List<dynamic> list) {
   }
 
   print("✅ GROUPED PSYCHIATRIC: $grouped");
+  return grouped;
+}
+// MUSCULOSKELETAL GROUPING
+  static Map<String, Map<String, String>> buildMusculoskeletalGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+    final duration = item['duration_weeks'];
+
+    String base = "";
+
+    if (raw.contains("joint pain")) base = "joint pain";
+    else if (raw.contains("arthritis")) base = "arthritis";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // MAIN symptom
+    if (raw == base) {
+      if (severity == "mild") g["severity"] = "GRADE 1";
+      if (severity == "moderate") g["severity"] = "GRADE 2";
+      if (severity == "severe") g["severity"] = "GRADE 3";
+
+      if (duration != null) {
+        g["duration"] = duration.toString();
+      }
+    }
+
+    // causality flags
+    if (raw.contains("after")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+  }
+
+  print("✅ GROUPED MSK: $grouped");
+  return grouped;
+}
+  //genitourinary grouping
+  static Map<String, Map<String, String>> buildGenitourinaryGroups(List<dynamic> list) {
+
+  final Map<String, Map<String, String>> grouped = {};
+
+  for (var item in list) {
+
+    final raw = (item['symptom'] ?? '').toLowerCase();
+    final severity = item['severity'] ?? '';
+    final duration = item['duration_weeks'];
+
+    String base = "";
+
+    if (raw.contains("hematuria")) base = "hematuria";
+    else if (raw.contains("flank")) base = "flank pain";
+    else if (raw.contains("frequency")) base = "urinary frequency";
+
+    if (base.isEmpty) continue;
+
+    grouped.putIfAbsent(base, () => {});
+    final g = grouped[base]!;
+
+    // MAIN
+    if (raw == base || raw.contains(base)) {
+      if (severity == "mild") g["severity"] = "GRADE 1";
+      if (severity == "moderate") g["severity"] = "GRADE 2";
+      if (severity == "severe") g["severity"] = "GRADE 3";
+      if (severity == "life threatening") g["severity"] = "GRADE 4";
+
+      if (duration != null) {
+        g["duration"] = duration.toString();
+      }
+    }
+
+    // causality
+    if (raw.contains("after")) g["after"] = "Yes";
+    if (raw.contains("pre-existing")) g["before"] = "Yes";
+    if (raw.contains("improved")) g["improved"] = "Yes";
+    if (raw.contains("returned")) g["returned"] = "Yes";
+  }
+
   return grouped;
 }
 
@@ -808,11 +1296,19 @@ if (symptom.toLowerCase().contains("returned")) {
 }
    if (systems.containsKey('Ocular')) {
 
-  final List<dynamic> ocularList = systems['Ocular'] ?? [];
+  final list = systems['Ocular'] ?? [];
 
-  r.writeln(generateOcularReport(ocularList));
-  r.writeln('');
-} 
+  // ✅ FILTER ONLY REAL SYMPTOMS
+  final valid = list.where((item) =>
+      (item['symptom_present'] ?? '').toLowerCase() == 'yes'
+  ).toList();
+
+  // ✅ ONLY PRINT IF DATA EXISTS
+  if (valid.isNotEmpty) {
+    r.writeln(generateOcularReport(valid));
+    r.writeln('');
+  }
+}
    if (systems.containsKey('SkinSubcutaneous')) {
   final skinList = systems['SkinSubcutaneous'] ?? [];
   r.writeln(generateSkinReport(skinList));
@@ -825,6 +1321,47 @@ if (symptom.toLowerCase().contains("returned")) {
   r.writeln(generatePsychiatricReport(psychList));
   r.writeln('');
 }
+   if (systems.containsKey('Musculoskeletal')) {
+  final list = systems['Musculoskeletal'] ?? [];
+  r.writeln(generateMusculoskeletalReport(list));
+  r.writeln('');
+}
+  if (systems.containsKey('Genitourinary')) {
+  final list = systems['Genitourinary'] ?? [];
+  r.writeln(generateGenitourinaryReport(list));
+}
+  final g = reportData['general'];
+
+bool hasGeneral =
+    g != null &&
+    (
+      (g['malaise_present']?.toLowerCase() == 'yes') ||
+      (g['fever_present']?.toLowerCase() == 'yes') ||
+      (g['fatigue_present']?.toLowerCase() == 'yes') ||
+      (g['discoloration_present']?.toLowerCase() == 'yes') ||
+      ((g['other_symptoms'] ?? '').toString().trim().isNotEmpty)
+    );
+
+if (hasGeneral) {
+  r.writeln(generateGeneralReport(g));
+  r.writeln('');
+}
+final inv = reportData["investigations"];
+
+bool hasInvestigationData =
+    inv != null &&
+    (
+      inv["lft_done"] == "Yes" ||
+      inv["hgb_done"] == "Yes" ||
+      inv["platelet_done"] == "Yes" ||
+      inv["uric_acid_done"] == "Yes"
+    );
+
+if (hasInvestigationData) {
+  r.writeln(generateInvestigationsReport(inv));
+}
+
+
 return r.toString();
   }
   

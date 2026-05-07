@@ -574,7 +574,7 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
         pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
-            pw.Image(logo, width: 100, height: 100),
+            pw.Image(logo, width: 150, height: 150),
             pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.end,
               children: [

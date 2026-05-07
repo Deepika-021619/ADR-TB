@@ -117,14 +117,36 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
 
       if (response.statusCode == 200) {
   final data = jsonDecode(response.body);
+
+  final selectedRegimen = regimens.firstWhere(
+  (r) => r['regimen_id'] == selectedRegimenId,
+);
+
+final String regimenType = selectedRegimen['regimen_type'];
+
+print("Selected regimen type: $regimenType"); // DEBUG
   
-  // 💙 NEW NAVIGATION - Direct to FLD Questionnaire (BLUE THEME)
-  Navigator.pushReplacement(  // ← pushReplacement instead of push
+  // 💙 NEW NAVIGATION - direct to FLD/SLD based on selection
+     if (regimenType == "FLD") {
+  Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => FLDQuestionnaireScreen(reportId: widget.reportId),
+      builder: (context) => FLDQuestionnaireScreen(
+        reportId: widget.reportId,
+      ),
     ),
   );
+} else if (regimenType == "SLD") {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => SLDQuestionnaireScreen(
+        reportId: widget.reportId,
+        portal: widget.portal,
+      ),
+    ),
+  );
+}
 
       } else {
         _showError("Failed to save: ${response.statusCode}");
