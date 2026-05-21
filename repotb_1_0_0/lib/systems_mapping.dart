@@ -22,6 +22,13 @@ class SystemMapper {
         return 'General';  // DB ENUM value 10
       case 'CARDIOVASCULAR SYSTEM':
         return 'Cardiovascular';  // DB ENUM value 1 for sld 
+      case 'AUDITORY':
+        return 'Auditory';  // DB ENUM value 4 for sld
+      case 'ENDOCRINE':
+        return 'Endocrine';  // DB ENUM value 7 for sld
+      case 'other side effects':
+        return 'Other';  // Map as needed
+  
       default:
         return 'General';
     }

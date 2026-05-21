@@ -5,17 +5,22 @@ import 'systems_api.dart';
 import '../services/grading_report.dart';
 import 'package:printing/printing.dart';
 import '../services/report_api.dart';
-
+import 'package:flutter/services.dart';
+import '../services/questionnaire_timer.dart';
 
 class InvestigationsScreen extends StatefulWidget {
   final String reportId;
+ 
   final VoidCallback onSaveAndComplete;
   
-  const InvestigationsScreen({
-    super.key,
-    required this.reportId,
-    required this.onSaveAndComplete,
-  });
+
+  
+ const InvestigationsScreen({
+  super.key,
+  required this.reportId,
+  required this.onSaveAndComplete,
+
+});
 
   @override
   State<InvestigationsScreen> createState() => _InvestigationsScreenState();
@@ -560,7 +565,24 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
   final logo = await imageFromAssetBundle('assets/images/logo.png');
 
   final now = DateTime.now();
+final totalDuration =
+    QuestionnaireTimer.getElapsed();
 
+final hours =
+    totalDuration.inHours;
+
+final minutes =
+    totalDuration.inMinutes
+        .remainder(60);
+
+final seconds =
+    totalDuration.inSeconds
+        .remainder(60);
+
+final formattedTime =
+    "${hours.toString().padLeft(2, '0')}:"
+    "${minutes.toString().padLeft(2, '0')}:"
+    "${seconds.toString().padLeft(2, '0')}";
   pdf.addPage(
     pw.MultiPage(
       pageFormat: PdfPageFormat.a4,
@@ -604,17 +626,39 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
         // 🔷 BODY (structured)
         // ===============================
         pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: _buildStyledReport(reportText),
-        ),
+  crossAxisAlignment: pw.CrossAxisAlignment.start,
+  children: [
+    ..._buildStyledReport(reportText),
+
+    pw.SizedBox(height: 20),
+
+    pw.Divider(),
+
+    pw.SizedBox(height: 10),
+
+    pw.Text(
+      'Time Taken: $formattedTime',
+      style: pw.TextStyle(
+        fontSize: 12,
+        fontWeight: pw.FontWeight.bold,
+        color: PdfColors.green800,
+      ),
+    ),
+  ],
+),
       ],
     ),
   );
 
-  await Printing.layoutPdf(
-    name: 'TB_ADR_Report_${widget.reportId}.pdf',
-    onLayout: (PdfPageFormat format) async => pdf.save(),
-  );
+ await Printing.layoutPdf(
+  
+  name: 'TB_ADR_Report_${widget.reportId}.pdf',
+  onLayout: (PdfPageFormat format) async => pdf.save(),
+  
+);
+QuestionnaireTimer.reset();
+// Close application after download
+SystemNavigator.pop();
 }
 List<pw.Widget> _buildStyledReport(String reportText) {
   final lines = reportText.split('\n');

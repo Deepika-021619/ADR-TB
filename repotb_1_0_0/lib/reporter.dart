@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'drugdetails.dart';
-
+import 'timer_widget.dart';
 
 class StartReporterScreen extends StatefulWidget {
   final String portal;
@@ -32,7 +32,7 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.red,
-        duration: const Duration(seconds: 4),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -76,43 +76,32 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
           "hospital_address": hospital,
           "r_state": rstate,
         }),
-      ).timeout(const Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 20));
 
       print("Reporter Status: ${reporterResponse.statusCode}");
       print("Reporter Response: ${reporterResponse.body}");
 
       if (reporterResponse.statusCode == 200 || reporterResponse.statusCode == 201) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: const Text("✅ Reporter details saved successfully!"),
-      backgroundColor: Colors.green,
-      duration: const Duration(seconds: 4),
-      action: SnackBarAction(
-        label: "NEXT",
-        textColor: Colors.white,
-        backgroundColor: Colors.blue.shade600,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DrugDetailsScreen(
-                portal: widget.portal,
-                reportId: widget.reportId,
-              ),
-            ),
-          );
-        },
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => DrugDetailsScreen(
+        portal: widget.portal,
+        reportId: widget.reportId,
       ),
     ),
   );
-  
-  // Clear form
+
+  // Optional: clear form
   nameCtrl.clear();
   hospitalCtrl.clear();
+
   setState(() {
     reporterType = null;
     rstate = null;
   });
+
 } else {
 
         _showError("❌ Failed: Data already entered ");
@@ -130,6 +119,12 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Reporter Details - Report ${widget.reportId}"),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: TimerWidget(),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

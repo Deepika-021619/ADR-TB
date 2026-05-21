@@ -67,7 +67,7 @@ class _PsychiatricSLDScreenState
   String? q115Restarted;
 
   bool showErrors = false;
-  bool emergencyShown = false;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +107,12 @@ class _PsychiatricSLDScreenState
                 _buildRadioQuestion(
                   number: "7.1",
                   question: "Severity of anxiety",
-                  options: [
-                    'Mild',
-                    'Moderate',
-                    'Severe',
-                    'Very severe',
-                  ],
+                 options: [
+  'Mild – I felt nervous but could do my daily activities',
+  'Moderate – Anxiety disturbed my daily routine',
+  'Severe – I had panic attacks or felt out of control',
+  'Very severe – I needed emergency care or hospital visit',
+],
                   value: q71Severity,
                   isRequired: true,
                   showError: showErrors,
@@ -191,11 +191,11 @@ class _PsychiatricSLDScreenState
                   number: "8.2",
                   question: "Severity of depression",
                   options: [
-                    'Mild',
-                    'Moderate',
-                    'Severe',
-                    'Very severe',
-                  ],
+  'Mild – I felt slightly sad or low, but it did not affect daily activities',
+  'Moderate – It affected mood and concentration but daily activities continued',
+  'Severe – Difficulty performing daily activities or social interactions',
+  'Very severe – Unable to carry out normal activities or felt overwhelmed',
+],
                   value: q82Severity,
                   isRequired: true,
                   showError: showErrors,
@@ -302,10 +302,10 @@ class _PsychiatricSLDScreenState
                   question:
                       "Which statement best describes your thoughts?",
                   options: [
-                    'Passive thoughts',
-                    'Active thoughts',
-                    'Active plan / emergency',
-                  ],
+  'Passive thoughts – Life not worth living but no self-harm plan',
+  'Active thoughts – Thought about self-harm but no plan',
+  'Active plan / emergency – Made a plan or may act on thoughts',
+],
                   value: q91Severity,
                   isRequired: true,
                   showError: showErrors,
@@ -314,38 +314,36 @@ class _PsychiatricSLDScreenState
 
                     setState(() => q91Severity = val);
 
-                    if (val ==
-                            'Active plan / emergency' &&
-                        !emergencyShown) {
+                    if (val == 'Active plan / emergency – Made a plan or may act on thoughts') {
 
-                      emergencyShown = true;
+  await showDialog(
 
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
+    context: context,
 
-                          return AlertDialog(
+    builder: (context) {
 
-                            title: const Text(
-                              "Emergency Alert",
-                            ),
+      return AlertDialog(
 
-                            content: const Text(
-                              "Immediate psychiatric evaluation is recommended.\n\nPlease contact clinician or emergency services immediately.",
-                            ),
+        title: const Text(
+          "Emergency Alert",
+        ),
 
-                            actions: [
+        content: const Text(
+          "Immediate psychiatric evaluation is recommended.\n\nPlease contact clinician or emergency services immediately.",
+        ),
 
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context),
-                                child: const Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
+        actions: [
+
+          TextButton(
+            onPressed: () =>
+                Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      );
+    },
+  );
+}
                   },
                 ),
 
@@ -404,11 +402,11 @@ class _PsychiatricSLDScreenState
                   number: "10.1",
                   question: "Severity of psychosis",
                   options: [
-                    'Mild',
-                    'Moderate',
-                    'Severe',
-                    'Life-threatening',
-                  ],
+  'Mild – Mild unusual thoughts or brief perceptual disturbances',
+  'Moderate – Hallucinations/delusions with noticeable impact',
+  'Severe – Marked psychotic symptoms with major impairment',
+  'Life-threatening – Risk of harm requiring urgent intervention',
+],
                   value: q101Severity,
                   isRequired: true,
                   showError: showErrors,
@@ -494,11 +492,11 @@ class _PsychiatricSLDScreenState
                   number: "11.1",
                   question:
                       "Severity of sleep difficulty",
-                  options: [
-                    'Mild',
-                    'Moderate',
-                    'Severe',
-                  ],
+                 options: [
+  'Mild – Some difficulty falling or staying asleep',
+  'Moderate – Moderate sleep difficulty',
+  'Severe – Severe sleep difficulty',
+],
                   value: q111Severity,
                   isRequired: true,
                   showError: showErrors,
@@ -601,112 +599,288 @@ class _PsychiatricSLDScreenState
 
   /// ================= SAVE =================
 
-  Future<void> _savePsychiatric() async {
+Future<void> _savePsychiatric() async {
 
-    List<Map<String, String>> symptoms = [];
+  List<Map<String, String>> symptoms = [];
 
-    if (q7Answer == 'Yes') {
+  /// ===================== ANXIETY =====================
+
+  if (q7Answer == 'Yes') {
+
+    symptoms.add({
+      'name': 'Anxiety',
+      'severity': _mapSeverity(q71Severity),
+    });
+
+    if (q72AfterTherapy == 'Yes') {
 
       symptoms.add({
-        'name': 'Anxiety',
-        'severity': _mapSeverity(q71Severity),
+        'name': 'Anxiety after medication',
+        'severity': 'mild',
       });
     }
 
-    if (q8Answer == 'Yes') {
+    if (q73BeforeTherapy == 'Yes') {
 
       symptoms.add({
-        'name': 'Depression',
-        'severity': _mapSeverity(q82Severity),
+        'name': 'Anxiety before treatment',
+        'severity': 'mild',
       });
     }
 
-    if (q9Answer == 'Yes') {
+    if (q74Improved == 'Yes') {
 
       symptoms.add({
-        'name': 'Suicidal ideation',
-        'severity': _mapSuicideSeverity(q91Severity),
+        'name': 'Anxiety improved after stopping',
+        'severity': 'mild',
       });
     }
 
-    if (q10Answer == 'Yes') {
+    if (q75Restarted == 'Yes') {
 
       symptoms.add({
-        'name': 'Psychosis',
-        'severity': _mapSeverity(q101Severity),
+        'name': 'Anxiety returned after restart',
+        'severity': 'moderate',
       });
-    }
-
-    if (q11Answer == 'Yes') {
-
-      symptoms.add({
-        'name': 'Insomnia',
-        'severity': _mapSeverity(q111Severity),
-      });
-    }
-
-    for (var s in symptoms) {
-
-      await SystemsApi.saveSymptom(
-
-        reportId: widget.reportId,
-
-        questionnaireSystem: "PSYCHIATRIC",
-
-        symptomName: s['name']!,
-
-        symptomPresent: "Yes",
-
-        severity: s['severity']!,
-
-        regimenType: "SLD",
-      );
     }
   }
+
+  /// ===================== DEPRESSION =====================
+
+  if (q8Answer == 'Yes') {
+
+    symptoms.add({
+      'name': 'Depression',
+      'severity': _mapSeverity(q82Severity),
+    });
+
+    if (q84AfterTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Depression after medication',
+        'severity': 'mild',
+      });
+    }
+
+    if (q85BeforeTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Depression before treatment',
+        'severity': 'mild',
+      });
+    }
+
+    if (q86Improved == 'Yes') {
+
+      symptoms.add({
+        'name': 'Depression improved after stopping',
+        'severity': 'mild',
+      });
+    }
+
+    if (q87Restarted == 'Yes') {
+
+      symptoms.add({
+        'name': 'Depression returned after restart',
+        'severity': 'moderate',
+      });
+    }
+  }
+
+  /// ===================== SUICIDAL IDEATION =====================
+
+  if (q9Answer == 'Yes') {
+
+    symptoms.add({
+      'name': 'Suicidal ideation',
+      'severity': _mapSuicideSeverity(q91Severity),
+    });
+
+    if (q92AfterTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Suicidal ideation after medication',
+        'severity': 'severe',
+      });
+    }
+
+    if (q93BeforeTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Suicidal ideation before treatment',
+        'severity': 'moderate',
+      });
+    }
+
+    if (q94Improved == 'Yes') {
+
+      symptoms.add({
+        'name': 'Suicidal ideation improved after stopping',
+        'severity': 'moderate',
+      });
+    }
+
+    if (q95Restarted == 'Yes') {
+
+      symptoms.add({
+        'name': 'Suicidal ideation returned after restart',
+        'severity': 'life threatening',
+      });
+    }
+  }
+
+  /// ===================== PSYCHOSIS =====================
+
+  if (q10Answer == 'Yes') {
+
+    symptoms.add({
+      'name': 'Psychosis',
+      'severity': _mapSeverity(q101Severity),
+    });
+
+    if (q102AfterTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Psychosis after medication',
+        'severity': 'moderate',
+      });
+    }
+
+    if (q103BeforeTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Psychosis before treatment',
+        'severity': 'moderate',
+      });
+    }
+
+    if (q104Improved == 'Yes') {
+
+      symptoms.add({
+        'name': 'Psychosis improved after stopping',
+        'severity': 'moderate',
+      });
+    }
+
+    if (q105Restarted == 'Yes') {
+
+      symptoms.add({
+        'name': 'Psychosis returned after restart',
+        'severity': 'severe',
+      });
+    }
+  }
+
+  /// ===================== INSOMNIA =====================
+
+  if (q11Answer == 'Yes') {
+
+    symptoms.add({
+      'name': 'Insomnia',
+      'severity': _mapSeverity(q111Severity),
+    });
+
+    if (q112AfterTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Insomnia after medication',
+        'severity': 'mild',
+      });
+    }
+
+    if (q113BeforeTherapy == 'Yes') {
+
+      symptoms.add({
+        'name': 'Insomnia before treatment',
+        'severity': 'mild',
+      });
+    }
+
+    if (q114Improved == 'Yes') {
+
+      symptoms.add({
+        'name': 'Insomnia improved after stopping',
+        'severity': 'mild',
+      });
+    }
+
+    if (q115Restarted == 'Yes') {
+
+      symptoms.add({
+        'name': 'Insomnia returned after restart',
+        'severity': 'moderate',
+      });
+    }
+  }
+
+  /// ===================== SAVE =====================
+
+  for (var s in symptoms) {
+
+    await SystemsApi.saveSymptom(
+
+      reportId: widget.reportId,
+
+      questionnaireSystem: "Psychiatric",
+
+      symptomName: s['name']!,
+
+      symptomPresent: "Yes",
+
+      severity: s['severity']!,
+
+      regimenType: "SLD",
+    );
+  }
+}
 
   /// ================= SEVERITY =================
 
-  String _mapSeverity(String? value) {
+String _mapSeverity(String? value) {
 
-    switch (value) {
+  if (value == null) return 'moderate';
 
-      case 'Mild':
-        return 'mild';
-
-      case 'Moderate':
-        return 'moderate';
-
-      case 'Severe':
-        return 'severe';
-
-      case 'Very severe':
-        return 'life threatening';
-
-      case 'Life-threatening':
-        return 'life threatening';
-
-      default:
-        return 'moderate';
-    }
+  if (value.startsWith('Mild')) {
+    return 'mild';
   }
+
+  if (value.startsWith('Moderate')) {
+    return 'moderate';
+  }
+
+  if (value.startsWith('Severe')) {
+    return 'severe';
+  }
+
+  if (value.startsWith('Very severe')) {
+    return 'life threatening';
+  }
+
+  if (value.startsWith('Life-threatening')) {
+    return 'life threatening';
+  }
+
+  return 'moderate';
+}
 
   String _mapSuicideSeverity(String? value) {
 
-    switch (value) {
+  if (value == null) return 'severe';
 
-      case 'Passive thoughts':
-        return 'moderate';
-
-      case 'Active thoughts':
-        return 'severe';
-
-      case 'Active plan / emergency':
-        return 'life threatening';
-
-      default:
-        return 'severe';
-    }
+  if (value.startsWith('Passive')) {
+    return 'moderate';
   }
+
+  if (value.startsWith('Active thoughts')) {
+    return 'severe';
+  }
+
+  if (value.startsWith('Active plan')) {
+    return 'life threatening';
+  }
+
+  return 'severe';
+}
 
   /// ================= HELPERS =================
 

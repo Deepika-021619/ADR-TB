@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'systems_api.dart';
+
 class OcularInvolvementScreen extends StatefulWidget {
   final String reportId;
   final VoidCallback onSaveAndComplete;
@@ -203,12 +204,15 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
         foregroundColor: Colors.white,
         label: const Text('Save & Next System', style: TextStyle(fontWeight: FontWeight.bold)),
         heroTag: "save_ocular_next",
-        onPressed: _isComplete() 
-            ? () {
-                _saveOcular();
-                widget.onSaveAndComplete();
-              } 
-            : null,
+        onPressed: _isComplete()
+    ? () async {
+        await _saveOcular();
+
+        Future.delayed(const Duration(seconds: 1), () {
+          widget.onSaveAndComplete();
+        });
+      }
+    : null,
       ),
     );
   }
@@ -372,7 +376,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
     return true;
   }
 
- void _saveOcular() async {
+ Future<void> _saveOcular() async {
   print('🔥 OCULAR SAVE - reportId: ${widget.reportId}');
   
   List<Map<String, String>> yesSymptoms = [];
@@ -506,10 +510,10 @@ String _mapSeverityToBackend(String? uiSeverity) {
         SnackBar(
           content: Text(savedCount > 0 
             ? '✅ Saved $savedCount ocular symptoms' 
-            : 'ℹ️ No symptoms to save (only "Yes" answers are saved)'
+            : 'ℹ️ No symptoms to save'
           ),
           backgroundColor: savedCount > 0 ? Colors.green : Colors.blue,
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 1),
         ),
       );
     }

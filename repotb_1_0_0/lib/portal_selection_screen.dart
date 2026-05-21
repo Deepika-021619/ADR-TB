@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'start_report_screen.dart';
+import 'consent_screen.dart';
+
 
 class PortalSelectionScreen extends StatelessWidget {
   const PortalSelectionScreen({super.key});
@@ -21,7 +22,7 @@ class PortalSelectionScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 🎨 Logo/Icon Section
+              // Logo/Icon Section
               Icon(
                 Icons.medical_services_rounded,
                 size: 100,
@@ -75,7 +76,7 @@ class PortalSelectionScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => StartReportScreen(portal: "Physician"),
+                        builder: (context) => const ConsentScreen(portal: "Physician"),
                       ),
                     );
                   },

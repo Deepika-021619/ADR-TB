@@ -501,8 +501,8 @@ void _showSaveMessage(int savedCount) {
         content: Text(savedCount > 0 
           ? '✅ Saved $savedCount GI symptoms' 
           : 'ℹ️ No GI symptoms reported'),
-        backgroundColor: savedCount > 0 ? Colors.green : Colors.blue,
-        duration: const Duration(seconds: 2),
+        backgroundColor: savedCount > 0 ? Colors.blue : Colors.green,
+        duration: const Duration(seconds: 1),
       ),
     );
   }

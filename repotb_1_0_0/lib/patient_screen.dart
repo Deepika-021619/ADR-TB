@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'reporter.dart';
+import 'timer_widget.dart';
 
 
 class StartPatientScreen extends StatefulWidget {
@@ -88,29 +89,16 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
       print("Patient Response: ${patientResponse.body}");
 
       if (patientResponse.statusCode == 200 || patientResponse.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("✅ Patient details saved successfully!"),
-            backgroundColor: Colors.green,
-            duration: const Duration (seconds: 4),
-            action: SnackBarAction( 
-              label: "Next",
-            textColor: Colors.white,
-            backgroundColor: Colors.blue.shade600,
-            onPressed:() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:(context) => StartReporterScreen(
-                    portal: widget.portal, 
-                    reportId: widget.reportId,
-                ),
-              ),
-            );
-            },
-            ),
-          ),
-        );
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => StartReporterScreen(
+        portal: widget.portal,
+        reportId: widget.reportId,
+      ),
+    ),
+  );
         // to clear form after successfull submission
         ageController.clear();
         heightController.clear(); 
@@ -134,9 +122,25 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Patient Details - Report ${widget.reportId}"),
+     appBar: AppBar(
+
+  title: Text(
+    "Patient Details - Report ${widget.reportId}",
+  ),
+
+  actions: const [
+
+    Padding(
+
+      padding: EdgeInsets.only(
+        right: 12,
       ),
+
+      child: TimerWidget(),
+    ),
+  ],
+),
+      
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(

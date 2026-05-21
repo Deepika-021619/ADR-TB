@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'systems_api.dart';
 
+
 class CentralnervousSystemScreen extends StatefulWidget {
   final String reportId;
   final VoidCallback onSaveAndComplete;
@@ -359,10 +360,10 @@ String normalizeSeverity(String? input) {
         SnackBar(
           content: Text(savedCount > 0 
             ? '✅ Saved $savedCount CNS symptoms' 
-            : 'ℹ️ No symptoms to save (only "Yes" answers are saved)'
+            : 'ℹ️ No symptoms to save'
           ),
           backgroundColor: savedCount > 0 ? Colors.green : Colors.blue,
-          duration: const Duration(seconds: 2),
+          duration: const Duration(seconds: 1),
         ),
       );
     }

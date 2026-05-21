@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'cardio_screen.dart'; // already created
 import 'centralnervous_sld.dart';
 import 'psychiatric_sld.dart';
+import 'auditory_sld.dart';
+import 'ocular_sld.dart';
+import 'gastrointestinal_sld.dart';
+import 'endocrine.dart';
+import 'musculoskeletal_sld.dart';
+import 'skin_sld.dart';
+import 'investigations_sld.dart';
+import 'general_sld.dart';
+import 'others_sld.dart';
+import 'timer_widget.dart';
 
 class SLDQuestionnaireScreen extends StatefulWidget {
   final String portal, reportId;
@@ -24,16 +34,16 @@ class _SLDQuestionnaireScreenState extends State<SLDQuestionnaireScreen> {
   final List<String> systems = [
     "Cardiovascular",
     "Centralnervous",
-    "Gastrointestinal",
-    "Endocrine",
-    "Musculoskeletal",
     "Psychiatric",
     "Auditory",
     "Ocular",
+    "Gastrointestinal",
+    "Endocrine",
+    "Musculoskeletal",
     "SkinSubcutaneous",
-    "Hematological",
-    "Metabolic",
-    "Renal"
+    "Investigations-Hematological,metabolic,renal",
+    "General symptoms",
+    "Other side effects"
   ];
 
   @override
@@ -54,11 +64,25 @@ class _SLDQuestionnaireScreenState extends State<SLDQuestionnaireScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "${currentSystemIndex + 1}/${systems.length} $currentSystem",
-        ),
-        backgroundColor: Colors.blue,
+
+  title: Text(
+    "${currentSystemIndex + 1}/${systems.length} $currentSystem",
+  ),
+
+  backgroundColor: Colors.blue,
+
+  actions: const [
+
+    Padding(
+
+      padding: EdgeInsets.only(
+        right: 12,
       ),
+
+      child: TimerWidget(),
+    ),
+  ],
+),
 
       body: _buildCurrentSystem(),
     );
@@ -89,7 +113,70 @@ class _SLDQuestionnaireScreenState extends State<SLDQuestionnaireScreen> {
       setState(() => currentSystemIndex++);
     },
   );
-
+     case 3:
+     return AuditorySLDScreen(
+       reportId: widget.reportId,
+       onSaveAndComplete: () {
+         setState(() => currentSystemIndex++);
+       },
+     );
+      case 4:
+      return OcularSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 5:
+      return GastrointestinalSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 6:
+      return EndocrineSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 7:
+      return MusculoskeletalSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 8:
+      return SkinSubcutaneousSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 9:
+      return InvestigationsSLDScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 10:
+      return GeneralSymptomsScreen(      
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+      case 11:
+      return OtherSideEffectsScreen(
+        reportId: widget.reportId,
+        onSaveAndComplete: () {
+          setState(() => currentSystemIndex++);
+        },
+      );
+       
       /// 🔜 PLACEHOLDER (for now)
       default:
         return Center(

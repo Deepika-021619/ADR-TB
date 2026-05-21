@@ -9,10 +9,17 @@ import 'musculoskeletal_screen.dart';
 import 'genitourinary_screen.dart';
 import 'general_screen.dart';
 import 'investigations_screen.dart';
+import 'timer_widget.dart';
+
 
 class FLDQuestionnaireScreen extends StatefulWidget {
   final String reportId;
-  const FLDQuestionnaireScreen({super.key, required this.reportId});
+  
+  const FLDQuestionnaireScreen({
+  super.key,
+  required this.reportId,
+  
+});
 
   @override
   State<FLDQuestionnaireScreen> createState() => _FLDQuestionnaireScreenState();
@@ -37,6 +44,7 @@ class _FLDQuestionnaireScreenState extends State<FLDQuestionnaireScreen> {
         appBar: AppBar(
           title: const Text('Questionnaire Complete!', style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.green[600],
+
         ),
         body: const Center(
           child: Column(
@@ -80,15 +88,37 @@ class _FLDQuestionnaireScreenState extends State<FLDQuestionnaireScreen> {
                 ? () => setState(() => currentSystemIndex--)
                 : null,
           ),
-          actions: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                '${currentSystemIndex + 1}/10',
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+         actions: [
+
+  const Padding(
+
+    padding: EdgeInsets.only(
+      right: 8,
+    ),
+
+    child: TimerWidget(),
+  ),
+
+  Container(
+
+    padding: const EdgeInsets.symmetric(
+      horizontal: 16,
+    ),
+
+    child: Text(
+
+      '${currentSystemIndex + 1}/10',
+
+      style: const TextStyle(
+
+        color: Colors.white,
+
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+],
+
         ),
         body: SafeArea(
           child: Column(
@@ -164,10 +194,11 @@ class _FLDQuestionnaireScreenState extends State<FLDQuestionnaireScreen> {
           reportId: widget.reportId,
           onSaveAndComplete: () => setState(() => currentSystemIndex++),
         );
-       case 9: 
-       return InvestigationsScreen(     
-       reportId: widget.reportId,
-       onSaveAndComplete: () => setState(() => isComplete = true),
+      case 9:
+  return InvestigationsScreen(
+    reportId: widget.reportId,
+    
+    onSaveAndComplete: () => setState(() => isComplete = true),
   );
       default:
         return Center(

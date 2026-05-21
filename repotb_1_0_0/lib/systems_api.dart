@@ -107,7 +107,151 @@ class SystemsApi {
   );
   return response.statusCode == 200;
   }
+  // Investigations for SLD (new)
+  static Future<void>
+saveInvestigationsSLD({
 
+  required Map<String, dynamic>
+      data,
+
+}) async {
+
+  try {
+
+    print(
+        "🔵 Sending SLD Investigations:");
+
+    print(data);
+
+    final response =
+        await http.post(
+
+      Uri.parse(
+        "$baseUrl/investigations-sld",
+      ),
+
+      headers: {
+
+        "Content-Type":
+            "application/json",
+      },
+
+      body: jsonEncode(data),
+    );
+
+    print(
+        "📱 SLD Investigation Response: ${response.statusCode}");
+
+    print(response.body);
+
+    if (response.statusCode !=
+        200) {
+
+      throw Exception(
+        "Failed to save SLD investigations",
+      );
+    }
+
+  } catch (e) {
+
+    print(
+        "❌ SLD Investigation Error: $e");
+
+    rethrow;
+  }
+}
+// General symptoms for SLD (new)
+//-------------------------------
+ static Future<void>
+saveGeneralSymptomsSLD({
+
+  required Map<String, dynamic>
+      data,
+
+}) async {
+
+  try {
+
+    print(
+        "🔵 Sending General Symptoms SLD:");
+
+    print(data);
+
+    final response =
+        await http.post(
+
+      Uri.parse(
+        "$baseUrl/general-symptoms-sld",
+      ),
+
+      headers: {
+
+        "Content-Type":
+            "application/json",
+      },
+
+      body: jsonEncode(data),
+    );
+
+    print(
+        "📱 General Symptoms Response: ${response.statusCode}");
+
+    print(response.body);
+
+    if (response.statusCode !=
+        200) {
+
+      throw Exception(
+        "Failed to save General Symptoms SLD",
+      );
+    }
+
+  } catch (e) {
+
+    print(
+        "❌ General Symptoms Error: $e");
+
+    rethrow;
+  }
+}
+
+// ===========other side effects for SLD (new)=================
+static Future<void> saveOtherSideEffects({
+
+  required Map<String, dynamic> data,
+
+}) async {
+
+  final response = await http.post(
+
+    Uri.parse(
+      '$baseUrl/save-other-side-effects',
+    ),
+
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    body: jsonEncode(data),
+  );
+
+  print(
+    "🔵 Sending Other Side Effects:\n$data",
+  );
+
+  print(
+    "📱 Other Side Effects Response: ${response.statusCode}",
+  );
+
+  print(response.body);
+
+  if (response.statusCode != 200) {
+
+    throw Exception(
+      'Failed to save Other Side Effects',
+    );
+  }
+}
   // ===============================
   // NEW: Get all systems data for reports ✅
   // ===============================

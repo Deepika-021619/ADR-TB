@@ -1222,9 +1222,15 @@ No GI symptoms reported.
     // ===============================
     // SYSTEMS
     // ===============================
-    final systems = reportData['systems'] ?? {};
+  final systemsRaw = reportData['systems'];
 
-    print("🔥 SYSTEM KEYS: ${systems.keys}");
+Map<String, dynamic> systems = {};
+
+if (systemsRaw is Map<String, dynamic>) {
+  systems = systemsRaw;
+}
+
+print("🔥 SYSTEMS: $systems");
 
    if (systems.containsKey('Respiratory')) {
 

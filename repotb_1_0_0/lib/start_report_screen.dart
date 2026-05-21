@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'patient_screen.dart';
-
+import 'dart:async';
+import '../services/questionnaire_timer.dart';
+import 'timer_widget.dart';
 
 class StartReportScreen extends StatefulWidget {
   final String portal;
@@ -14,6 +16,16 @@ class StartReportScreen extends StatefulWidget {
 }
 
 class _StartReportScreenState extends State<StartReportScreen> {
+
+  
+  
+
+  @override
+  void initState() {
+    super.initState();
+    QuestionnaireTimer.start();
+
+  }
 
   final TextEditingController nikshayIdController = TextEditingController();
   final TextEditingController patientIdController = TextEditingController();
@@ -29,7 +41,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.red,
-        duration: const Duration(seconds: 4),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -79,7 +91,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
           "gender": gender ?? "Not Specified",
           "p_state": state ?? "Not Selected",
         }),
-      ).timeout(const Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 5));
 
       print("Patient Status: ${patientResponse.statusCode}");
       print("Patient Response: ${patientResponse.body}");
@@ -94,7 +106,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
             "Recheck or use a different Nikshay ID / Patient ID ",
           ),
           backgroundColor: Colors.orange.shade700,
-          duration: const Duration(seconds: 10),
+          duration: const Duration(seconds: 3),
           behavior: SnackBarBehavior.floating,
           action: SnackBarAction(
             label: "OK",
@@ -130,36 +142,30 @@ class _StartReportScreenState extends State<StartReportScreen> {
           "nik_id": nikshayIdController.text,
           "portal": widget.portal
         }),
-      ).timeout(const Duration(seconds: 30));
+      ).timeout(const Duration(seconds: 20));
       print("Report Status: ${reportResponse.statusCode}");
       print("Report Response: ${reportResponse.body}");
 
     if (reportResponse.statusCode == 200 || reportResponse.statusCode == 201) {
         final reportData = jsonDecode(reportResponse.body);
         final reportId = reportData["report_id"] ?? "Unknown";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("✅ Report Created: $reportId"),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 15),
-            action: SnackBarAction(
-            label: "CONTINUE",  // ✅ Better UX
-            textColor: Colors.white,
-            backgroundColor: Colors.blue.shade600,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => StartPatientScreen(
-                    portal: widget.portal,
-                    reportId: reportId,
-                  ),
-                ),
-              );
-            },
-          ),
+       ScaffoldMessenger.of(context).showSnackBar(
+  SnackBar(
+    content: Text("✅ Report Created: $reportId"),
+    backgroundColor: Colors.green,
+    duration: const Duration(seconds: 1),
+  ),
+  
+);
+        Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => StartPatientScreen(
+      portal: widget.portal,
+      reportId: reportId,
     ),
-        );
+  ),
+);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -186,7 +192,33 @@ class _StartReportScreenState extends State<StartReportScreen> {
     @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Patient Details")),
+appBar: AppBar(
+
+  backgroundColor: Colors.blue[700],
+
+  foregroundColor: Colors.white,
+
+  title: const Text(
+
+    "Patient Details",
+
+    style: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+
+  actions: const [
+
+    Padding(
+
+      padding: EdgeInsets.only(
+        right: 12,
+      ),
+
+      child: TimerWidget(),
+    ),
+  ],
+),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(

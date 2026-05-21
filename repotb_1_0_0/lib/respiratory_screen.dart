@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'systems_api.dart'; 
 import '../services/grading_report.dart';
+import 'timer_widget.dart';
 
 class RespiratoryScreen extends StatefulWidget {
   final String reportId;
@@ -148,6 +149,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blue[600],
         foregroundColor: Colors.white,
+        
         label: const Text(
           'Save & Next System', 
           style: TextStyle(fontWeight: FontWeight.bold)
@@ -388,10 +390,10 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
         SnackBar(
           content: Text(savedCount > 0 
             ? '✅ Saved $savedCount "Yes" symptoms' 
-            : 'ℹ️ No symptoms to save (only "Yes" answers are saved)'
+            : 'ℹ️ No symptoms to save'
           ),
-          backgroundColor: savedCount > 0 ? Colors.green : Colors.blue,
-          duration: const Duration(seconds: 2),
+          backgroundColor: savedCount > 0 ? Colors.blue : Colors.green,
+          duration: const Duration(seconds: 1),
         ),
       );
     }

@@ -396,7 +396,7 @@ class _CentralNervousSLDScreenState
                     setState(() => q6Answer = val),
               ),
 
-              if (q6Answer == 'Present') ...[
+              if (q6Answer == 'Yes') ...[
 
                 _buildRadioQuestion(
                   number: "6.1",
@@ -553,7 +553,7 @@ class _CentralNervousSLDScreenState
       if (q56Restarted == null) return false;
     }
 
-    if (q6Answer == 'Present') {
+    if (q6Answer == 'Yes') {
 
       if (q61Severity == null) return false;
       if (q62AfterTherapy == null) return false;
@@ -567,235 +567,310 @@ class _CentralNervousSLDScreenState
 
   /// ===================== SAVE =====================
 
-  Future<void> _saveCNS() async {
 
-    List<Map<String, dynamic>> symptoms = [];
+Future<void> _saveCNS() async {
 
-    /// ---------- Q4 ----------
+  List<Map<String, dynamic>> symptoms = [];
 
-    if (q4Answer == 'Yes') {
+  /// ---------- Q4 ----------
 
-      int duration =
-          int.tryParse(
-            q42DurationController.text,
-          ) ??
-          0;
+  if (q4Answer == 'Yes') {
 
-      symptoms.add({
-        'name': 'Peripheral neuropathy',
-        'severity':
-            _mapSeverity(q41Severity),
-        'duration': duration,
-      });
+    symptoms.add({
 
-      if (q43AfterTherapy == 'Yes') {
+      'name': 'Peripheral neuropathy',
 
-        symptoms.add({
-          'name':
-              'Peripheral neuropathy after medication',
-          'severity': 'mild',
-          'duration': duration,
-        });
-      }
+      'severity':
+          _mapSeverity(q41Severity),
 
-      if (q45Improved == 'Yes') {
+      'duration':
+          q42DurationController.text,
+    });
 
-        symptoms.add({
-          'name':
-              'Peripheral neuropathy improved after stopping',
-          'severity': 'mild',
-          'duration': duration,
-        });
-      }
-
-      if (q46Restart == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Peripheral neuropathy returned after restart',
-          'severity': 'moderate',
-          'duration': duration,
-        });
-      }
-    }
-
-    /// ---------- Q5 ----------
-
-    if (q5Answer == 'Yes') {
+    if (q43AfterTherapy != 'Yes') {
 
       symptoms.add({
-        'name': 'Vertigo',
-        'severity':
-            _mapVertigoSeverity(q51Severity),
-        'duration': null,
+
+        'name':
+            'Peripheral neuropathy after medication',
+
+        'severity': 'N/A',
       });
-
-      if (q53AfterTherapy == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Vertigo after medication',
-          'severity': 'mild',
-          'duration': null,
-        });
-      }
-
-      if (q55Improved == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Vertigo improved after stopping',
-          'severity': 'mild',
-          'duration': null,
-        });
-      }
-
-      if (q56Restarted == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Vertigo returned after restart',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q52Symptoms.contains(
-          'Nausea/vomiting')) {
-
-        symptoms.add({
-          'name':
-              'Nausea with vertigo',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q52Symptoms.contains(
-          'Hearing loss')) {
-
-        symptoms.add({
-          'name':
-              'Hearing loss with vertigo',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q52Symptoms.contains(
-          'Tinnitus')) {
-
-        symptoms.add({
-          'name':
-              'Tinnitus with vertigo',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q52Symptoms.contains(
-          'Unsteady gait/falls')) {
-
-        symptoms.add({
-          'name':
-              'Unsteady gait with vertigo',
-          'severity': 'severe',
-          'duration': null,
-        });
-      }
     }
 
-    /// ---------- Q6 ----------
-
-    if (q6Answer == 'Present') {
+    if (q44BeforeTreatment != 'Yes') {
 
       symptoms.add({
-        'name': 'Seizures',
-        'severity':
-            _mapSeverity(q61Severity),
-        'duration': null,
+
+        'name':
+            'Peripheral neuropathy before treatment',
+
+        'severity': 'N/A',
       });
-
-      if (q62AfterTherapy == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Seizures after medication',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q64Improved == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Seizures improved after stopping',
-          'severity': 'moderate',
-          'duration': null,
-        });
-      }
-
-      if (q65Restarted == 'Yes') {
-
-        symptoms.add({
-          'name':
-              'Seizures returned after restart',
-          'severity': 'severe',
-          'duration': null,
-        });
-      }
     }
 
-    /// ---------- SAVE ----------
+    if (q45Improved != 'Yes') {
 
-    for (var s in symptoms) {
+      symptoms.add({
 
-      await SystemsApi.saveSymptom(
+        'name':
+            'Peripheral neuropathy improved after stopping',
 
-        reportId: widget.reportId,
+        'severity': 'N/A',
+      });
+    }
 
-        questionnaireSystem:
-            "CENTRAL NERVOUS SYSTEM",
+    if (q46Restart != 'Yes') {
 
-        symptomName: s['name'],
+      symptoms.add({
 
-        symptomPresent: "Yes",
+        'name':
+            'Peripheral neuropathy returned after restart',
 
-        severity: s['severity'],
+        'severity': 'N/A',
+      });
+    }
 
-        durationWeeks: s['duration'],
+    if (q47Conditions != 'Yes') {
 
-        regimenType: "SLD",
-      );
+      symptoms.add({
+
+        'name':
+            'Pre-existing diabetes or neuropathy',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q48Injury != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Recent physical activity or injury',
+
+        'severity': 'N/A',
+      });
     }
   }
+
+  /// ---------- Q5 ----------
+
+  if (q5Answer == 'Yes') {
+
+    symptoms.add({
+
+      'name': 'Vertigo',
+
+      'severity':
+          _mapVertigoSeverity(q51Severity),
+
+      'duration': null,
+    });
+
+    if (q53AfterTherapy != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Vertigo after medication',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q54BeforeTherapy != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Vertigo before treatment',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q55Improved != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Vertigo improved after stopping',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q56Restarted != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Vertigo returned after restart',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q52Symptoms.contains(
+        'Nausea/vomiting')) {
+
+      symptoms.add({
+
+        'name':
+            'Nausea/vomiting with vertigo',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q52Symptoms.contains(
+        'Hearing loss')) {
+
+      symptoms.add({
+
+        'name':
+            'Hearing loss with vertigo',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q52Symptoms.contains(
+        'Tinnitus')) {
+
+      symptoms.add({
+
+        'name':
+            'Tinnitus with vertigo',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q52Symptoms.contains(
+        'Unsteady gait/falls')) {
+
+      symptoms.add({
+
+        'name':
+            'Unsteady gait/falls with vertigo',
+
+        'severity': 'N/A',
+      });
+    }
+  }
+
+  /// ---------- Q6 ----------
+
+  if (q6Answer == 'Yes') {
+
+    symptoms.add({
+
+      'name': 'Seizures',
+
+      'severity':
+          _mapSeverity(q61Severity),
+
+      'duration': null,
+    });
+
+    if (q62AfterTherapy != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Seizures after medication',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q63BeforeTherapy != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Seizures before treatment',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q64Improved != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Seizures improved after stopping',
+
+        'severity': 'N/A',
+      });
+    }
+
+    if (q65Restarted != 'Yes') {
+
+      symptoms.add({
+
+        'name':
+            'Seizures returned after restart',
+
+        'severity': 'N/A',
+      });
+    }
+  }
+
+  /// ---------- SAVE ----------
+
+  for (var s in symptoms) {
+
+    await SystemsApi.saveSymptom(
+
+      reportId: widget.reportId,
+
+      questionnaireSystem:
+          "CENTRAL NERVOUS SYSTEM",
+
+      symptomName: s['name'],
+
+      symptomPresent: "Yes",
+
+      severity: s['severity'],
+
+      durationWeeks:
+          int.tryParse(
+              s['duration'] ?? ''),
+
+      regimenType: "SLD",
+    );
+  }
+}
 
   /// ===================== HELPERS =====================
 
-  String _mapSeverity(String? value) {
+ String _mapSeverity(String? value) {
 
-    switch (value) {
+  switch (value) {
 
-      case 'Mild':
-        return 'mild';
+    case 'Mild':
+      return 'mild';
 
-      case 'Moderate':
-        return 'moderate';
+    case 'Moderate':
+      return 'moderate';
 
-      case 'Severe':
-        return 'severe';
+    case 'Severe':
+      return 'severe';
 
-      case 'Life-threatening':
-        return 'life threatening';
+    case 'Life-threatening':
+      return 'life threatening';
 
-      case 'Death':
-        return 'life threatening';
+    case 'Grade 5':
+      return 'life threatening';
 
-      default:
-        return 'moderate';
-    }
+    default:
+      return 'moderate';
   }
+}
 
   String _mapVertigoSeverity(
       String? value) {

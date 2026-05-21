@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'fld_questionnaire_screen.dart';
 import 'sld_questionnaire_screen.dart';
+import 'timer_widget.dart';
+
 
 class DrugDetailsScreen extends StatefulWidget {
   final String portal;
@@ -22,6 +24,7 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
   List<Map<String, dynamic>> regimens = [];
   int? selectedRegimenId;
   bool isLoading = false;
+  
   bool isLoadingRegimens = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -45,11 +48,14 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
 
   final List<String> timeUnits = ['Days', 'Weeks', 'Months', 'Years'];
 
-  @override
-  void initState() {
-    super.initState();
-    loadRegimens();
-  }
+
+@override
+void initState() {
+
+  super.initState();
+
+  loadRegimens();
+}
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -132,8 +138,8 @@ print("Selected regimen type: $regimenType"); // DEBUG
     context,
     MaterialPageRoute(
       builder: (context) => FLDQuestionnaireScreen(
-        reportId: widget.reportId,
-      ),
+  reportId: widget.reportId,
+),
     ),
   );
 } else if (regimenType == "SLD") {
@@ -164,6 +170,12 @@ print("Selected regimen type: $regimenType"); // DEBUG
         title: Text("TB Regimen - ${widget.reportId}"),
         backgroundColor: Colors.blue.shade600,
         foregroundColor: Colors.white,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: TimerWidget(),
+          ),
+        ],
       ),
       body: isLoadingRegimens
           ? const Center(child: CircularProgressIndicator())
@@ -296,7 +308,19 @@ const SizedBox(height: 20),
                       title: const Text("• Are you taking FDC?"),
                       subtitle: const Text("(Fixed Dose Combination)"),
                       value: isFdc ?? false,
-                      onChanged: (v) => setState(() => isFdc = v),
+                      onChanged: (v) {
+  setState(() {
+    isFdc = v;
+
+    // Auto-clear fields when FDC selected
+    if (v) {
+      _brandNameController.clear();
+      _batchNumberController.clear();
+      _doseController.clear();
+      _frequencyController.clear();
+    }
+  });
+},
                       activeColor: Colors.blue.shade600,
                       inactiveThumbColor: Colors.grey.shade400,
                       inactiveTrackColor: Colors.grey.shade200,
@@ -305,46 +329,112 @@ const SizedBox(height: 20),
 
                     // 4. BRAND NAME *
                     TextFormField(
-                      controller: _brandNameController,
-                      decoration: InputDecoration(
-                        hintText: "• Brand name of the drug taken *",
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (v) => v?.isEmpty ?? true ? 'Required' : null,
-                    ),
+  controller: _brandNameController,
+
+  enabled: !isFdc,
+  readOnly: isFdc,
+
+  style: TextStyle(
+    color: isFdc ? Colors.grey : null,
+  ),
+
+  decoration: InputDecoration(
+    hintText: isFdc
+        ? "Unavailable for FDC"
+        : "• Brand name of the drug taken (if available)",
+
+    border: const OutlineInputBorder(),
+
+    filled: isFdc,
+    fillColor: isFdc ? Colors.grey[100] : null,
+  ),
+
+  validator: (v) => null,
+),
                     const SizedBox(height: 16),
 
                     // 5. BATCH NUMBER *
                     TextFormField(
-                      controller: _batchNumberController,
-                      decoration: const InputDecoration(
-                        hintText: "• Batch number *",
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (v) => v?.isEmpty ?? true ? 'Required' : null,
-                    ),
+  controller: _batchNumberController,
+
+  enabled: !isFdc,
+  readOnly: isFdc,
+
+  style: TextStyle(
+    color: isFdc ? Colors.grey : null,
+  ),
+
+  decoration: InputDecoration(
+    hintText: isFdc
+        ? "Unavailable for FDC"
+        : "• Batch number (if available)",
+
+    border: const OutlineInputBorder(),
+
+    filled: isFdc,
+    fillColor: isFdc ? Colors.grey[100] : null,
+  ),
+
+  validator: (v) => null,
+),
                     const SizedBox(height: 16),
 
                     // 6. DOSE *
                     TextFormField(
-                      controller: _doseController,
-                      decoration: InputDecoration(
-                        hintText: "• Dose (in mg) *",
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (v) => v?.isEmpty ?? true ? 'Required' : null,
-                    ),
+  controller: _doseController,
+
+  enabled: !isFdc,
+  readOnly: isFdc,
+
+  style: TextStyle(
+    color: isFdc ? Colors.grey : null,
+  ),
+
+  decoration: InputDecoration(
+    hintText: isFdc
+        ? "Unavailable for FDC"
+        : "• Dose (in mg) *",
+
+    border: const OutlineInputBorder(),
+
+    filled: isFdc,
+    fillColor: isFdc ? Colors.grey[100] : null,
+  ),
+
+  validator: (v) {
+    if (isFdc) return null;
+    return v?.isEmpty ?? true ? 'Required' : null;
+  },
+),
                     const SizedBox(height: 16),
 
                     // 7. FREQUENCY
-                    TextFormField(
-                      controller: _frequencyController,
-                      decoration: InputDecoration(
-                        hintText: "• Number of tablets taken per day*",
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (v) => v?.isEmpty ?? true ? 'Required' : null,
-                    ),
+                   TextFormField(
+  controller: _frequencyController,
+
+  enabled: !isFdc,
+  readOnly: isFdc,
+
+  style: TextStyle(
+    color: isFdc ? Colors.grey : null,
+  ),
+
+  decoration: InputDecoration(
+    hintText: isFdc
+        ? "Unavailable for FDC"
+        : "• Number of tablets taken per day *",
+
+    border: const OutlineInputBorder(),
+
+    filled: isFdc,
+    fillColor: isFdc ? Colors.grey[100] : null,
+  ),
+
+  validator: (v) {
+    if (isFdc) return null;
+    return v?.isEmpty ?? true ? 'Required' : null;
+  },
+),
                     const SizedBox(height: 40),
                     Text("• Are all drugs taken in oral formulation? *", style: Theme.of(context).textTheme.titleMedium),
 DropdownButtonFormField<String>(
@@ -398,7 +488,7 @@ TextFormField(
 const SizedBox(height: 16),
 
 // ✅ 10. PREVIOUS REGIMEN * (REPLACE TEXT FIELD)
-Text("• Did you take any other combination before current medication? *", 
+Text("• Did the patient take any other combination before current medication? *", 
      style: Theme.of(context).textTheme.titleMedium),
 DropdownButtonFormField<String>(
   value: _prevRegimenValue,

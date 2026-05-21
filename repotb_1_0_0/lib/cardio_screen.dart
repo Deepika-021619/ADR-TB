@@ -133,6 +133,7 @@ class _CardiovascularScreenState
                     'Chest pain',
                     'Shortness of breath',
                     'Syncope',
+                    'None',
                   ],
                   selected: q12Symptoms,
                   onChanged: (val, checked) {
@@ -717,7 +718,7 @@ class _CardiovascularScreenState
       symptoms.add({
         'name': 'Palpitations',
         'severity':
-            (q11Answer ?? 'moderate')
+            q11Answer! 
                 .toLowerCase(),
       });
 
@@ -729,6 +730,14 @@ class _CardiovascularScreenState
           'severity': 'mild',
         });
       }
+      if (q14Answer == 'Yes') {
+
+  symptoms.add({
+    'name':
+        'Palpitations before therapy',
+    'severity': 'mild',
+  });
+}
 
       if (q15Answer == 'Yes') {
 
@@ -751,7 +760,7 @@ class _CardiovascularScreenState
       if (q12Symptoms.contains('Dizziness')) {
 
         symptoms.add({
-          'name': 'Dizziness',
+          'name': 'Dizziness during palpitations',
           'severity': 'mild',
         });
       }
@@ -759,7 +768,7 @@ class _CardiovascularScreenState
       if (q12Symptoms.contains('Chest pain')) {
 
         symptoms.add({
-          'name': 'Chest pain',
+          'name': 'Chest pain during palpitations',
           'severity': 'moderate',
         });
       }
@@ -769,7 +778,7 @@ class _CardiovascularScreenState
 
         symptoms.add({
           'name':
-              'Shortness of breath',
+              'Shortness of breath during palpitations',
           'severity': 'moderate',
         });
       }
@@ -777,7 +786,7 @@ class _CardiovascularScreenState
       if (q12Symptoms.contains('Syncope')) {
 
         symptoms.add({
-          'name': 'Syncope',
+          'name': 'Syncope during palpitations',
           'severity': 'severe',
         });
       }
@@ -802,6 +811,14 @@ class _CardiovascularScreenState
           'severity': 'mild',
         });
       }
+      if (q24PreExisting == 'Yes') {
+
+  symptoms.add({
+    'name':
+        'Syncope before therapy',
+    'severity': 'mild',
+  });
+}
 
       if (q25Improved == 'Yes') {
 
@@ -880,6 +897,14 @@ class _CardiovascularScreenState
           'severity': 'mild',
         });
       }
+      if (q35BeforeTherapy == 'Yes') {
+
+  symptoms.add({
+    'name':
+        'QT prolongation before therapy',
+    'severity': 'mild',
+  });
+}
 
       if (q36Improved == 'Yes') {
 
