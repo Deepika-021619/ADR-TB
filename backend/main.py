@@ -16,8 +16,9 @@ from backend.tb_regimen import router as tb_regimen_router
 from backend.general_symptoms import router as general_router
 from backend.investigations import router as investigations_router
 from fastapi.middleware.cors import CORSMiddleware
-
-
+from backend.investigation_sld import router as investigations_sld_router
+from backend.general_symptoms_sld import router as general_symptoms_sld_router
+from .other_side_effects import router as other_side_effects_router
 
 
 app = FastAPI(title="ADR Backend", version="1.0.0")
@@ -42,6 +43,9 @@ app.include_router(system_type_router)
 app.include_router(tb_regimen_router)
 app.include_router(general_router)
 app.include_router(investigations_router)
+app.include_router(investigations_sld_router)
+app.include_router(general_symptoms_sld_router)
+app.include_router(other_side_effects_router)
 
 
 # --------------------

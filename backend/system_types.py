@@ -9,10 +9,10 @@ router = APIRouter(prefix="/systems", tags=["System Symptoms"])
 VALID_SYSTEMS = [
     'Gastrointestinal', 'SkinSubcutaneous', 'Centralnervous', 'Musculoskeletal', 
     'Peripheral nervous', 'Respiratory', 'Hematological', 'Cardiovascular', 
-    'Ocular', 'Miscellaneous', 'Psychiatric', 'Genitourinary'
+    'Ocular', 'Miscellaneous', 'Psychiatric', 'Genitourinary', 'Renal', 'Auditory', 'Endocrine', 'Metabolic'
 ]
 VALID_PRESENT = ['Yes', 'No']
-VALID_SEVERITY = ['mild', 'moderate', 'severe', 'life-threatening']
+VALID_SEVERITY = ['asymptomatic','mild', 'moderate', 'severe', 'life threatening', 'N/A']
 
 class SystemCreateRequest(BaseModel):
     report_id: str
@@ -21,8 +21,9 @@ class SystemCreateRequest(BaseModel):
     symptom_present: str
     severity: str = "N/A"
     duration_weeks: int | None = None   # ✅ NEW
-    
-    
+    regimen_type: str = "FLD"  # ✅ NEW
+
+
     @validator('system_name')
     def validate_system(cls, v):
         if v not in VALID_SYSTEMS:
@@ -60,15 +61,16 @@ def create_system_entry(data: SystemCreateRequest):
         # INSERT with explicit columns
         cursor.execute("""
             INSERT INTO system_types 
-            (report_id, system_name, symptom_name, symptom_present, severity, duration_weeks)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            (report_id, system_name, symptom_name, symptom_present, severity, duration_weeks, regimen_type)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
         """, (
             data.report_id,
             data.system_name,
             data.symptom_name[:99],  # Truncate if too long
             data.symptom_present,
             data.severity,
-            data.duration_weeks
+            data.duration_weeks,
+            data.regimen_type
         ))
         
         conn.commit()

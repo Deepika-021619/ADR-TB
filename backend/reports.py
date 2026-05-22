@@ -87,13 +87,35 @@ def get_full_report(report_id: str):
             d.tablet_frequency,
             d.oral_only,
 
-            a.ADR_experienced,
+            
 
             s.system_name,
             s.symptom_name,
             s.symptom_present,
             s.severity,
-            s.duration_weeks
+            s.duration_weeks,
+
+            i.lft_done,
+            i.ast_value,
+            i.ast_uln,
+            i.alt_value,
+            i.alt_uln,
+            i.alp_value,
+            i.alp_uln,
+            i.bilirubin_total,
+            i.bilirubin_total_uln,
+
+            i.hgb_done,
+            i.hgb_value,
+            i.hgb_lln,
+
+            i.platelet_done,
+            i.platelet_value,
+            i.platelet_lln,
+
+            i.uric_acid_done,
+            i.uric_acid_value,
+            i.uric_acid_uln
         FROM reports r
 
         JOIN patient_details p 
@@ -111,17 +133,25 @@ def get_full_report(report_id: str):
         LEFT JOIN drug_details d 
             ON r.report_id = d.report_id
 
-        LEFT JOIN adr_data a 
-            ON r.report_id = a.report_id
+        
 
         LEFT JOIN system_types s 
             ON r.report_id = s.report_id
+        LEFT JOIN investigations i 
+        ON r.report_id = i.report_id
 
         WHERE r.report_id = %s
     """
 
     cursor.execute(query, (report_id,))
     rows = cursor.fetchall()
+
+    # 🔹 Fetch general symptoms (CORRECTLY INDENTED)
+    cursor.execute("""
+        SELECT * FROM general_symptoms WHERE report_id = %s
+    """, (report_id,))
+
+    general_data = cursor.fetchone()
 
     cursor.close()
     conn.close()
@@ -130,7 +160,6 @@ def get_full_report(report_id: str):
         raise HTTPException(status_code=404, detail="Report not found")
 
     first = rows[0]
-
     report = {
         "report_id": first["report_id"],
         "portal": first["portal"],
@@ -171,25 +200,54 @@ def get_full_report(report_id: str):
             "oral_only": first["oral_only"]
         },
 
-        "adr_experienced": first["ADR_experienced"],
+        "systems": [],
 
-        "systems": {}
+        "general": general_data,
+
+        "investigations": {
+
+            "lft_done": first["lft_done"],
+            "ast_value": first["ast_value"],
+            "ast_uln": first["ast_uln"],
+            "alt_value": first["alt_value"],
+            "alt_uln": first["alt_uln"],
+            "alp_value": first["alp_value"],
+            "alp_uln": first["alp_uln"],
+            "bilirubin_total": first["bilirubin_total"],
+            "bilirubin_total_uln": first["bilirubin_total_uln"],
+
+            "hgb_done": first["hgb_done"],
+            "hgb_value": first["hgb_value"],
+            "hgb_lln": first["hgb_lln"],
+
+            "platelet_done": first["platelet_done"],
+            "platelet_value": first["platelet_value"],
+            "platelet_lln": first["platelet_lln"],
+
+            "uric_acid_done": first["uric_acid_done"],
+            "uric_acid_value": first["uric_acid_value"],
+            "uric_acid_uln": first["uric_acid_uln"],
+        }
     }
 
+    # ==========================
+    # ADD ALL SYSTEM ROWS
+    # ==========================
     for row in rows:
+
         if row["system_name"] is None:
             continue
 
-        system = row["system_name"]
+        report["systems"].append({
 
-        if system not in report["systems"]:
-            report["systems"][system] = []
+            "system_name": row["system_name"],
 
-        report["systems"][system].append({
-            "symptom": row["symptom_name"],
+            "symptom_name": row["symptom_name"],
+
+            "symptom_present": row["symptom_present"],
+
             "severity": row["severity"],
+
             "duration_weeks": row["duration_weeks"],
         })
-
     return report
-
