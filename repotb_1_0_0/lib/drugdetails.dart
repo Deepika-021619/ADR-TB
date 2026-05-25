@@ -66,7 +66,7 @@ void initState() {
   Future<void> loadRegimens() async {
     try {
       final response = await http.get(
-       Uri.parse("http://127.0.0.1:8000/tb_regimen/regimens"),
+       Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/tb_regimen/regimens"),
         headers: {"Accept": "application/json"},
       ).timeout(const Duration(seconds: 10));
 
@@ -101,7 +101,7 @@ void initState() {
 
     try {
       final response = await http.post(
-        Uri.parse("http://127.0.0.1:8000/tb_regimen/drug_details"),
+        Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/tb_regimen/drug_details"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
         "report_id": widget.reportId,

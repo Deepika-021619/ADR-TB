@@ -70,7 +70,7 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
 
     try {
       final patientResponse = await http.post(
-        Uri.parse("http://127.0.0.1:8000/reports/${widget.reportId}/event"),
+        Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/reports/${widget.reportId}/event"),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",

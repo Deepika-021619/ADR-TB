@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'systems_mapping.dart';
 
 class SystemsApi {
-  static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net';
 
   // ===============================
   // SYSTEMS (CNS, GI, etc.)

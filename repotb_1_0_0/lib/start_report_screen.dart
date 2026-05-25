@@ -78,7 +78,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
       print("Creating for Patient: ${nikshayIdController.text}");
 
      final patientResponse = await http.post(
-       Uri.parse("http://127.0.0.1:8000/patient_details/patients"),
+       Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/patient_details/patients"),
         
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +133,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
 
       // STEP 2 — Create Report
       final reportResponse = await http.post(
-        Uri.parse("http://127.0.0.1:8000/reports"),
+        Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/reports"),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",

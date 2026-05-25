@@ -64,7 +64,7 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
 
     try {
       final reporterResponse = await http.post(
-       Uri.parse("http://127.0.0.1:8000/Reporter_details/reporter_details"),
+       Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/Reporter_details/reporter_details"),
         headers: { 
           "Content-Type": "application/json",
           "Accept": "application/json",
