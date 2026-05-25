@@ -42,7 +42,13 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
     final age = ageController.text.trim();
     final height = heightController.text.trim();
     final weight = weightController.text.trim();
-    final treatmentDate = treatmentStartDateController.text.trim();
+    final treatmentDateText =
+    treatmentStartDateController.text.trim();
+
+final parts = treatmentDateText.split('-');
+
+final treatmentDate =
+    "${parts[2]}-${parts[1]}-${parts[0]}";
 
     // this is for validation
     if (age.isEmpty) {

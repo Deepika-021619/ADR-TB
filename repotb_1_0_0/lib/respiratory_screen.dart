@@ -44,7 +44,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
               // 1. MAIN QUESTION
               _buildRadioQuestion(
                 number: "1",
-                question: "Have you experienced any new or worsening shortness of breath since starting the treatment?",
+                question: "Have you experienced any new or worsening shortness of breath since starting the treatment?*",
                 options: ['Yes', 'No', 'Unknown'],
                 value: q1Answer,
                 onChanged: (val) => setState(() => q1Answer = val),
@@ -60,7 +60,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 // 1.1 Severity
                 _buildRadioQuestion(
                   number: "1.1",
-                  question: "How severe is your shortness of breath?",
+                  question: "How severe is your shortness of breath?*",
                   options: [
                     'Mild - I can perform my usual daily activities',
                     'Moderate - It interferes with my daily activities', 
@@ -81,7 +81,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 // 1.3 Pre-existing
                 _buildRadioQuestion(
                   number: "1.3",
-                  question: "Did the shortness of breath begin or was present before starting the medication?",
+                  question: "Did the shortness of breath begin or was present before starting the medication?*",
                   options: ['Yes', 'No'],
                   value: q13Answer,
                   onChanged: (val) => setState(() => q13Answer = val),
@@ -90,7 +90,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 // 1.4 After medication
                 _buildRadioQuestion(
                   number: "1.4",
-                  question: "Did the shortness of breath begin or worsen after starting the medication?",
+                  question: "Did the shortness of breath begin or worsen after starting the medication?*",
                   options: ['Yes', 'No', 'Not sure'],
                   value: q14Answer,
                   onChanged: (val) => setState(() => q14Answer = val),
@@ -105,14 +105,14 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                   
                   _buildRadioQuestion(
                     number: "1.4.1",
-                    question: "Did the symptoms improve after the medication was stopped or after you received treatment for it?",
+                    question: "Did the symptoms improve after the medication was stopped or after you received treatment for it?*",
                     options: ['Yes', 'No', 'Not applicable'],
                     value: q141Answer,
                     onChanged: (val) => setState(() => q141Answer = val),
                   ),
                   _buildRadioQuestion(
                     number: "1.4.2",
-                    question: "Did the shortness of breath return after restarting the medication?",
+                    question: "Did the shortness of breath return after restarting the medication?*",
                     options: ['Yes', 'No', 'Not applicable'],
                     value: q142Answer,
                     onChanged: (val) => setState(() => q142Answer = val),
@@ -122,7 +122,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 // 1.5 Pre-existing lung conditions
                 _buildRadioQuestion(
                   number: "1.5",
-                  question: "Do you have any pre-existing lung conditions such as asthma, COPD, or prior lung disease?",
+                  question: "Do you have any pre-existing lung conditions such as asthma, COPD, or prior lung disease?*",
                   options: ['Yes', 'No'],
                   value: q15Answer,
                   onChanged: (val) => setState(() => q15Answer = val),
@@ -131,7 +131,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 // 1.6 Recent infection/exposure
                 _buildRadioQuestion(
                   number: "1.6",
-                  question: "Have you recently had a respiratory infection or been exposed to dust, smoke, or allergens?",
+                  question: "Have you recently had a respiratory infection or been exposed to dust, smoke, or allergens?*",
                   options: ['Yes', 'No'],
                   value: q16Answer,
                   onChanged: (val) => setState(() => q16Answer = val),
@@ -231,9 +231,29 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
   }
 
   // ✅ SIMPLIFIED: Button enables after Q1 only
-  bool _isComplete() {
-    return q1Answer != null;
+ bool _isComplete() {
+
+  // Main question mandatory
+  if (q1Answer == null) return false;
+
+  // If No/Unknown → enough
+  if (q1Answer != 'Yes') return true;
+
+  // Followups mandatory except 1.2
+  if (q11Answer == null) return false;
+  if (q13Answer == null) return false;
+  if (q14Answer == null) return false;
+  if (q15Answer == null) return false;
+  if (q16Answer == null) return false;
+
+  // If 1.4 = Yes → 1.4.1 and 1.4.2 mandatory
+  if (q14Answer == 'Yes') {
+    if (q141Answer == null) return false;
+    if (q142Answer == null) return false;
   }
+
+  return true;
+}
 
   // ✅ YES-ONLY SAVING: Only "Yes" answers go to DB
   void _saveRespiratory() async {

@@ -108,7 +108,7 @@ void initState() {
         "regimen_id": selectedRegimenId,
         "time_since_value": int.tryParse(_timeValueController.text ?? '') ?? 0,
         "time_since_unit": selectedTimeUnit ?? "Months",
-        "is_fdc": (isFdc ?? false).toString(),
+        "is_fdc": isFdc == true ? "Yes" : "No",
         "brand_name": _brandNameController.text ?? "",
         "batch_number": _batchNumberController.text ?? "",
         "dose_description": _doseController.text ?? "",
@@ -119,7 +119,10 @@ void initState() {
         "previous_regimen_details": _prevDetailsController.text ?? "",
         "duration_previous_regimen": int.tryParse(_prevDurationController.text ?? '') ?? 0,
         }),
-      ).timeout(const Duration(seconds: 10));
+      ) 
+     .timeout(const Duration(seconds: 10));
+     print("Status: ${response.statusCode}");
+print("Response: ${response.body}");
 
       if (response.statusCode == 200) {
   final data = jsonDecode(response.body);
@@ -307,8 +310,9 @@ const SizedBox(height: 20),
                     SwitchListTile(
                       title: const Text("• Are you taking FDC?"),
                       subtitle: const Text("(Fixed Dose Combination)"),
-                      value: isFdc ?? false,
+                      value: isFdc,
                       onChanged: (v) {
+                        print("FDC SWITCH VALUE: $v");
   setState(() {
     isFdc = v;
 
