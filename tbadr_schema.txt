@@ -132,9 +132,11 @@ CREATE TABLE system_types (
     ) NOT NULL,
     symptom_name VARCHAR(100) NOT NULL,
     symptom_present ENUM('Yes','No') NOT NULL,
-    severity ENUM('mild','moderate','severe') NOT NULL,
+    severity ENUM('mild','moderate','severe','life thretening','N/A' ) NOT NULL,
     constraint system_report_fk FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+); 
+ALTER TABLE system_types 
+MODIFY COLUMN severity ENUM('asymptomatic','mild','moderate','severe','life threatening') not null;
 ALTER TABLE system_types 
 MODIFY COLUMN symptom_present ENUM('Yes', 'No', 'Not sure', 'Not applicable') NOT NULL;
 
@@ -255,3 +257,120 @@ CREATE TABLE investigations (
 );
 
 ALTER TABLE system_types ADD COLUMN duration_weeks INT;
+CREATE TABLE system_master (
+  system_id INT PRIMARY KEY,
+  system_name VARCHAR(100) UNIQUE NOT NULL
+);
+INSERT INTO system_master (system_id, system_name) VALUES (1, 'Respiratory'), (2, 'Gastrointestinal'), (3, 'Centralnervous'), (4, 'Cardiovascular'), (5, 'Psychiatric'), (6, 'Musculoskeletal'), (7, 'SkinSubcutaneous'), (8, 'Ocular'), (9, 'Auditory'), (10, 'Hematological'), (11, 'Endocrine'), (12, 'Metabolic'), (13, 'Renal'), (14, 'Genitourinary');
+
+ALTER TABLE system_types 
+ADD COLUMN system_master_id INT NULL;
+ALTER TABLE system_types 
+ADD COLUMN regimen_type ENUM('FLD','SLD') NOT NULL;
+ALTER TABLE system_types 
+ADD CONSTRAINT fk_system_master
+FOREIGN KEY (system_master_id) REFERENCES system_master(system_id) on UPDATE CASCADE on DELETE CASCADE;
+
+ALTER TABLE system_types 
+MODIFY COLUMN system_name ENUM(
+'Gastrointestinal',
+'SkinSubcutaneous',
+'Centralnervous',
+'Musculoskeletal',
+'Peripheral nervous',
+'Respiratory',
+'Hematological',
+'Cardiovascular',
+'Ocular',
+'Miscellaneous',
+'Psychiatric',
+'Genitourinary',
+
+-- NEW SLD SYSTEMS
+'Auditory',
+'Endocrine',
+'Metabolic',
+'Renal'
+);
+
+ALTER TABLE general_symptoms
+ADD INDEX idx_general_report_id(report_id);
+
+ALTER TABLE general_symptoms
+ADD CONSTRAINT fk_general_symptoms_reports
+FOREIGN KEY (report_id)
+REFERENCES reports(report_id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+CREATE TABLE investigations_sld (
+
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    report_id VARCHAR(50) NOT NULL,
+
+    category ENUM(
+        'Hematological',
+        'Metabolic',
+        'Renal'
+    ) NOT NULL,
+
+    test_name VARCHAR(255) NOT NULL,
+
+    test_value FLOAT DEFAULT NULL,
+
+    unit VARCHAR(50) DEFAULT NULL,
+
+    lower_limit_normal FLOAT DEFAULT NULL,
+
+    upper_limit_normal FLOAT DEFAULT NULL,
+
+    baseline_value FLOAT DEFAULT NULL,
+
+    associated_symptoms TEXT DEFAULT NULL,
+
+    clinical_severity ENUM(
+        'N/A',
+        'asymptomatic',
+        'mild',
+        'moderate',
+        'severe',
+        'life threatening'
+    ) DEFAULT 'N/A',
+
+    fever_present ENUM(
+        'Yes',
+        'No'
+    ) DEFAULT NULL,
+
+    after_drug_start ENUM(
+        'Yes',
+        'No'
+    ) DEFAULT NULL,
+
+    improved_after_stop ENUM(
+        'Yes',
+        'No'
+    ) DEFAULT NULL,
+
+    recurred_after_restart ENUM(
+        'Yes',
+        'No'
+    ) DEFAULT NULL,
+
+    regimen_type ENUM(
+        'SLD',
+        'FLD'
+    ) NOT NULL,
+
+    created_at TIMESTAMP
+    DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE investigations_sld
+ADD INDEX idx_investigations_sld_report_id(report_id);
+ALTER TABLE investigations_sld
+ADD CONSTRAINT fk_investigations_sld_reports
+FOREIGN KEY (report_id)
+REFERENCES reports(report_id)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
