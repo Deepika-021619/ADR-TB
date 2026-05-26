@@ -59,24 +59,47 @@ Causality: $causality
   // ===============================
   // 🔹 CAUSALITY LOGIC
   // ===============================
-  static String _calculateRespiratoryCausality(Map<String, String> data) {
+static String _calculateRespiratoryCausality(
+    Map<String, String> data) {
 
-    if (data['q13Answer'] == 'Yes') return 'UNLIKELY';
+  List<String> results = [];
 
-    if (data['q14Answer'] == 'Yes') {
-      if (data['q141Answer'] == 'Yes') {
-        if (data['q142Answer'] == 'Yes') return 'CERTAIN';
-        return 'PROBABLE';
+  // 1.3 → UNLIKELY
+  if (data['q13Answer'] == 'Yes') {
+    results.add('UNLIKELY');
+  }
+
+  // 1.4 → POSSIBLE / PROBABLE / CERTAIN
+  if (data['q14Answer'] == 'Yes') {
+
+    // 1.4.1
+    if (data['q141Answer'] == 'Yes') {
+
+      // 1.4.2
+      if (data['q142Answer'] == 'Yes') {
+        results.add('CERTAIN');
+      } else {
+        results.add('PROBABLE');
       }
-      return 'POSSIBLE';
-    }
 
-    if (data['q15Answer'] == 'Yes' || data['q16Answer'] == 'Yes') {
-      return 'CONDITIONAL';
+    } else {
+      results.add('POSSIBLE');
     }
+  }
 
+  // 1.5 + 1.6 → CONDITIONAL
+  if (data['q15Answer'] == 'Yes' ||
+      data['q16Answer'] == 'Yes') {
+
+    results.add('CONDITIONAL');
+  }
+
+  if (results.isEmpty) {
     return 'UNKNOWN';
   }
+
+  return results.join(', ');
+}
   // ===============================
 // 🔹 GI CAUSALITY
 // ===============================
