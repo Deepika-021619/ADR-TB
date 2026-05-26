@@ -26,6 +26,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
     if (val.contains("mild")) return "mild";
     if (val.contains("moderate")) return "moderate";
     if (val.contains("severe")) return "severe";
+    if (val.contains("life threatening") || val.contains("life")) return "life threatening";
 
     return "mild"; // fallback
   }
