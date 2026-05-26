@@ -1249,7 +1249,8 @@ print("🔥 SYSTEMS: $systems");
 
    if (systems.containsKey('Respiratory')) {
 
-  final List<dynamic> respList = systems['Respiratory'];
+  final List<dynamic> respList =
+    systems['Respiratory'] ?? [];
 
   Map<String, String> resp = {};
 
