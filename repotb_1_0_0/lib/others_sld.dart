@@ -231,20 +231,22 @@ print(systemsRaw);
         ],
       ),
     );
+    } catch (e) {
 
-  } catch (e) {
+  if (!mounted) return;
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
+  ScaffoldMessenger.of(context)
+      .showSnackBar(
 
-      SnackBar(
+    SnackBar(
 
-        content: Text(
-          'PDF generation failed: $e',
-        ),
+      content: Text(
+        'PDF generation failed: $e',
       ),
-    );
-  }
+    ),
+  );
+}
+  
 },
 
             icon: const Icon(Icons.download),
