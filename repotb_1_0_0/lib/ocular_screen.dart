@@ -426,35 +426,48 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
   }
 
   // 12. COLOR VISION (same pattern)
-bool isGrade0 = q123Severity?.contains('Grade 0') == true;
+   // 12. COLOR VISION
+if (q12Answer == 'Yes') {
 
-yesSymptoms.add({
-  'name': isGrade0
-      ? 'Color Vision Change (grade0)'   // 👈 MUST be here
-      : 'Color Vision Change',
-  'severity': _mapSeverityToBackend(q123Severity),
-  'extra': 'Ishihara: ${q122Plates ?? 'Not tested'}',
-});
+  bool isGrade0 =
+      q123Severity?.contains('Grade 0') == true;
 
-    if (q124Answer == 'Yes') yesSymptoms.add({
-  'name': 'Color vision after medication',
-  'severity': 'mild',
-});
+  yesSymptoms.add({
+    'name': isGrade0
+        ? 'Color Vision Change (grade0)'
+        : 'Color Vision Change',
+    'severity': _mapSeverityToBackend(q123Severity),
+    'extra': 'Ishihara: ${q122Plates ?? 'Not tested'}',
+  });
 
-if (q125Answer == 'Yes') yesSymptoms.add({
-  'name': 'Pre-existing color vision issues',
-  'severity': 'mild',
-});
+  if (q124Answer == 'Yes') {
+    yesSymptoms.add({
+      'name': 'Color vision after medication',
+      'severity': 'mild',
+    });
+  }
 
-if (q126Answer == 'Yes') yesSymptoms.add({
-  'name': 'Color vision improved after stopping',
-  'severity': 'mild',
-});
+  if (q125Answer == 'Yes') {
+    yesSymptoms.add({
+      'name': 'Pre-existing color vision issues',
+      'severity': 'mild',
+    });
+  }
 
-if (q127Answer == 'Yes') yesSymptoms.add({
-  'name': 'Color vision returned after restart',
-  'severity': 'mild',
-});
+  if (q126Answer == 'Yes') {
+    yesSymptoms.add({
+      'name': 'Color vision improved after stopping',
+      'severity': 'mild',
+    });
+  }
+
+  if (q127Answer == 'Yes') {
+    yesSymptoms.add({
+      'name': 'Color vision returned after restart',
+      'severity': 'mild',
+    });
+  }
+}
 
   // 13. PATCHY VISION LOSS
   if (q13Answer == 'Yes') {
