@@ -81,7 +81,7 @@ class _GenitourinaryScreenState extends State<GenitourinaryScreen> {
                     'Mild / Asymptomatic – Blood detected only on lab tests or microscopy; no treatment was required.',
                     'Moderate – Symptomatic blood in urine; may require urinary catheter or bladder irrigation; limits instrumental activities of daily living.',
                     'Severe – Gross visible blood in urine; may require transfusion, IV medications, or hospitalization; elective invasive procedures may be needed; limits self-care activities.',
-                    'Life-threatening – Massive hematuria causing hemodynamic compromise; urgent invasive intervention required.'
+                    'Life threatening – Massive hematuria causing hemodynamic compromise; urgent invasive intervention required.'
                   ],
                   value: q212Severity,
                   onChanged: (val) => setState(() => q212Severity = val),

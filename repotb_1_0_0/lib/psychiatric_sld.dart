@@ -405,7 +405,7 @@ class _PsychiatricSLDScreenState
   'Mild – Mild unusual thoughts or brief perceptual disturbances',
   'Moderate – Hallucinations/delusions with noticeable impact',
   'Severe – Marked psychotic symptoms with major impairment',
-  'Life-threatening – Risk of harm requiring urgent intervention',
+  'Life threatening – Risk of harm requiring urgent intervention',
 ],
                   value: q101Severity,
                   isRequired: true,

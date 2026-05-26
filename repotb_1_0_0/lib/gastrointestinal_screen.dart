@@ -154,7 +154,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                     'Mild- 1-2 episodes in 24 hours',
                     'Moderate - 3–5 episodes in 24 hours',
                     'Severe - 6 or more episodes in 24 hours or required medical attention',
-                    'Life-threatening - Required urgent medical intervention'
+                    'Life threatening - Required urgent medical intervention'
                   ],
                   value: q31Answer,
                   onChanged: (val) => setState(() => q31Answer = val),
@@ -218,7 +218,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                     'Mild – Occasional symptoms; occasional use of stool softeners, laxatives, dietary changes, or enema',
                     'Moderate – Persistent symptoms requiring regular use of laxatives or enemas; interferes with routine daily activities',
                     'Severe – Severe constipation requiring manual evacuation; interferes with self-care activities',
-                    'Life-threatening – Required urgent medical intervention'
+                    'Life threatening – Required urgent medical intervention'
                   ],
                   value: q51Answer,
                   onChanged: (val) => setState(() => q51Answer = val),
@@ -250,7 +250,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                     'Mild – Fewer than 4 additional stools per day over baseline',
                     'Moderate – 4 to 6 additional stools per day over baseline',
                     'Severe – 7 or more additional stools per day over baseline or required hospitalization',
-                    'Life-threatening – Required urgent medical intervention'
+                    'Life threatening – Required urgent medical intervention'
                   ],
                   value: q61Answer,
                   onChanged: (val) => setState(() => q61Answer = val),
@@ -282,7 +282,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                     'Asymptomatic – Detected only on clinical examination or investigations; no treatment required',
                     'Mild to Moderate – Symptoms present; medical treatment required (e.g., antacids, PPIs)',
                     'Severe – Significant difficulty eating or maintaining nutrition; required hospitalization or nutritional support',
-                    'Life-threatening – Required urgent medical or surgical intervention'
+                    'Life threatening – Required urgent medical or surgical intervention'
                   ],
                   value: q71Answer,
                   onChanged: (val) => setState(() => q71Answer = val),

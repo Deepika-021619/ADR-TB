@@ -22,7 +22,7 @@ String normalizeSeverity(String? input) {
   if (input == null) return "mild";
 
   final val = input.toLowerCase();
-  if (val.contains("life")) return "life-threatening";
+  if (val.contains("life threatening")) return "life threatening";
   if (val.contains("mild")) return "mild";
   if (val.contains("moderate")) return "moderate";
   if (val.contains("severe")) return "severe";

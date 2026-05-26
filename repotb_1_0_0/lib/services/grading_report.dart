@@ -787,7 +787,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
@@ -853,7 +853,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
@@ -932,7 +932,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
@@ -991,7 +991,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
@@ -1043,7 +1043,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
@@ -1146,7 +1146,7 @@ else if (sev.contains("severe")) {
   g["severity"] = "GRADE 3";
 }
 else if (
-    sev.contains("life") ||
+    sev.contains("life threatening") ||
     sev.contains("grade 4")) {
 
   g["severity"] = "GRADE 4";
