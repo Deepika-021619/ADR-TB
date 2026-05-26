@@ -115,6 +115,8 @@ class _GastrointestinalSLDScreenState
                 options: ['Yes', 'No'],
 
                 value: q17Answer,
+                isRequired: true,
+                showError: showErrors,
 
                 onChanged: (v) =>
                     setState(() => q17Answer = v),
@@ -139,6 +141,8 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q171Severity,
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -167,6 +171,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q173AfterTherapy,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -195,6 +202,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q175Improved,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -215,6 +225,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q176Restarted,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -254,6 +267,9 @@ class _GastrointestinalSLDScreenState
                 ],
 
                 value: q18Answer,
+                isRequired: true,
+                  showError: showErrors,
+
 
                 onChanged: (v) =>
                     setState(() => q18Answer = v),
@@ -289,6 +305,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q181Severity,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q181Severity = v),
@@ -309,6 +328,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q182AfterTherapy,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q182AfterTherapy = v),
@@ -328,6 +350,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q183Improved,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -348,6 +373,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q184Restarted,
+
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -376,6 +404,9 @@ class _GastrointestinalSLDScreenState
 
                 value: q19Answer,
 
+                isRequired: true,
+                showError: showErrors,
+
                 onChanged: (v) =>
                     setState(() => q19Answer = v),
               ),
@@ -399,6 +430,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q191Severity,
+
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -428,6 +462,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q193AfterTherapy,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q193AfterTherapy = v),
@@ -455,6 +492,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q195Improved,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -475,6 +515,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q196Restarted,
+
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -511,6 +554,9 @@ class _GastrointestinalSLDScreenState
 
                 value: q20Answer,
 
+                isRequired: true,
+                showError: showErrors,
+
                 onChanged: (v) =>
                     setState(() => q20Answer = v),
               ),
@@ -536,6 +582,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q201Severity,
+
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -565,6 +614,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q203AfterTherapy,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q203AfterTherapy = v),
@@ -593,6 +645,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q205Improved,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q205Improved = v),
@@ -613,6 +668,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q206Restarted,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q206Restarted = v),
@@ -631,6 +689,9 @@ class _GastrointestinalSLDScreenState
                 options: ['Yes', 'No'],
 
                 value: q21Answer,
+                isRequired: true,
+                  showError: showErrors,
+
 
                 onChanged: (v) =>
                     setState(() => q21Answer = v),
@@ -657,6 +718,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q211Severity,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -686,6 +750,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q213AfterTherapy,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q213AfterTherapy = v),
@@ -714,6 +781,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q215Improved,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q215Improved = v),
@@ -734,6 +804,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q216Restarted,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q216Restarted = v),
@@ -752,6 +825,9 @@ class _GastrointestinalSLDScreenState
                 options: ['Yes', 'No'],
 
                 value: q22Answer,
+
+                isRequired: true,
+                showError: showErrors,
 
                 onChanged: (v) =>
                     setState(() => q22Answer = v),
@@ -778,6 +854,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q221Severity,
+                  isRequired: true,
+                  showError: showErrors,
+
 
                   onChanged: (v) =>
                       setState(() =>
@@ -807,6 +886,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q223AfterTherapy,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q223AfterTherapy = v),
@@ -835,6 +917,9 @@ class _GastrointestinalSLDScreenState
 
                   value: q225Improved,
 
+                  isRequired: true,
+                  showError: showErrors,
+
                   onChanged: (v) =>
                       setState(() =>
                           q225Improved = v),
@@ -854,6 +939,9 @@ class _GastrointestinalSLDScreenState
                   ],
 
                   value: q226Restarted,
+
+                  isRequired: true,
+                  showError: showErrors,
 
                   onChanged: (v) =>
                       setState(() =>
@@ -881,38 +969,137 @@ class _GastrointestinalSLDScreenState
 
         onPressed: () async {
 
-          final saved =
-              await _saveGastrointestinal();
+  if (!_validateForm()) {
 
-          if (!mounted) return;
+    setState(() => showErrors = true);
 
-          ScaffoldMessenger.of(context)
-              .showSnackBar(
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
 
-            SnackBar(
+      const SnackBar(
 
-              content: Text(
+        content: Text(
+          "Please answer all required questions",
+        ),
 
-                saved
-                    ? "Symptoms saved successfully"
-                    : "No symptoms selected",
-              ),
+        backgroundColor: Colors.red,
+      ),
+    );
 
-              backgroundColor:
-                  saved
-                      ? Colors.green
-                      : Colors.orange,
-            ),
-          );
+    return;
+  }
 
-          widget.onSaveAndComplete();
-        },
+  final saved =
+      await _saveGastrointestinal();
+
+  if (!mounted) return;
+
+  ScaffoldMessenger.of(context)
+      .showSnackBar(
+
+    const SnackBar(
+
+      content: Text(
+        "Symptoms saved successfully",
+      ),
+
+      backgroundColor: Colors.green,
+    ),
+  );
+
+  widget.onSaveAndComplete();
+},
       ),
     );
   }
 
        /// ================= SAVE =================
+bool _validateForm() {
 
+  // ---------- Q17 ----------
+  if (q17Answer == null) return false;
+
+  if (q17Answer == 'Yes') {
+
+    if (q171Severity == null) return false;
+    if (q172Duration.text.isEmpty) return false;
+    if (q173AfterTherapy == null) return false;
+    if (q174BeforeTherapy == null) return false;
+    if (q175Improved == null) return false;
+    if (q176Restarted == null) return false;
+    if (q177Diet == null) return false;
+    if (q178OtherMeds == null) return false;
+  }
+
+  // ---------- Q18 ----------
+  if (q18Answer == null) return false;
+
+  if (q18Answer == 'Yes') {
+
+    if (q18Duration.text.isEmpty) return false;
+    if (q181Severity == null) return false;
+    if (q182AfterTherapy == null) return false;
+    if (q183Improved == null) return false;
+    if (q184Restarted == null) return false;
+    if (q185OtherMeds == null) return false;
+  }
+
+  // ---------- Q19 ----------
+  if (q19Answer == null) return false;
+
+  if (q19Answer == 'Yes') {
+
+    if (q191Severity == null) return false;
+    if (q192Duration.text.isEmpty) return false;
+    if (q193AfterTherapy == null) return false;
+    if (q194BeforeTherapy == null) return false;
+    if (q195Improved == null) return false;
+    if (q196Restarted == null) return false;
+    if (q197History == null) return false;
+    if (q198Stress == null) return false;
+  }
+
+  // ---------- Q20 ----------
+  if (q20Answer == null) return false;
+
+  if (q20Answer == 'Yes') {
+
+    if (q201Severity == null) return false;
+    if (q202Duration.text.isEmpty) return false;
+    if (q203AfterTherapy == null) return false;
+    if (q204BeforeTherapy == null) return false;
+    if (q205Improved == null) return false;
+    if (q206Restarted == null) return false;
+  }
+
+  // ---------- Q21 ----------
+  if (q21Answer == null) return false;
+
+  if (q21Answer == 'Yes') {
+
+    if (q211Severity == null) return false;
+    if (q212Duration.text.isEmpty) return false;
+    if (q213AfterTherapy == null) return false;
+    if (q214BeforeTherapy == null) return false;
+    if (q215Improved == null) return false;
+    if (q216Restarted == null) return false;
+  }
+
+  // ---------- Q22 ----------
+  if (q22Answer == null) return false;
+
+  if (q22Answer == 'Yes') {
+
+    if (q221Severity == null) return false;
+    if (q222Duration.text.isEmpty) return false;
+    if (q223AfterTherapy == null) return false;
+    if (q224BeforeTherapy == null) return false;
+    if (q225Improved == null) return false;
+    if (q226Restarted == null) return false;
+  }
+
+  return true;
+}
       Future<bool> _saveGastrointestinal() async {
 
   List<Map<String, String>> symptoms = [];
@@ -1250,101 +1437,149 @@ class _GastrointestinalSLDScreenState
 
     return 'moderate';
   }
-  Widget _buildRadioQuestion({
-    required String number,
-    required String question,
-    required List<String> options,
-    required String? value,
-    required Function(String) onChanged,
-  }) {
+    Widget _buildRadioQuestion({
+  required String number,
+  required String question,
+  required List<String> options,
+  required String? value,
+  required Function(String) onChanged,
 
-    return Card(
+  bool isRequired = false,
+  bool showError = false,
+}) {
 
-      margin:
-          const EdgeInsets.only(bottom: 16),
+  return Card(
 
-      child: Padding(
+    margin:
+        const EdgeInsets.only(bottom: 16),
 
-        padding: const EdgeInsets.all(16),
+    shape: RoundedRectangleBorder(
 
-        child: Column(
+      side: BorderSide(
 
-          crossAxisAlignment:
-              CrossAxisAlignment.start,
+        color: (
+                showError &&
+                value == null
+            )
 
-          children: [
+            ? Colors.red
 
-            RichText(
+            : Colors.transparent,
 
-              text: TextSpan(
+        width: 2,
+      ),
 
-                text: "$number. $question",
+      borderRadius:
+          BorderRadius.circular(12),
+    ),
 
-                style: const TextStyle(
+    child: Padding(
 
-                  color: Colors.black,
+      padding: const EdgeInsets.all(16),
 
-                  fontWeight: FontWeight.bold,
+      child: Column(
 
-                  fontSize: 16,
-                ),
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
 
-                children: const [
+        children: [
 
-                  TextSpan(
+          RichText(
+
+            text: TextSpan(
+
+              text: "$number. $question",
+
+              style: const TextStyle(
+
+                color: Colors.black,
+
+                fontWeight: FontWeight.bold,
+
+                fontSize: 16,
+              ),
+
+              children: [
+
+                if (isRequired)
+
+                  const TextSpan(
 
                     text: " *",
 
                     style: TextStyle(
-                      color: Colors.red,
+                      color:Colors.red,
                     ),
-                  )
-                ],
+                  ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          ...options.map(
+
+            (e) => RadioListTile<String>(
+
+              value: e,
+
+              groupValue: value,
+
+              title: Text(e),
+
+              onChanged: (v) =>
+                  onChanged(v!),
+            ),
+          ),
+
+          // VALIDATION MESSAGE
+          if (showError && value == null)
+
+            const Padding(
+
+              padding:
+                  EdgeInsets.only(top: 6),
+
+              child: Text(
+
+                "This question is required",
+
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 12,
+                ),
               ),
             ),
-
-            const SizedBox(height: 12),
-
-            ...options.map(
-
-              (e) => RadioListTile<String>(
-
-                value: e,
-
-                groupValue: value,
-
-                title: Text(e),
-
-                onChanged: (v) =>
-                    onChanged(v!),
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildYesNoQuestion(
-    String number,
-    String question,
-    String? value,
-    Function(String) onChanged,
-  ) {
+Widget _buildYesNoQuestion(
+  String number,
+  String question,
+  String? value,
+  Function(String) onChanged,
+) {
 
-    return _buildRadioQuestion(
+  return _buildRadioQuestion(
 
-      number: number,
+    number: number,
 
-      question: question,
+    question: question,
 
-      options: ['Yes', 'No'],
+    options: ['Yes', 'No'],
 
-      value: value,
+    value: value,
 
-      onChanged: onChanged,
-    );
-  }
+    isRequired: true,
+
+    showError: showErrors,
+
+    onChanged: onChanged,
+  );
+}
 
   Widget _buildTextField({
     required String label,

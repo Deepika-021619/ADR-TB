@@ -222,11 +222,16 @@ print(systemsRaw);
 
           TextButton(
 
-            onPressed: () =>
-                Navigator.pop(dialogContext),
+  onPressed: () {
 
-            child: const Text('Close'),
-          ),
+    Navigator.pop(dialogContext);
+
+    widget.onSaveAndComplete();
+
+  },
+
+  child: const Text('Close'),
+),
         ],
       ),
     );
