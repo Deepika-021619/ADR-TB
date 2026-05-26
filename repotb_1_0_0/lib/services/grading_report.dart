@@ -1222,13 +1222,28 @@ No GI symptoms reported.
     // ===============================
     // SYSTEMS
     // ===============================
-  final systemsRaw = reportData['systems'];
+final List<dynamic> systemsList =
+    reportData['systems'] ?? [];
 
-Map<String, dynamic> systems = {};
+Map<String, List<dynamic>> systems = {};
 
-if (systemsRaw is Map<String, dynamic>) {
-  systems = systemsRaw;
+for (var item in systemsList) {
+
+  final systemName = item['system_name'];
+
+  if (systemName == null) continue;
+
+  systems.putIfAbsent(systemName, () => []);
+
+  systems[systemName]!.add({
+    'symptom': item['symptom_name'],
+    'symptom_present': item['symptom_present'],
+    'severity': item['severity'],
+    'duration_weeks': item['duration_weeks'],
+  });
 }
+
+print("🔥 GROUPED SYSTEMS: $systems");
 
 print("🔥 SYSTEMS: $systems");
 
