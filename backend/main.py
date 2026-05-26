@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
+import os
+
+
 
 from backend.database import get_db_connection
 from backend.patients import router as patient_router
@@ -19,6 +22,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.investigation_sld import router as investigations_sld_router
 from backend.general_symptoms_sld import router as general_symptoms_sld_router
 from .other_side_effects import router as other_side_effects_router
+
+
 
 
 app = FastAPI(title="ADR Backend", version="1.0.0")
@@ -64,7 +69,14 @@ def db_test():
     except Exception as e:
         return {"error": str(e)}
 
-
+@app.get("/check-host")
+def check_host():
+    return {
+        "HOST": repr(os.getenv("AZURE_MYSQL_HOST")),
+        "PORT": repr(os.getenv("AZURE_MYSQL_PORT")),
+        "DB": repr(os.getenv("AZURE_MYSQL_NAME")),
+        "USER": repr(os.getenv("AZURE_MYSQL_USER")),
+    }
 
 
     
