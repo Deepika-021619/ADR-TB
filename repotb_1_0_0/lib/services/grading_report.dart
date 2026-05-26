@@ -1314,6 +1314,13 @@ print("🔥 SYSTEMS: $systems");
 if (symptom.toLowerCase().contains("returned")) {
   resp["q142Answer"] = "Yes";
 }
+if (symptom.toLowerCase().contains("condition")) {
+  resp["q15Answer"] = "Yes";
+}
+
+if (symptom.toLowerCase().contains("trigger")) {
+  resp["q16Answer"] = "Yes";
+}
   }
 
   // defaults (VERY IMPORTANT)
