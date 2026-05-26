@@ -775,11 +775,23 @@ static String _gradePlatelets(double plt) {
     // ✅ ONLY exact match (main symptom)
 if (raw == base || raw == "$base symptoms") {
 
-  if (severity == "mild") g["severity"] = "GRADE 1";
-  if (severity == "moderate") g["severity"] = "GRADE 2";
-  if (severity == "severe") g["severity"] = "GRADE 3";
-  if (severity == "life threatening") g["severity"] = "GRADE 4";
+  final sev = severity.toString().toLowerCase();
 
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
   if (duration != null) {
     g["duration"] = duration.toString();
   }
@@ -829,10 +841,23 @@ if (raw == base || raw == "$base symptoms") {
   (base == "seizure" &&
     (raw == "seizure" || raw == "seizures"))
 ) {
-  if (severity == "mild") g["severity"] = "GRADE 1";
-  if (severity == "moderate") g["severity"] = "GRADE 2";
-  if (severity == "severe") g["severity"] = "GRADE 3";
-  if (severity == "life threatening") g["severity"] = "GRADE 4";
+final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
 
   if (duration != null) {
     g["duration"] = duration.toString();
@@ -895,10 +920,23 @@ if (list.isEmpty) return {};
 
   // 🔹 Normal mapping (only if not Grade 0)
   else {
-    if (severity == "mild") g["severity"] = "GRADE 1";
-    if (severity == "moderate") g["severity"] = "GRADE 2";
-    if (severity == "severe") g["severity"] = "GRADE 3";
-    if (severity == "life threatening") g["severity"] = "GRADE 4";
+final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
   }
 }
 
@@ -941,10 +979,23 @@ if (list.isEmpty) return {};
       (base == "itching" && raw == "itching") ||
       (base == "jaundice" && raw == "jaundice")
     ) {
-      if (severity == "mild") g["severity"] = "GRADE 1";
-      if (severity == "moderate") g["severity"] = "GRADE 2";
-      if (severity == "severe") g["severity"] = "GRADE 3";
-      if (severity == "life threatening") g["severity"] = "GRADE 4";
+      final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
     }
 
     // ✅ causality flags
@@ -980,10 +1031,23 @@ if (list.isEmpty) return {};
 
     // MAIN symptom
     if (raw == base) {
-      if (severity == "mild") g["severity"] = "GRADE 1";
-      if (severity == "moderate") g["severity"] = "GRADE 2";
-      if (severity == "severe") g["severity"] = "GRADE 3";
-      if (severity == "life threatening") g["severity"] = "GRADE 4";
+      final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
     }
 
     // causality flags
@@ -1019,9 +1083,17 @@ if (list.isEmpty) return {};
 
     // MAIN symptom
     if (raw == base) {
-      if (severity == "mild") g["severity"] = "GRADE 1";
-      if (severity == "moderate") g["severity"] = "GRADE 2";
-      if (severity == "severe") g["severity"] = "GRADE 3";
+     final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
 
       if (duration != null) {
         g["duration"] = duration.toString();
@@ -1062,10 +1134,23 @@ if (list.isEmpty) return {};
 
     // MAIN
     if (raw == base || raw.contains(base)) {
-      if (severity == "mild") g["severity"] = "GRADE 1";
-      if (severity == "moderate") g["severity"] = "GRADE 2";
-      if (severity == "severe") g["severity"] = "GRADE 3";
-      if (severity == "life threatening") g["severity"] = "GRADE 4";
+     final sev = severity.toString().toLowerCase();
+
+if (sev.contains("mild")) {
+  g["severity"] = "GRADE 1";
+}
+else if (sev.contains("moderate")) {
+  g["severity"] = "GRADE 2";
+}
+else if (sev.contains("severe")) {
+  g["severity"] = "GRADE 3";
+}
+else if (
+    sev.contains("life") ||
+    sev.contains("grade 4")) {
+
+  g["severity"] = "GRADE 4";
+}
 
       if (duration != null) {
         g["duration"] = duration.toString();
@@ -1313,13 +1398,6 @@ print("🔥 SYSTEMS: $systems");
 
 if (symptom.toLowerCase().contains("returned")) {
   resp["q142Answer"] = "Yes";
-}
-if (symptom.toLowerCase().contains("condition")) {
-  resp["q15Answer"] = "Yes";
-}
-
-if (symptom.toLowerCase().contains("trigger")) {
-  resp["q16Answer"] = "Yes";
 }
   }
 
