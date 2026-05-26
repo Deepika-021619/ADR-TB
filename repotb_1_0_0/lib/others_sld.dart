@@ -105,8 +105,9 @@ class _OtherSideEffectsScreenState
           TextButton(
 
             onPressed: () {
-
+            if (mounted) {
               Navigator.pop(context);
+            }
 
               widget.onSaveAndComplete();
             },
@@ -123,8 +124,6 @@ class _OtherSideEffectsScreenState
             ),
 
            onPressed: () async {
-
-  Navigator.pop(context);
 
   try {
 
@@ -201,7 +200,7 @@ print(systemsRaw);
 
       context: context,
 
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
 
         title: const Text(
           'TB ADR Report Preview',
@@ -224,7 +223,7 @@ print(systemsRaw);
           TextButton(
 
             onPressed: () =>
-                Navigator.pop(context),
+                Navigator.pop(dialogContext),
 
             child: const Text('Close'),
           ),
