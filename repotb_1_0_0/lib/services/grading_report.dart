@@ -914,7 +914,7 @@ if (list.isEmpty) return {};
 ) {
 
   // 🔥 PRIORITY: Grade 0 (must come first)
-  if (raw.contains("Grade 0")) {
+  if (raw.contains("Asymptomatic")) {
     g["severity"] = "GRADE 0";
   }
 

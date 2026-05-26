@@ -45,7 +45,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
               _buildRadioQuestion(
                 number: "1",
                 question: "Have you experienced any new or worsening shortness of breath since starting the treatment?*",
-                options: ['Yes', 'No', 'Unknown'],
+                options: ['Yes', 'No'],
                 value: q1Answer,
                 onChanged: (val) => setState(() => q1Answer = val),
               ),
