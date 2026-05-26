@@ -112,7 +112,10 @@ void initState() {
         "brand_name": _brandNameController.text ?? "",
         "batch_number": _batchNumberController.text ?? "",
         "dose_description": _doseController.text ?? "",
-        "tablet_frequency": _frequencyController.text ?? "",
+        "tablet_frequency":
+           _frequencyController.text.trim().isEmpty
+        ? null
+        : int.parse(_frequencyController.text.trim()),
         "oral_only": _oralOnlyValue ?? "Yes",           
         "injectable_details": _injectableController.text ?? "",
         "previous_regimen_taken": _prevRegimenValue ?? "No",  
