@@ -69,14 +69,6 @@ def db_test():
     except Exception as e:
         return {"error": str(e)}
 
-@app.get("/check-host")
-def check_host():
-    return {
-        "HOST": repr(os.getenv("AZURE_MYSQL_HOST")),
-        "PORT": repr(os.getenv("AZURE_MYSQL_PORT")),
-        "DB": repr(os.getenv("AZURE_MYSQL_NAME")),
-        "USER": repr(os.getenv("AZURE_MYSQL_USER")),
-    }
 
 
     
