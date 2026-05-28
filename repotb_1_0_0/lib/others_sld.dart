@@ -219,18 +219,22 @@ print(systemsRaw);
         ),
 
         actions: [
-
-          TextButton(
+TextButton(
 
   onPressed: () {
 
     Navigator.pop(dialogContext);
 
-    widget.onSaveAndComplete();
+    Navigator.pop(context);
 
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(
+      '/',
+      (route) => false,
+    );
   },
 
-  child: const Text('Close'),
+  child: const Text('Finish'),
 ),
         ],
       ),

@@ -16,6 +16,7 @@ class StartReportScreen extends StatefulWidget {
 }
 
 class _StartReportScreenState extends State<StartReportScreen> {
+  
 
   
   
@@ -30,11 +31,40 @@ class _StartReportScreenState extends State<StartReportScreen> {
   final TextEditingController nikshayIdController = TextEditingController();
   final TextEditingController patientIdController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  
+  final TextEditingController otherPlaceController = TextEditingController();
 
   String? gender = null;
   String? state = null;
   bool isLoading = false;
+
+  Widget requiredLabel(String text) {
+
+  return RichText(
+
+    text: TextSpan(
+
+      text: text,
+
+      style: const TextStyle(
+
+        color: Colors.black87,
+        fontSize: 16,
+      ),
+
+      children: const [
+
+        TextSpan(
+
+          text: " *",
+
+          style: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -67,10 +97,13 @@ class _StartReportScreenState extends State<StartReportScreen> {
     return;
   }
   
-  if (selectedState == null) {
-    _showError(" Please select State!");
-    return;
-  }
+  if (selectedState == null ||
+    (selectedState == "Other" &&
+     otherPlaceController.text.trim().isEmpty)) {
+
+  _showError(" Please select Place!");
+  return;
+}
 
   setState(() => isLoading = true);
 
@@ -89,7 +122,9 @@ class _StartReportScreenState extends State<StartReportScreen> {
           "p_id": patientIdController.text.trim().isEmpty ? "" : patientIdController.text.trim(),
           "p_name": nameController.text.trim(),
           "gender": gender ?? "Not Specified",
-          "p_state": state ?? "Not Selected",
+          "p_state": state == "Other"
+    ? otherPlaceController.text.trim()
+    : state ?? "Not Selected",
         }),
       ).timeout(const Duration(seconds: 5));
 
@@ -227,7 +262,7 @@ appBar: AppBar(
             TextField(
               controller: nikshayIdController,
               decoration: InputDecoration(
-                labelText: "Nikshay ID *",
+                label: requiredLabel("Nikshay ID"),
                 hintText: "Required",
                 prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
                 border: OutlineInputBorder(),
@@ -239,7 +274,7 @@ appBar: AppBar(
             TextField(
               controller: patientIdController,
               decoration: InputDecoration(
-                labelText: "Patient ID",
+                label: requiredLabel("Patient ID"),
                 prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
                 border: OutlineInputBorder(),
               ),
@@ -250,7 +285,7 @@ appBar: AppBar(
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: "Patient Name *",
+                label: requiredLabel("Patient Name"),
                 hintText: "Required",
                 prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
                 border: OutlineInputBorder(),
@@ -261,10 +296,10 @@ appBar: AppBar(
 
             DropdownButtonFormField<String>(
               value: gender,
-              hint: const Text("Select Gender *"),
+              hint: requiredLabel("Select Gender"),
               decoration: InputDecoration(
-                labelText: "Gender",
-                 prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
+                label: requiredLabel("Gender"),
+                prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
                 border: OutlineInputBorder(),
               ),
               items: const [
@@ -279,48 +314,248 @@ appBar: AppBar(
 
             const SizedBox(height: 15),
 
-          DropdownButtonFormField<String>(
-            value: state,
-            hint: const Text("Select State *"),
-            decoration: InputDecoration(
-              labelText: "State",
-               prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
-              border: OutlineInputBorder(),
-            ),
-            items: const [
-              DropdownMenuItem(value: "Andra Pradesh", child: Text("Andra Pradesh")),
-              DropdownMenuItem(value: "Arunachal Pradesh", child: Text("Arunachal Pradesh")),
-              DropdownMenuItem(value: "Assam", child: Text("Assam")),
-              DropdownMenuItem(value: "Bihar", child: Text("Bihar")),
-              DropdownMenuItem(value: "Chhattisgarh", child: Text("Chhattisgarh")),
-              DropdownMenuItem(value: "Goa", child: Text("Goa")),
-              DropdownMenuItem(value: "Gujarat", child: Text("Gujarat")),
-              DropdownMenuItem(value: "Haryana", child: Text("Haryana")),
-              DropdownMenuItem(value: "Himachal Pradesh", child: Text("Himachal Pradesh")),
-              DropdownMenuItem(value: "Jharkhand", child: Text("Jharkhand")),
-              DropdownMenuItem(value: "Karnataka", child: Text("Karnataka")),
-              DropdownMenuItem(value: "Kerala", child: Text("Kerala")),
-              DropdownMenuItem(value: "Madhya Pradesh", child: Text("Madhya Pradesh")),
-              DropdownMenuItem(value: "Maharashtra", child: Text("Maharashtra")),
-              DropdownMenuItem(value: "Manipur", child: Text("Manipur")),
-              DropdownMenuItem(value: "Meghalaya", child: Text("Meghalaya")),
-              DropdownMenuItem(value: "Mizoram", child: Text("Mizoram")),
-              DropdownMenuItem(value: "Nagaland", child: Text("Nagaland")),
-              DropdownMenuItem(value: "Odisha", child: Text("Odisha")),
-              DropdownMenuItem(value: "Punjab", child: Text("Punjab")),
-              DropdownMenuItem(value: "Rajasthan", child: Text("Rajasthan")),
-              DropdownMenuItem(value: "Sikkim", child: Text("Sikkim")),
-              DropdownMenuItem(value:"Tamil Nadu",child :Text("Tamil Nadu")),
-              DropdownMenuItem(value:"Telangana",child :Text("Telangana")),
-              DropdownMenuItem(value: "Tripura", child: Text("Tripura")),
-              DropdownMenuItem(value: "Uttar Pradesh", child: Text("Uttar Pradesh")),
-              DropdownMenuItem(value: "Uttarakhand", child: Text("Uttarakhand")),
-              DropdownMenuItem(value:"West Bengal",child :Text ("West Bengal")),
-            ],
-            onChanged: (value) {
-              setState(() => state = value ?? "");
-            },
+            DropdownButtonFormField<String>(
+
+  value: state,
+
+  hint: RichText(
+
+    text: const TextSpan(
+
+      text: "Select Place",
+
+      style: TextStyle(
+        color: Colors.black54,
+        fontSize: 16,
+      ),
+
+      children: [
+
+        TextSpan(
+
+          text: " *",
+
+          style: TextStyle(
+            color: Colors.red,
           ),
+        ),
+      ],
+    ),
+  ),
+
+  decoration: InputDecoration(
+
+    label: RichText(
+
+      text: const TextSpan(
+
+        text: "Place",
+
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+        ),
+
+        children: [
+
+          TextSpan(
+
+            text: " *",
+
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
+        ],
+      ),
+    ),
+
+    prefixIcon: Icon(
+      Icons.location_on,
+      color: Colors.red.shade400,
+    ),
+
+    border: const OutlineInputBorder(),
+  ),
+
+  items: const [
+
+    DropdownMenuItem(
+      value: "Andra Pradesh",
+      child: Text("Andra Pradesh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Arunachal Pradesh",
+      child: Text("Arunachal Pradesh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Assam",
+      child: Text("Assam"),
+    ),
+
+    DropdownMenuItem(
+      value: "Bihar",
+      child: Text("Bihar"),
+    ),
+
+    DropdownMenuItem(
+      value: "Chhattisgarh",
+      child: Text("Chhattisgarh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Goa",
+      child: Text("Goa"),
+    ),
+
+    DropdownMenuItem(
+      value: "Gujarat",
+      child: Text("Gujarat"),
+    ),
+
+    DropdownMenuItem(
+      value: "Haryana",
+      child: Text("Haryana"),
+    ),
+
+    DropdownMenuItem(
+      value: "Himachal Pradesh",
+      child: Text("Himachal Pradesh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Jharkhand",
+      child: Text("Jharkhand"),
+    ),
+
+    DropdownMenuItem(
+      value: "Karnataka",
+      child: Text("Karnataka"),
+    ),
+
+    DropdownMenuItem(
+      value: "Kerala",
+      child: Text("Kerala"),
+    ),
+
+    DropdownMenuItem(
+      value: "Madhya Pradesh",
+      child: Text("Madhya Pradesh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Maharashtra",
+      child: Text("Maharashtra"),
+    ),
+
+    DropdownMenuItem(
+      value: "Manipur",
+      child: Text("Manipur"),
+    ),
+
+    DropdownMenuItem(
+      value: "Meghalaya",
+      child: Text("Meghalaya"),
+    ),
+
+    DropdownMenuItem(
+      value: "Mizoram",
+      child: Text("Mizoram"),
+    ),
+
+    DropdownMenuItem(
+      value: "Nagaland",
+      child: Text("Nagaland"),
+    ),
+
+    DropdownMenuItem(
+      value: "Odisha",
+      child: Text("Odisha"),
+    ),
+
+    DropdownMenuItem(
+      value: "Punjab",
+      child: Text("Punjab"),
+    ),
+
+    DropdownMenuItem(
+      value: "Rajasthan",
+      child: Text("Rajasthan"),
+    ),
+
+    DropdownMenuItem(
+      value: "Sikkim",
+      child: Text("Sikkim"),
+    ),
+
+    DropdownMenuItem(
+      value: "Tamil Nadu",
+      child: Text("Tamil Nadu"),
+    ),
+
+    DropdownMenuItem(
+      value: "Telangana",
+      child: Text("Telangana"),
+    ),
+
+    DropdownMenuItem(
+      value: "Tripura",
+      child: Text("Tripura"),
+    ),
+
+    DropdownMenuItem(
+      value: "Uttar Pradesh",
+      child: Text("Uttar Pradesh"),
+    ),
+
+    DropdownMenuItem(
+      value: "Uttarakhand",
+      child: Text("Uttarakhand"),
+    ),
+
+    DropdownMenuItem(
+      value: "West Bengal",
+      child: Text("West Bengal"),
+    ),
+
+    DropdownMenuItem(
+      value: "Other",
+      child: Text("Other"),
+    ),
+  ],
+
+  onChanged: (value) {
+
+    setState(() {
+
+      state = value;
+
+      if (value != "Other") {
+        otherPlaceController.clear();
+      }
+    });
+  },
+),
+
+// 🔹 SHOW OTHER TEXTBOX
+if (state == "Other") ...[
+
+  const SizedBox(height: 15),
+
+  TextField(
+
+    controller: otherPlaceController,
+
+   decoration: InputDecoration(
+
+  label: requiredLabel("Enter Place"),
+
+  border: const OutlineInputBorder(),
+),
+  ),
+],
             const SizedBox(height: 25),
 
             isLoading
