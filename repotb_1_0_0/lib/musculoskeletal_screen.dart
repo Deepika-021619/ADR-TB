@@ -54,7 +54,7 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
               _buildRadioQuestion(
                 number: "19",
                 question: "Have you experienced any joint pain since starting the medication?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q19Answer,
                 onChanged: (val) => setState(() => q19Answer = val),
               ),
@@ -85,10 +85,10 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
                   value: q193Joints,
                   onChanged: (val) => setState(() => q193Joints = val),
                 ),
-                _buildRadioQuestion(number: "19.4", question: "Did the joint pain begin after starting the therapy?", options: ['Yes', 'No', 'Not sure'], value: q194Answer, onChanged: (val) => setState(() => q194Answer = val)),
-                _buildRadioQuestion(number: "19.5", question: "Did you experience similar joint pain before starting treatment?", options: ['Yes', 'No'], value: q195Answer, onChanged: (val) => setState(() => q195Answer = val)),
-                _buildRadioQuestion(number: "19.6", question: "Did the joint pain improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q196Answer, onChanged: (val) => setState(() => q196Answer = val)),
-                _buildRadioQuestion(number: "19.7", question: "Did the joint pain reappear after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q197Answer, onChanged: (val) => setState(() => q197Answer = val)),
+                _buildRadioQuestion(number: "19.4", question: "Did the joint pain begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q194Answer, onChanged: (val) => setState(() => q194Answer = val)),
+                _buildRadioQuestion(number: "19.5", question: "Did you experience similar joint pain before starting treatment?", options: ['Yes', 'No','Unknown'], value: q195Answer, onChanged: (val) => setState(() => q195Answer = val)),
+                _buildRadioQuestion(number: "19.6", question: "Did the joint pain improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q196Answer, onChanged: (val) => setState(() => q196Answer = val)),
+                _buildRadioQuestion(number: "19.7", question: "Did the joint pain reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q197Answer, onChanged: (val) => setState(() => q197Answer = val)),
               ],
 
               // 20. ARTHRITIS
@@ -96,7 +96,7 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
               _buildRadioQuestion(
                 number: "20",
                 question: "Have you experienced joint pain with swelling, redness, warmth, or stiffness since starting the medication?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q20Answer,
                 onChanged: (val) => setState(() => q20Answer = val),
               ),
@@ -127,10 +127,10 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
                   value: q203Joints,
                   onChanged: (val) => setState(() => q203Joints = val),
                 ),
-                _buildRadioQuestion(number: "20.4", question: "Did the arthritis begin after starting the therapy?", options: ['Yes', 'No', 'Not sure'], value: q204Answer, onChanged: (val) => setState(() => q204Answer = val)),
-                _buildRadioQuestion(number: "20.5", question: "Did you have similar joint problems before starting treatment?", options: ['Yes', 'No'], value: q205Answer, onChanged: (val) => setState(() => q205Answer = val)),
-                _buildRadioQuestion(number: "20.6", question: "Did the symptoms improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q206Answer, onChanged: (val) => setState(() => q206Answer = val)),
-                _buildRadioQuestion(number: "20.7", question: "Did the symptoms reappear after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q207Answer, onChanged: (val) => setState(() => q207Answer = val)),
+                _buildRadioQuestion(number: "20.4", question: "Did the arthritis begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q204Answer, onChanged: (val) => setState(() => q204Answer = val)),
+                _buildRadioQuestion(number: "20.5", question: "Did you have similar joint problems before starting treatment?", options: ['Yes', 'No','Unknown'], value: q205Answer, onChanged: (val) => setState(() => q205Answer = val)),
+                _buildRadioQuestion(number: "20.6", question: "Did the symptoms improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q206Answer, onChanged: (val) => setState(() => q206Answer = val)),
+                _buildRadioQuestion(number: "20.7", question: "Did the symptoms reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q207Answer, onChanged: (val) => setState(() => q207Answer = val)),
               ],
               
               const SizedBox(height: 100),

@@ -108,7 +108,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "2",
                 question: "Have you experienced nausea (a feeling of wanting to vomit) since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q2Answer,
                 onChanged: (val) => setState(() => q2Answer = val),
               ),
@@ -129,12 +129,12 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   onChanged: (val) => setState(() => q21Answer = val),
                 ),
                 _buildNumericQuestion(number: "2.2", question: "How long have you had nausea (in weeks)?", value: q22Weeks, onChanged: (val) => setState(() => q22Weeks = val)),
-                _buildRadioQuestion(number: "2.3", question: "Did the nausea begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q23Answer, onChanged: (val) => setState(() => q23Answer = val)),
-                _buildRadioQuestion(number: "2.4", question: "Did you experience nausea before starting treatment?", options: ['Yes', 'No'], value: q24Answer, onChanged: (val) => setState(() => q24Answer = val)),
-                _buildRadioQuestion(number: "2.5", question: "Did the nausea improve after stopping/reducing the medication or after you received treatment for it?", options: ['Yes', 'No', 'Not applicable'], value: q25Answer, onChanged: (val) => setState(() => q25Answer = val)),
-                _buildRadioQuestion(number: "2.6", question: "Did the nausea return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q26Answer, onChanged: (val) => setState(() => q26Answer = val)),
-                _buildRadioQuestion(number: "2.7", question: "Have you recently changed your diet?", options: ['Yes', 'No'], value: q27Diet, onChanged: (val) => setState(() => q27Diet = val)),
-                _buildRadioQuestion(number: "2.8", question: "Are you taking any other medications that may cause nausea?", options: ['Yes', 'No'], value: q28OtherMeds, onChanged: (val) => setState(() => q28OtherMeds = val)),
+                _buildRadioQuestion(number: "2.3", question: "Did the nausea begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q23Answer, onChanged: (val) => setState(() => q23Answer = val)),
+                _buildRadioQuestion(number: "2.4", question: "Did you experience nausea before starting treatment?", options: ['Yes', 'No','Unknown'], value: q24Answer, onChanged: (val) => setState(() => q24Answer = val)),
+                _buildRadioQuestion(number: "2.5", question: "Did the nausea improve after stopping/reducing the medication or after you received treatment for it?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q25Answer, onChanged: (val) => setState(() => q25Answer = val)),
+                _buildRadioQuestion(number: "2.6", question: "Did the nausea return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q26Answer, onChanged: (val) => setState(() => q26Answer = val)),
+                _buildRadioQuestion(number: "2.7", question: "Have you recently changed your diet?", options: ['Yes', 'No','Unknown',], value: q27Diet, onChanged: (val) => setState(() => q27Diet = val)),
+                _buildRadioQuestion(number: "2.8", question: "Are you taking any other medications that may cause nausea?", options: ['Yes', 'No','Unknown'], value: q28OtherMeds, onChanged: (val) => setState(() => q28OtherMeds = val)),
               ],
               
               // 3. VOMITING
@@ -142,7 +142,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "3",
                 question: "Have you experienced vomiting since starting the treatment?",
-                options: ['Yes', 'No', 'Not sure'],
+                options: ['Yes', 'No','Unknown', 'Not sure'],
                 value: q3Answer,
                 onChanged: (val) => setState(() => q3Answer = val),
               ),
@@ -160,10 +160,10 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   value: q31Answer,
                   onChanged: (val) => setState(() => q31Answer = val),
                 ),
-                _buildRadioQuestion(number: "3.2", question: "Did the vomiting begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q32Answer, onChanged: (val) => setState(() => q32Answer = val)),
-                _buildRadioQuestion(number: "3.3", question: "Did it improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q33Answer, onChanged: (val) => setState(() => q33Answer = val)),
-                _buildRadioQuestion(number: "3.4", question: "Did it recur after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q34Answer, onChanged: (val) => setState(() => q34Answer = val)),
-                _buildRadioQuestion(number: "3.5", question: "Are you taking any other medications that may cause vomiting?", options: ['Yes', 'No'], value: q35OtherMeds, onChanged: (val) => setState(() => q35OtherMeds = val)),
+                _buildRadioQuestion(number: "3.2", question: "Did the vomiting begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q32Answer, onChanged: (val) => setState(() => q32Answer = val)),
+                _buildRadioQuestion(number: "3.3", question: "Did it improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q33Answer, onChanged: (val) => setState(() => q33Answer = val)),
+                _buildRadioQuestion(number: "3.4", question: "Did it recur after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q34Answer, onChanged: (val) => setState(() => q34Answer = val)),
+                _buildRadioQuestion(number: "3.5", question: "Are you taking any other medications that may cause vomiting?", options: ['Yes', 'No','Unknown'], value: q35OtherMeds, onChanged: (val) => setState(() => q35OtherMeds = val)),
               ],
 
               // 4. ABDOMINAL PAIN
@@ -171,7 +171,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "4",
                 question: "Have you experienced abdominal (stomach) pain since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q4Answer,
                 onChanged: (val) => setState(() => q4Answer = val),
               ),
@@ -191,12 +191,12 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   onChanged: (val) => setState(() => q41Answer = val),
                 ),
                 _buildNumericQuestion(number: "4.2", question: "How long have you had this abdominal pain (in weeks)?", value: q42Weeks, onChanged: (val) => setState(() => q42Weeks = val)),
-                _buildRadioQuestion(number: "4.3", question: "Did the abdominal pain begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q43Answer, onChanged: (val) => setState(() => q43Answer = val)),
-                _buildRadioQuestion(number: "4.4", question: "Did you have similar abdominal pain before starting treatment?", options: ['Yes', 'No'], value: q44Answer, onChanged: (val) => setState(() => q44Answer = val)),
-                _buildRadioQuestion(number: "4.5", question: "Did the pain improve after stopping or reducing the medication?", options: ['Yes', 'No', 'Not applicable'], value: q45Answer, onChanged: (val) => setState(() => q45Answer = val)),
-                _buildRadioQuestion(number: "4.6", question: "Did the pain return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q46Answer, onChanged: (val) => setState(() => q46Answer = val)),
-                _buildRadioQuestion(number: "4.7", question: "Do you have a history of gastrointestinal conditions such as ulcers, gastritis, or irritable bowel syndrome (IBS)?", options: ['Yes', 'No'], value: q47GIHistory, onChanged: (val) => setState(() => q47GIHistory = val)),
-                _buildRadioQuestion(number: "4.8", question: "Have you recently experienced significant stressful event?", options: ['Yes', 'No'], value: q48Stress, onChanged: (val) => setState(() => q48Stress = val)),
+                _buildRadioQuestion(number: "4.3", question: "Did the abdominal pain begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q43Answer, onChanged: (val) => setState(() => q43Answer = val)),
+                _buildRadioQuestion(number: "4.4", question: "Did you have similar abdominal pain before starting treatment?", options: ['Yes', 'No','Unknown'], value: q44Answer, onChanged: (val) => setState(() => q44Answer = val)),
+                _buildRadioQuestion(number: "4.5", question: "Did the pain improve after stopping or reducing the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q45Answer, onChanged: (val) => setState(() => q45Answer = val)),
+                _buildRadioQuestion(number: "4.6", question: "Did the pain return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q46Answer, onChanged: (val) => setState(() => q46Answer = val)),
+                _buildRadioQuestion(number: "4.7", question: "Do you have a history of gastrointestinal conditions such as ulcers, gastritis, or irritable bowel syndrome (IBS)?", options: ['Yes', 'No','Unknown', 'Unknown'], value: q47GIHistory, onChanged: (val) => setState(() => q47GIHistory = val)),
+                _buildRadioQuestion(number: "4.8", question: "Have you recently experienced significant stressful event?", options: ['Yes', 'No','Unknown', 'Unknown'], value: q48Stress, onChanged: (val) => setState(() => q48Stress = val)),
               ],
 
               // 5. CONSTIPATION
@@ -204,7 +204,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "5",
                 question: "Have you experienced constipation (difficulty passing stools or infrequent bowel movements) since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q5Answer,
                 onChanged: (val) => setState(() => q5Answer = val),
               ),
@@ -225,10 +225,10 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   onChanged: (val) => setState(() => q51Answer = val),
                 ),
                 _buildNumericQuestion(number: "5.2", question: "How long have you had constipation (in weeks)?", value: q52Weeks, onChanged: (val) => setState(() => q52Weeks = val)),
-                _buildRadioQuestion(number: "5.3", question: "Did the constipation begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q53Answer, onChanged: (val) => setState(() => q53Answer = val)),
-                _buildRadioQuestion(number: "5.4", question: "Did you have constipation before starting treatment?", options: ['Yes', 'No'], value: q54Answer, onChanged: (val) => setState(() => q54Answer = val)),
-                _buildRadioQuestion(number: "5.5", question: "Did the constipation improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No', 'Not applicable'], value: q55Answer, onChanged: (val) => setState(() => q55Answer = val)),
-                _buildRadioQuestion(number: "5.6", question: "Did the constipation return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q56Answer, onChanged: (val) => setState(() => q56Answer = val)),
+                _buildRadioQuestion(number: "5.3", question: "Did the constipation begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q53Answer, onChanged: (val) => setState(() => q53Answer = val)),
+                _buildRadioQuestion(number: "5.4", question: "Did you have constipation before starting treatment?", options: ['Yes', 'No','Unknown'], value: q54Answer, onChanged: (val) => setState(() => q54Answer = val)),
+                _buildRadioQuestion(number: "5.5", question: "Did the constipation improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q55Answer, onChanged: (val) => setState(() => q55Answer = val)),
+                _buildRadioQuestion(number: "5.6", question: "Did the constipation return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q56Answer, onChanged: (val) => setState(() => q56Answer = val)),
               ],
 
               // 6. DIARRHEA
@@ -236,7 +236,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "6",
                 question: "Have you experienced diarrhea (loose or frequent stools) since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q6Answer,
                 onChanged: (val) => setState(() => q6Answer = val),
               ),
@@ -257,10 +257,10 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   onChanged: (val) => setState(() => q61Answer = val),
                 ),
                 _buildNumericQuestion(number: "6.2", question: "How long have you had diarrhea (in weeks)?", value: q62Weeks, onChanged: (val) => setState(() => q62Weeks = val)),
-                _buildRadioQuestion(number: "6.3", question: "Did the diarrhea begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q63Answer, onChanged: (val) => setState(() => q63Answer = val)),
-                _buildRadioQuestion(number: "6.4", question: "Did you have diarrhea before starting treatment?", options: ['Yes', 'No'], value: q64Answer, onChanged: (val) => setState(() => q64Answer = val)),
-                _buildRadioQuestion(number: "6.5", question: "Did the diarrhea improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No', 'Not applicable'], value: q65Answer, onChanged: (val) => setState(() => q65Answer = val)),
-                _buildRadioQuestion(number: "6.6", question: "Did the diarrhea return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q66Answer, onChanged: (val) => setState(() => q66Answer = val)),
+                _buildRadioQuestion(number: "6.3", question: "Did the diarrhea begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q63Answer, onChanged: (val) => setState(() => q63Answer = val)),
+                _buildRadioQuestion(number: "6.4", question: "Did you have diarrhea before starting treatment?", options: ['Yes', 'No','Unknown'], value: q64Answer, onChanged: (val) => setState(() => q64Answer = val)),
+                _buildRadioQuestion(number: "6.5", question: "Did the diarrhea improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q65Answer, onChanged: (val) => setState(() => q65Answer = val)),
+                _buildRadioQuestion(number: "6.6", question: "Did the diarrhea return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q66Answer, onChanged: (val) => setState(() => q66Answer = val)),
               ],
 
               // 7. GASTRITIS
@@ -268,7 +268,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
               _buildRadioQuestion(
                 number: "7",
                 question: "Have you experienced symptoms of gastritis (such as upper abdominal discomfort, burning sensation, bloating, or indigestion) since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q7Answer,
                 onChanged: (val) => setState(() => q7Answer = val),
               ),
@@ -289,10 +289,10 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                   onChanged: (val) => setState(() => q71Answer = val),
                 ),
                 _buildNumericQuestion(number: "7.2", question: "How long have you had these symptoms (in weeks)?", value: q72Weeks, onChanged: (val) => setState(() => q72Weeks = val)),
-                _buildRadioQuestion(number: "7.3", question: "Did the symptoms begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q73Answer, onChanged: (val) => setState(() => q73Answer = val)),
-                _buildRadioQuestion(number: "7.4", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No'], value: q74Answer, onChanged: (val) => setState(() => q74Answer = val)),
-                _buildRadioQuestion(number: "7.5", question: "Did the symptoms improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No', 'Not applicable'], value: q75Answer, onChanged: (val) => setState(() => q75Answer = val)),
-                _buildRadioQuestion(number: "7.6", question: "Did the symptoms return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q76Answer, onChanged: (val) => setState(() => q76Answer = val)),
+                _buildRadioQuestion(number: "7.3", question: "Did the symptoms begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q73Answer, onChanged: (val) => setState(() => q73Answer = val)),
+                _buildRadioQuestion(number: "7.4", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No','Unknown'], value: q74Answer, onChanged: (val) => setState(() => q74Answer = val)),
+                _buildRadioQuestion(number: "7.5", question: "Did the symptoms improve after stopping or reducing the medication or by taking treatment for it?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q75Answer, onChanged: (val) => setState(() => q75Answer = val)),
+                _buildRadioQuestion(number: "7.6", question: "Did the symptoms return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q76Answer, onChanged: (val) => setState(() => q76Answer = val)),
               ],
               
               const SizedBox(height: 100), // Space for buttons

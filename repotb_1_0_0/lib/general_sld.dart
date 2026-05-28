@@ -262,7 +262,7 @@ class _GeneralSymptomsScreenState
                 question:
                     "Have you experienced unusual fatigue or weakness since starting the medication?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q34Answer,
 
@@ -326,7 +326,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not sure',
                   ],
 
@@ -349,7 +349,7 @@ class _GeneralSymptomsScreenState
                   question:
                       "Did you experience similar fatigue before treatment?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
 
                   value: q344Before,
 
@@ -372,7 +372,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -397,7 +397,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -422,7 +422,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -461,7 +461,7 @@ class _GeneralSymptomsScreenState
                 question:
                     "Have you lost weight after starting TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q35Answer,
 
@@ -519,7 +519,7 @@ class _GeneralSymptomsScreenState
                 question:
                     "Have you experienced fever since starting medication?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q36Answer,
 
@@ -581,7 +581,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not sure',
                   ],
 
@@ -604,7 +604,7 @@ class _GeneralSymptomsScreenState
                   question:
                       "Did you have similar fever before treatment?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
 
                   value: q364Before,
 
@@ -627,7 +627,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -652,7 +652,7 @@ class _GeneralSymptomsScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                    'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -681,7 +681,7 @@ _buildRadioQuestion(
   question:
       "Have you experienced any joint pain since starting the medication?",
 
-  options: ['Yes', 'No'],
+  options: ['Yes', 'No','Unknown'],
 
   value: q37Answer,
 
@@ -855,7 +855,7 @@ if (q37Answer == 'Yes') ...[
 
     options: [
       'Yes',
-      'No',
+      'No','Unknown',
       'Not sure',
     ],
 
@@ -878,7 +878,7 @@ if (q37Answer == 'Yes') ...[
     question:
         "Did you experience similar joint pain before treatment?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q375Before,
 
@@ -901,7 +901,7 @@ if (q37Answer == 'Yes') ...[
 
     options: [
       'Yes',
-      'No',
+      'No','Unknown',
       'Not applicable',
     ],
 
@@ -926,7 +926,7 @@ if (q37Answer == 'Yes') ...[
 
     options: [
       'Yes',
-      'No',
+      'No','Unknown',
       'Not applicable',
     ],
 
@@ -957,7 +957,7 @@ _buildRadioQuestion(
   question:
       "Have you had headaches after starting TB treatment?",
 
-  options: ['Yes', 'No'],
+  options: ['Yes', 'No','Unknown'],
 
   value: q38Answer,
 
@@ -1008,7 +1008,7 @@ if (q38Answer == 'Yes') ...[
     question:
         "Did the headache start after beginning TB treatment?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q382AfterStart,
 
@@ -1029,7 +1029,7 @@ if (q38Answer == 'Yes') ...[
     question:
         "Was the headache present before starting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q383Before,
 
@@ -1050,7 +1050,7 @@ if (q38Answer == 'Yes') ...[
     question:
         "Did the headache improve after stopping or adjusting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q384Improved,
 
@@ -1071,7 +1071,7 @@ if (q38Answer == 'Yes') ...[
     question:
         "Did the headache reappear after restarting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q385Reappeared,
 
@@ -1100,7 +1100,7 @@ _buildRadioQuestion(
   question:
       "Have you experienced itching after starting TB treatment?",
 
-  options: ['Yes', 'No'],
+  options: ['Yes', 'No','Unknown'],
 
   value: q39Answer,
 
@@ -1151,7 +1151,7 @@ if (q39Answer == 'Yes') ...[
     question:
         "Did itching start after beginning TB treatment?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q392AfterStart,
 
@@ -1172,7 +1172,7 @@ if (q39Answer == 'Yes') ...[
     question:
         "Was itching present before starting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q393Before,
 
@@ -1193,7 +1193,7 @@ if (q39Answer == 'Yes') ...[
     question:
         "Did itching improve after stopping or adjusting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q394Improved,
 
@@ -1214,7 +1214,7 @@ if (q39Answer == 'Yes') ...[
     question:
         "Did itching reappear after restarting medication?",
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: q395Reappeared,
 

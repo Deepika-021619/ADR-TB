@@ -52,7 +52,7 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
               _buildRadioQuestion(
                 number: "17",
                 question: "Have you been feeling low, depressed, or down since starting the medication?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q17Answer,
                 onChanged: (val) => setState(() => q17Answer = val),
               ),
@@ -87,10 +87,10 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
                   value: q173Interference,
                   onChanged: (val) => setState(() => q173Interference = val),
                 ),
-                _buildRadioQuestion(number: "17.4", question: "Did this feeling begin after starting the therapy?", options: ['Yes', 'No', 'Not sure'], value: q174Answer, onChanged: (val) => setState(() => q174Answer = val)),
-                _buildRadioQuestion(number: "17.5", question: "Did you experience low mood before starting the therapy?", options: ['Yes', 'No'], value: q175Answer, onChanged: (val) => setState(() => q175Answer = val)),
-                _buildRadioQuestion(number: "17.6", question: "Did your mood improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q176Answer, onChanged: (val) => setState(() => q176Answer = val)),
-                _buildRadioQuestion(number: "17.7", question: "Did the low mood return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q177Answer, onChanged: (val) => setState(() => q177Answer = val)),
+                _buildRadioQuestion(number: "17.4", question: "Did this feeling begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q174Answer, onChanged: (val) => setState(() => q174Answer = val)),
+                _buildRadioQuestion(number: "17.5", question: "Did you experience low mood before starting the therapy?", options: ['Yes', 'No','Unknown'], value: q175Answer, onChanged: (val) => setState(() => q175Answer = val)),
+                _buildRadioQuestion(number: "17.6", question: "Did your mood improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q176Answer, onChanged: (val) => setState(() => q176Answer = val)),
+                _buildRadioQuestion(number: "17.7", question: "Did the low mood return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q177Answer, onChanged: (val) => setState(() => q177Answer = val)),
               ],
 
               // 18. PSYCHOSIS
@@ -98,7 +98,7 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
               _buildRadioQuestion(
                 number: "18",
                 question: "Have you experienced any unusual thoughts, hallucinations (seeing or hearing things that others do not), severe confusion, or loss of touch with reality since starting the medication? (PSYCHOSIS)",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q18Answer,
                 onChanged: (val) => setState(() => q18Answer = val),
               ),
@@ -119,10 +119,10 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
                   value: q181Severity,
                   onChanged: (val) => setState(() => q181Severity = val),
                 ),
-                _buildRadioQuestion(number: "18.2", question: "Did these symptoms begin after starting the therapy?", options: ['Yes', 'No', 'Not sure'], value: q182Answer, onChanged: (val) => setState(() => q182Answer = val)),
-                _buildRadioQuestion(number: "18.3", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No'], value: q183Answer, onChanged: (val) => setState(() => q183Answer = val)),
-                _buildRadioQuestion(number: "18.4", question: "Did the symptoms improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q184Answer, onChanged: (val) => setState(() => q184Answer = val)),
-                _buildRadioQuestion(number: "18.5", question: "Did the symptoms reappear after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q185Answer, onChanged: (val) => setState(() => q185Answer = val)),
+                _buildRadioQuestion(number: "18.2", question: "Did these symptoms begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q182Answer, onChanged: (val) => setState(() => q182Answer = val)),
+                _buildRadioQuestion(number: "18.3", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No','Unknown'], value: q183Answer, onChanged: (val) => setState(() => q183Answer = val)),
+                _buildRadioQuestion(number: "18.4", question: "Did the symptoms improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q184Answer, onChanged: (val) => setState(() => q184Answer = val)),
+                _buildRadioQuestion(number: "18.5", question: "Did the symptoms reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q185Answer, onChanged: (val) => setState(() => q185Answer = val)),
               ],
               
               const SizedBox(height: 100),

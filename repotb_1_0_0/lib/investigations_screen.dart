@@ -81,7 +81,7 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
               _buildRadioQuestion(
                 number: "29",
                 question: "Did you get your liver function tests (LFTs) done recently?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q29Answer,
                 onChanged: (val) => setState(() => q29Answer = val),
               ),
@@ -98,7 +98,7 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
               _buildRadioQuestion(
                 number: "30",
                 question: "Did you get your hemoglobin (Hgb) tested recently?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q30Answer,
                 onChanged: (val) => setState(() => q30Answer = val),
               ),
@@ -135,7 +135,7 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
               _buildRadioQuestion(
                 number: "31",
                 question: "Have you had your platelet count checked recently or experienced any unusual bleeding/bruising since starting the medication? (Thrombocytopenic purpura)",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q31Answer,
                 onChanged: (val) => setState(() => q31Answer = val),
               ),
@@ -172,7 +172,7 @@ class _InvestigationsScreenState extends State<InvestigationsScreen> {
               _buildRadioQuestion(
                 number: "32",
                 question: "Have you had your serum uric acid tested recently? (Hyperuricemia)",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q32Answer,
                 onChanged: (val) => setState(() => q32Answer = val),
               ),

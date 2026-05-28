@@ -48,7 +48,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
               _buildRadioQuestion(
                 number: "1",
                 question: "Have you experienced any new or worsening shortness of breath since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No', 'Unknown'],
                 value: q1Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -100,7 +100,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 _buildRadioQuestion(
                   number: "1.4",
                   question: "Did the shortness of breath begin or worsen after starting the medication?",
-                  options: ['Yes', 'No', 'Not sure'],
+                  options: ['Yes', 'No', 'Unknown'],
                   value: q14Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -138,7 +138,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 _buildRadioQuestion(
                   number: "1.5",
                   question: "Do you have any pre-existing lung conditions such as asthma, COPD, or prior lung disease?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q15Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -149,7 +149,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
                 _buildRadioQuestion(
                   number: "1.6",
                   question: "Have you recently had a respiratory infection or been exposed to dust, smoke, or allergens?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No', 'Unknown'],
                   value: q16Answer,
                   isRequired: true,
                   showError: showErrors,

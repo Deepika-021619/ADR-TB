@@ -123,7 +123,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Did you get your hemoglobin (Hgb) tested recently?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q28Answer,
 
@@ -172,7 +172,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Have you had your platelet count checked recently or experienced unusual bleeding/bruising since starting medication?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q29Answer,
 
@@ -221,7 +221,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Did you get your Absolute Neutrophil Count (ANC) tested recently?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q30Answer,
 
@@ -265,7 +265,7 @@ class _InvestigationsSLDScreenState
                   question:
                       "Did you have fever (temperature ≥38°C) along with low neutrophil count?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
 
                   value: q302Answer,
 
@@ -290,7 +290,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Have you experienced symptoms suggestive of lactic acidosis after starting TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q31Answer,
 
@@ -374,7 +374,7 @@ class _InvestigationsSLDScreenState
                   question:
                       "Did you undergo a blood lactate test?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
 
                   value: q312Answer,
 
@@ -452,7 +452,7 @@ class _InvestigationsSLDScreenState
                   number: "31.4",
                   question:
                       "Did this occur after starting Linezolid?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q314Answer,
                   onChanged: (val) {
                     setState(() {
@@ -465,7 +465,7 @@ class _InvestigationsSLDScreenState
                   number: "31.5",
                   question:
                       "Did the condition improve after stopping or reducing Linezolid?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q315Answer,
                   onChanged: (val) {
                     setState(() {
@@ -478,7 +478,7 @@ class _InvestigationsSLDScreenState
                   number: "31.6",
                   question:
                       "Did it recur after restarting Linezolid?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q316Answer,
                   onChanged: (val) {
                     setState(() {
@@ -501,7 +501,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Have you had your serum uric acid tested recently?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q32Answer,
 
@@ -550,7 +550,7 @@ class _InvestigationsSLDScreenState
                 question:
                     "Have you had a recent kidney function test (serum creatinine)?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q33Answer,
 

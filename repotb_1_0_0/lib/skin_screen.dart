@@ -50,7 +50,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
               _buildRadioQuestion(
                 number: "14",
                 question: "Have you developed any red, raised, or flat skin rash (maculopapular rash) since starting the medication?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q14Answer,
                 onChanged: (val) => setState(() => q14Answer = val),
               ),
@@ -79,12 +79,12 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                   onChanged: (v) => setState(() => q142Severity = v),
                 ),
 
-                _buildRadioQuestion(number: "14.3", question: "Did the rash begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q143Answer, onChanged: (v) => setState(() => q143Answer = v)),
-                _buildRadioQuestion(number: "14.4", question: "Did you have a similar rash before starting treatment?", options: ['Yes', 'No'], value: q144Answer, onChanged: (v) => setState(() => q144Answer = v)),
-                _buildRadioQuestion(number: "14.5", question: "Did the rash improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q145Answer, onChanged: (v) => setState(() => q145Answer = v)),
-                _buildRadioQuestion(number: "14.6", question: "Did the rash reappear after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q146Answer, onChanged: (v) => setState(() => q146Answer = v)),
-                _buildRadioQuestion(number: "14.7", question: "Used new skincare products?", options: ['Yes', 'No'], value: q147Products, onChanged: (v) => setState(() => q147Products = v)),
-                _buildRadioQuestion(number: "14.8", question: "Known allergies?", options: ['Yes', 'No'], value: q148Allergies, onChanged: (v) => setState(() => q148Allergies = v)),
+                _buildRadioQuestion(number: "14.3", question: "Did the rash begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q143Answer, onChanged: (v) => setState(() => q143Answer = v)),
+                _buildRadioQuestion(number: "14.4", question: "Did you have a similar rash before starting treatment?", options: ['Yes', 'No','Unknown'], value: q144Answer, onChanged: (v) => setState(() => q144Answer = v)),
+                _buildRadioQuestion(number: "14.5", question: "Did the rash improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q145Answer, onChanged: (v) => setState(() => q145Answer = v)),
+                _buildRadioQuestion(number: "14.6", question: "Did the rash reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q146Answer, onChanged: (v) => setState(() => q146Answer = v)),
+                _buildRadioQuestion(number: "14.7", question: "Used new skincare products?", options: ['Yes', 'No','Unknown'], value: q147Products, onChanged: (v) => setState(() => q147Products = v)),
+                _buildRadioQuestion(number: "14.8", question: "Known allergies?", options: ['Yes', 'No','Unknown'], value: q148Allergies, onChanged: (v) => setState(() => q148Allergies = v)),
               ],
 
               // ===== 15 =====
@@ -92,7 +92,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
               _buildRadioQuestion(
                 number: "15",
                 question: "Have you experienced itching, hives, petechiae, or dermatitis?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q15Answer,
                 onChanged: (val) => setState(() => q15Answer = val),
               ),
@@ -108,10 +108,10 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                   onChanged: (v)=>setState(()=>q151Severity=v),
                 ),
 
-                _buildRadioQuestion(number: "15.2", question: "After medication?", options: ['Yes', 'No', 'Not sure'], value: q152Answer, onChanged: (v) => setState(() => q152Answer = v)),
-                _buildRadioQuestion(number: "15.3", question: "Pre-existing?", options: ['Yes', 'No'], value: q153Answer, onChanged: (v) => setState(() => q153Answer = v)),
-                _buildRadioQuestion(number: "15.4", question: "Improved after stopping?", options: ['Yes', 'No', 'Not applicable'], value: q154Answer, onChanged: (v) => setState(() => q154Answer = v)),
-                _buildRadioQuestion(number: "15.5", question: "Recurred after restart?", options: ['Yes', 'No', 'Not applicable'], value: q155Answer, onChanged: (v) => setState(() => q155Answer = v)),
+                _buildRadioQuestion(number: "15.2", question: "After medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q152Answer, onChanged: (v) => setState(() => q152Answer = v)),
+                _buildRadioQuestion(number: "15.3", question: "Pre-existing?", options: ['Yes', 'No','Unknown'], value: q153Answer, onChanged: (v) => setState(() => q153Answer = v)),
+                _buildRadioQuestion(number: "15.4", question: "Improved after stopping?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q154Answer, onChanged: (v) => setState(() => q154Answer = v)),
+                _buildRadioQuestion(number: "15.5", question: "Recurred after restart?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q155Answer, onChanged: (v) => setState(() => q155Answer = v)),
               ],
 
               // ===== 16 =====
@@ -119,7 +119,7 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
               _buildRadioQuestion(
                 number: "16",
                 question: "Have you noticed yellowing of your skin or eyes, or dark urine?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q16Answer,
                 onChanged: (val) => setState(() => q16Answer = val),
               ),
@@ -143,10 +143,10 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
                   onChanged: (v)=>setState(()=>q162Symptoms=v),
                 ),
 
-                _buildRadioQuestion(number: "16.3", question: "After medication?", options: ['Yes', 'No', 'Not sure'], value: q163Answer, onChanged: (v) => setState(() => q163Answer = v)),
-                _buildRadioQuestion(number: "16.4", question: "Pre-existing?", options: ['Yes', 'No'], value: q164Answer, onChanged: (v) => setState(() => q164Answer = v)),
-                _buildRadioQuestion(number: "16.5", question: "Improved after stopping?", options: ['Yes', 'No', 'Not applicable'], value: q165Answer, onChanged: (v) => setState(() => q165Answer = v)),
-                _buildRadioQuestion(number: "16.6", question: "Recurred after restart?", options: ['Yes', 'No', 'Not applicable'], value: q166Answer, onChanged: (v) => setState(() => q166Answer = v)),
+                _buildRadioQuestion(number: "16.3", question: "After medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q163Answer, onChanged: (v) => setState(() => q163Answer = v)),
+                _buildRadioQuestion(number: "16.4", question: "Pre-existing?", options: ['Yes', 'No','Unknown'], value: q164Answer, onChanged: (v) => setState(() => q164Answer = v)),
+                _buildRadioQuestion(number: "16.5", question: "Improved after stopping?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q165Answer, onChanged: (v) => setState(() => q165Answer = v)),
+                _buildRadioQuestion(number: "16.6", question: "Recurred after restart?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q166Answer, onChanged: (v) => setState(() => q166Answer = v)),
               ],
 
               const SizedBox(height: 100),

@@ -65,7 +65,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
               _buildRadioQuestion(
                 number: "11",
                 question: "Have you experienced any blurring or decrease in vision since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q11Answer,
                 onChanged: (val) => setState(() => q11Answer = val),
               ),
@@ -86,7 +86,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
                   onChanged2: (val) => setState(() => q111LeftEye = val),
                 ),
                 
-                _buildRadioQuestion(number: "11.2", question: "Baseline visual acuity available?", options: ['Yes', 'No'], value: q112Baseline, onChanged: (val) => setState(() => q112Baseline = val)),
+                _buildRadioQuestion(number: "11.2", question: "Baseline visual acuity available?", options: ['Yes', 'No','Unknown'], value: q112Baseline, onChanged: (val) => setState(() => q112Baseline = val)),
                 _buildRadioQuestion(
                   number: "11.3",
                   question: "How severe was your vision affected when measured using Snellen's chart?",
@@ -98,12 +98,12 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
                   value: q113Severity,
                   onChanged: (val) => setState(() => q113Severity = val),
                 ),
-                _buildRadioQuestion(number: "11.4", question: "Did the visual symptoms begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q114Answer, onChanged: (val) => setState(() => q114Answer = val)),
-                _buildRadioQuestion(number: "11.5", question: "Did you have similar visual problems before starting treatment?", options: ['Yes', 'No'], value: q115Answer, onChanged: (val) => setState(() => q115Answer = val)),
-                _buildRadioQuestion(number: "11.6", question: "Did vision improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q116Answer, onChanged: (val) => setState(() => q116Answer = val)),
-                _buildRadioQuestion(number: "11.7", question: "Did symptoms return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q117Answer, onChanged: (val) => setState(() => q117Answer = val)),
-                _buildRadioQuestion(number: "11.8", question: "Do you have any pre-existing eye conditions (e.g., glaucoma, cataract)?", options: ['Yes', 'No'], value: q118Answer, onChanged: (val) => setState(() => q118Answer = val)),
-                _buildRadioQuestion(number: "11.9", question: "Have you recently experienced visual strain or bright light exposure?", options: ['Yes', 'No'], value: q119Strain, onChanged: (val) => setState(() => q119Strain = val)),
+                _buildRadioQuestion(number: "11.4", question: "Did the visual symptoms begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q114Answer, onChanged: (val) => setState(() => q114Answer = val)),
+                _buildRadioQuestion(number: "11.5", question: "Did you have similar visual problems before starting treatment?", options: ['Yes', 'No','Unknown'], value: q115Answer, onChanged: (val) => setState(() => q115Answer = val)),
+                _buildRadioQuestion(number: "11.6", question: "Did vision improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q116Answer, onChanged: (val) => setState(() => q116Answer = val)),
+                _buildRadioQuestion(number: "11.7", question: "Did symptoms return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q117Answer, onChanged: (val) => setState(() => q117Answer = val)),
+                _buildRadioQuestion(number: "11.8", question: "Do you have any pre-existing eye conditions (e.g., glaucoma, cataract)?", options: ['Yes', 'No','Unknown'], value: q118Answer, onChanged: (val) => setState(() => q118Answer = val)),
+                _buildRadioQuestion(number: "11.9", question: "Have you recently experienced visual strain or bright light exposure?", options: ['Yes', 'No','Unknown'], value: q119Strain, onChanged: (val) => setState(() => q119Strain = val)),
               ],
 
               // 12. COLOR VISION
@@ -111,7 +111,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
               _buildRadioQuestion(
                 number: "12",
                 question: "Have you noticed any change in your color vision or difficulty distinguishing colors (especially red and green) or reduced contrast in vision?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q12Answer,
                 onChanged: (val) => setState(() => q12Answer = val),
               ),
@@ -141,10 +141,10 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
                   value: q123Severity,
                   onChanged: (val) => setState(() => q123Severity = val),
                 ),
-                _buildRadioQuestion(number: "12.4", question: "Did this symptom begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q124Answer, onChanged: (val) => setState(() => q124Answer = val)),
-                _buildRadioQuestion(number: "12.5", question: "Did you experience similar visual problems before starting treatment?", options: ['Yes', 'No'], value: q125Answer, onChanged: (val) => setState(() => q125Answer = val)),
-                _buildRadioQuestion(number: "12.6", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q126Answer, onChanged: (val) => setState(() => q126Answer = val)),
-                _buildRadioQuestion(number: "12.7", question: "Did the symptom reappear after the medication was restarted?", options: ['Yes', 'No', 'Not applicable'], value: q127Answer, onChanged: (val) => setState(() => q127Answer = val)),
+                _buildRadioQuestion(number: "12.4", question: "Did this symptom begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q124Answer, onChanged: (val) => setState(() => q124Answer = val)),
+                _buildRadioQuestion(number: "12.5", question: "Did you experience similar visual problems before starting treatment?", options: ['Yes', 'No','Unknown'], value: q125Answer, onChanged: (val) => setState(() => q125Answer = val)),
+                _buildRadioQuestion(number: "12.6", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q126Answer, onChanged: (val) => setState(() => q126Answer = val)),
+                _buildRadioQuestion(number: "12.7", question: "Did the symptom reappear after the medication was restarted?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q127Answer, onChanged: (val) => setState(() => q127Answer = val)),
               ],
 
               // 13. PATCHY VISION LOSS
@@ -152,7 +152,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
               _buildRadioQuestion(
                 number: "13",
                 question: "Have you experienced any patchy or partial loss of vision (missing area in your field of vision) since starting the medication?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q13Answer,
                 onChanged: (val) => setState(() => q13Answer = val),
               ),
@@ -187,10 +187,10 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
                   value: q132Severity,
                   onChanged: (val) => setState(() => q132Severity = val),
                 ),
-                _buildRadioQuestion(number: "13.3", question: "Did this visual problem begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q133Answer, onChanged: (val) => setState(() => q133Answer = val)),
-                _buildRadioQuestion(number: "13.4", question: "Did you have similar visual problems before starting treatment?", options: ['Yes', 'No'], value: q134Answer, onChanged: (val) => setState(() => q134Answer = val)),
-                _buildRadioQuestion(number: "13.5", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q135Answer, onChanged: (val) => setState(() => q135Answer = val)),
-                _buildRadioQuestion(number: "13.6", question: "Did the symptom reappear after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q136Answer, onChanged: (val) => setState(() => q136Answer = val)),
+                _buildRadioQuestion(number: "13.3", question: "Did this visual problem begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q133Answer, onChanged: (val) => setState(() => q133Answer = val)),
+                _buildRadioQuestion(number: "13.4", question: "Did you have similar visual problems before starting treatment?", options: ['Yes', 'No','Unknown'], value: q134Answer, onChanged: (val) => setState(() => q134Answer = val)),
+                _buildRadioQuestion(number: "13.5", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q135Answer, onChanged: (val) => setState(() => q135Answer = val)),
+                _buildRadioQuestion(number: "13.6", question: "Did the symptom reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q136Answer, onChanged: (val) => setState(() => q136Answer = val)),
               ],
               
               const SizedBox(height: 100),

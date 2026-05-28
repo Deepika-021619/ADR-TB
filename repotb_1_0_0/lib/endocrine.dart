@@ -73,7 +73,7 @@ class _EndocrineSLDScreenState
                 question:
                     "Have you experienced symptoms of thyroid problems during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes','No','Unknown'],
 
                 value: q23Answer,
 
@@ -251,7 +251,7 @@ class _EndocrineSLDScreenState
 
                     'Yes',
 
-                    'No',
+                   'No','Unknown',
                   ],
 
                   value: q236AfterTherapy,
@@ -278,7 +278,7 @@ class _EndocrineSLDScreenState
 
                     'Yes',
 
-                    'No',
+                   'No','Unknown',
                   ],
 
                   value: q237BeforeTherapy,
@@ -305,7 +305,7 @@ class _EndocrineSLDScreenState
 
                     'Yes',
 
-                    'No',
+                   'No','Unknown',
                   ],
 
                   value: q238TSHDone,

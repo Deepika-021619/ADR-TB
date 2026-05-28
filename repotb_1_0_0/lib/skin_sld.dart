@@ -81,7 +81,7 @@ class _SkinSubcutaneousSLDScreenState
                 question:
                     "Have you noticed darkening or discoloration of your skin during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes','No','Unknown'],
 
                 value: q26Answer,
 
@@ -131,7 +131,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did this discoloration start after beginning TB treatment?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q262AfterTherapy,
 
@@ -151,7 +151,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did you have similar skin pigmentation before therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q263BeforeTherapy,
 
@@ -171,7 +171,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did the discoloration improve after stopping or adjusting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q264Improved,
 
@@ -191,7 +191,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did the discoloration return after restarting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q265Restarted,
 
@@ -216,7 +216,7 @@ class _SkinSubcutaneousSLDScreenState
                 question:
                     "Have you developed a severe skin rash during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes','No','Unknown'],
 
                 value: q27Answer,
 
@@ -295,7 +295,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did this skin rash start after beginning TB treatment?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q273AfterTherapy,
 
@@ -315,7 +315,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did you have similar skin rash before therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q274BeforeTherapy,
 
@@ -335,7 +335,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did the rash improve after stopping or adjusting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q275Improved,
 
@@ -355,7 +355,7 @@ class _SkinSubcutaneousSLDScreenState
                   question:
                       "Did the rash return after restarting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q276Restarted,
 

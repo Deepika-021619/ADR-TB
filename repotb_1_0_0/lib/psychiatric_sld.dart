@@ -94,7 +94,7 @@ class _PsychiatricSLDScreenState
                 number: "7",
                 question:
                     "Have you felt unusually anxious, nervous, or worried during TB treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q7Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -161,7 +161,7 @@ class _PsychiatricSLDScreenState
                 number: "8",
                 question:
                     "Have you been feeling low, depressed, or down?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q8Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -226,7 +226,7 @@ class _PsychiatricSLDScreenState
                   question: "Did it begin after therapy?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure',
                   ],
                   value: q84AfterTherapy,
@@ -250,7 +250,7 @@ class _PsychiatricSLDScreenState
                       "Did mood improve after stopping medication?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
                   value: q86Improved,
@@ -266,7 +266,7 @@ class _PsychiatricSLDScreenState
                       "Did low mood return after restart?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
                   value: q87Restarted,
@@ -285,7 +285,7 @@ class _PsychiatricSLDScreenState
                 number: "9",
                 question:
                     "Have you had thoughts about harming yourself or ending your life?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q9Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -388,7 +388,7 @@ class _PsychiatricSLDScreenState
                 number: "10",
                 question:
                     "Have you experienced hallucinations, psychosis, or severe confusion?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q10Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -419,7 +419,7 @@ class _PsychiatricSLDScreenState
                   question: "Did it begin after therapy?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure',
                   ],
                   value: q102AfterTherapy,
@@ -443,7 +443,7 @@ class _PsychiatricSLDScreenState
                       "Did symptoms improve after stopping medication?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
                   value: q104Improved,
@@ -459,7 +459,7 @@ class _PsychiatricSLDScreenState
                       "Did symptoms return after restart?",
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
                   value: q105Restarted,
@@ -478,7 +478,7 @@ class _PsychiatricSLDScreenState
                 number: "11",
                 question:
                     "Have you had difficulty sleeping during treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q11Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -894,7 +894,7 @@ String _mapSeverity(String? value) {
     return _buildRadioQuestion(
       number: number,
       question: question,
-      options: ['Yes', 'No'],
+      options: ['Yes', 'No','Unknown'],
       value: value,
       onChanged: onChanged,
       isRequired: true,

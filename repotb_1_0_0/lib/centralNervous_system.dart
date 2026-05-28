@@ -77,7 +77,7 @@ String normalizeSeverity(String? input) {
               _buildRadioQuestion(
                 number: "8",
                 question: "Have you experienced numbness, tingling, or a burning sensation in your hands or feet since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q8Answer,
                 onChanged: (val) => setState(() => q8Answer = val),
               ),
@@ -99,12 +99,12 @@ String normalizeSeverity(String? input) {
                   onChanged: (val) => setState(() => q81Answer = val),
                 ),
                 _buildNumericQuestion(number: "8.2", question: "How long have you had these symptoms (in weeks)?", value: q82Weeks, onChanged: (val) => setState(() => q82Weeks = val)),
-                _buildRadioQuestion(number: "8.3", question: "Did these symptoms begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q83Answer, onChanged: (val) => setState(() => q83Answer = val)),
-                _buildRadioQuestion(number: "8.4", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No'], value: q84Answer, onChanged: (val) => setState(() => q84Answer = val)),
-                _buildRadioQuestion(number: "8.5", question: "Did the symptoms improve after stopping or reducing the medication or after receiving treatment (e.g., vitamin supplementation)?", options: ['Yes', 'No', 'Not applicable'], value: q85Answer, onChanged: (val) => setState(() => q85Answer = val)),
-                _buildRadioQuestion(number: "8.6", question: "Did the symptoms return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q86Answer, onChanged: (val) => setState(() => q86Answer = val)),
-                _buildRadioQuestion(number: "8.7", question: "Do you have any pre-existing conditions such as diabetes or known peripheral neuropathy?", options: ['Yes', 'No'], value: q87PreExisting, onChanged: (val) => setState(() => q87PreExisting = val)),
-                _buildRadioQuestion(number: "8.8", question: "Have you recently started any new physical activities or sustained any injury that could explain these symptoms?", options: ['Yes', 'No'], value: q88NewActivity, onChanged: (val) => setState(() => q88NewActivity = val)),
+                _buildRadioQuestion(number: "8.3", question: "Did these symptoms begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q83Answer, onChanged: (val) => setState(() => q83Answer = val)),
+                _buildRadioQuestion(number: "8.4", question: "Did you have similar symptoms before starting treatment?", options: ['Yes', 'No','Unknown'], value: q84Answer, onChanged: (val) => setState(() => q84Answer = val)),
+                _buildRadioQuestion(number: "8.5", question: "Did the symptoms improve after stopping or reducing the medication or after receiving treatment (e.g., vitamin supplementation)?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q85Answer, onChanged: (val) => setState(() => q85Answer = val)),
+                _buildRadioQuestion(number: "8.6", question: "Did the symptoms return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q86Answer, onChanged: (val) => setState(() => q86Answer = val)),
+                _buildRadioQuestion(number: "8.7", question: "Do you have any pre-existing conditions such as diabetes or known peripheral neuropathy?", options: ['Yes', 'No','Unknown'], value: q87PreExisting, onChanged: (val) => setState(() => q87PreExisting = val)),
+                _buildRadioQuestion(number: "8.8", question: "Have you recently started any new physical activities or sustained any injury that could explain these symptoms?", options: ['Yes', 'No','Unknown'], value: q88NewActivity, onChanged: (val) => setState(() => q88NewActivity = val)),
               ],
 
               // 9. HEADACHES
@@ -112,7 +112,7 @@ String normalizeSeverity(String? input) {
               _buildRadioQuestion(
                 number: "9",
                 question: "Have you experienced headaches since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q9Answer,
                 onChanged: (val) => setState(() => q9Answer = val),
               ),
@@ -133,10 +133,10 @@ String normalizeSeverity(String? input) {
                   onChanged: (val) => setState(() => q91Answer = val),
                 ),
                 _buildNumericQuestion(number: "9.2", question: "How long have you had the headache (in weeks)?", value: q92Weeks, onChanged: (val) => setState(() => q92Weeks = val)),
-                _buildRadioQuestion(number: "9.3", question: "Did the headache begin after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q93Answer, onChanged: (val) => setState(() => q93Answer = val)),
-                _buildRadioQuestion(number: "9.4", question: "Did you experience similar headaches before starting treatment?", options: ['Yes', 'No'], value: q94Answer, onChanged: (val) => setState(() => q94Answer = val)),
-                _buildRadioQuestion(number: "9.5", question: "Did the headache improve after stopping or reducing the medication?", options: ['Yes', 'No', 'Not applicable'], value: q95Answer, onChanged: (val) => setState(() => q95Answer = val)),
-                _buildRadioQuestion(number: "9.6", question: "Did the headache return after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q96Answer, onChanged: (val) => setState(() => q96Answer = val)),
+                _buildRadioQuestion(number: "9.3", question: "Did the headache begin after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q93Answer, onChanged: (val) => setState(() => q93Answer = val)),
+                _buildRadioQuestion(number: "9.4", question: "Did you experience similar headaches before starting treatment?", options: ['Yes', 'No','Unknown'], value: q94Answer, onChanged: (val) => setState(() => q94Answer = val)),
+                _buildRadioQuestion(number: "9.5", question: "Did the headache improve after stopping or reducing the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q95Answer, onChanged: (val) => setState(() => q95Answer = val)),
+                _buildRadioQuestion(number: "9.6", question: "Did the headache return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q96Answer, onChanged: (val) => setState(() => q96Answer = val)),
               ],
 
               // 10. SEIZURES
@@ -144,7 +144,7 @@ String normalizeSeverity(String? input) {
               _buildRadioQuestion(
                 number: "10",
                 question: "Have you experienced any seizures (fits or convulsions) since starting the treatment?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q10Answer,
                 onChanged: (val) => setState(() => q10Answer = val),
               ),
@@ -167,10 +167,10 @@ String normalizeSeverity(String? input) {
                 ),
                 _buildNumericQuestion(number: "10.2", question: "When did the seizure first occur (weeks after starting treatment)?", value: q102Weeks, onChanged: (val) => setState(() => q102Weeks = val)),
                 _buildNumericQuestion(number: "10.3", question: "Number of seizure episodes:", value: q103Episodes, onChanged: (val) => setState(() => q103Episodes = val)),
-                _buildRadioQuestion(number: "10.4", question: "Did the seizure occur after starting the medication?", options: ['Yes', 'No', 'Not sure'], value: q104Answer, onChanged: (val) => setState(() => q104Answer = val)),
-                _buildRadioQuestion(number: "10.5", question: "Did you have a history of seizures before starting treatment?", options: ['Yes', 'No'], value: q105History, onChanged: (val) => setState(() => q105History = val)),
-                _buildRadioQuestion(number: "10.6", question: "Did seizures stop or improve after stopping or adjusting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q106Answer, onChanged: (val) => setState(() => q106Answer = val)),
-                _buildRadioQuestion(number: "10.7", question: "Did seizures recur after restarting the medication?", options: ['Yes', 'No', 'Not applicable'], value: q107Answer, onChanged: (val) => setState(() => q107Answer = val)),
+                _buildRadioQuestion(number: "10.4", question: "Did the seizure occur after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q104Answer, onChanged: (val) => setState(() => q104Answer = val)),
+                _buildRadioQuestion(number: "10.5", question: "Did you have a history of seizures before starting treatment?", options: ['Yes', 'No','Unknown'], value: q105History, onChanged: (val) => setState(() => q105History = val)),
+                _buildRadioQuestion(number: "10.6", question: "Did seizures stop or improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q106Answer, onChanged: (val) => setState(() => q106Answer = val)),
+                _buildRadioQuestion(number: "10.7", question: "Did seizures recur after restarting the medication?", options: ['Yes', 'No','Unknown','Unknown', 'Not applicable'], value: q107Answer, onChanged: (val) => setState(() => q107Answer = val)),
               ],
               
               const SizedBox(height: 100), // Space for buttons

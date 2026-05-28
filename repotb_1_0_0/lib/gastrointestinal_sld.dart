@@ -112,7 +112,7 @@ class _GastrointestinalSLDScreenState
                 question:
                     "Have you experienced nausea since starting the treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q17Answer,
                 isRequired: true,
@@ -166,7 +166,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -197,7 +197,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -220,7 +220,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -262,7 +262,7 @@ class _GastrointestinalSLDScreenState
 
                 options: [
                   'Yes',
-                  'No',
+                 'No','Unknown',
                   'Not sure'
                 ],
 
@@ -322,7 +322,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -345,7 +345,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -368,7 +368,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -400,7 +400,7 @@ class _GastrointestinalSLDScreenState
                 question:
                     "Have you experienced abdominal pain since starting treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q19Answer,
 
@@ -456,7 +456,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -487,7 +487,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -510,7 +510,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -550,7 +550,7 @@ class _GastrointestinalSLDScreenState
                 question:
                     "Have you experienced constipation since starting treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q20Answer,
 
@@ -608,7 +608,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -639,7 +639,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -662,7 +662,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -686,7 +686,7 @@ class _GastrointestinalSLDScreenState
                 question:
                     "Have you experienced diarrhea since starting treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q21Answer,
                 isRequired: true,
@@ -744,7 +744,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -775,7 +775,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -798,7 +798,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -822,7 +822,7 @@ class _GastrointestinalSLDScreenState
                 question:
                     "Have you experienced symptoms of gastritis?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q22Answer,
 
@@ -880,7 +880,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure'
                   ],
 
@@ -911,7 +911,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -934,7 +934,7 @@ class _GastrointestinalSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable'
                   ],
 
@@ -1569,7 +1569,7 @@ Widget _buildYesNoQuestion(
 
     question: question,
 
-    options: ['Yes', 'No'],
+    options: ['Yes', 'No','Unknown'],
 
     value: value,
 

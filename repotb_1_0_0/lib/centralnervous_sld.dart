@@ -82,7 +82,7 @@ class _CentralNervousSLDScreenState
                 number: "4",
                 question:
                     "Have you experienced numbness, tingling, or burning sensation in hands or feet?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q4Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -186,7 +186,7 @@ class _CentralNervousSLDScreenState
                   number: "4.4",
                   question:
                       "Did you have similar symptoms before treatment?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q44BeforeTreatment,
                   isRequired: true,
                   showError: showErrors,
@@ -233,7 +233,7 @@ class _CentralNervousSLDScreenState
                   number: "4.7",
                   question:
                       "Pre-existing diabetes or neuropathy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q47Conditions,
                   isRequired: true,
                   showError: showErrors,
@@ -246,7 +246,7 @@ class _CentralNervousSLDScreenState
                   number: "4.8",
                   question:
                       "Recent physical activity/injury?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q48Injury,
                   isRequired: true,
                   showError: showErrors,
@@ -264,7 +264,7 @@ class _CentralNervousSLDScreenState
                 number: "5",
                 question:
                     "Are you experiencing vertigo or dizziness?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q5Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -336,7 +336,7 @@ class _CentralNervousSLDScreenState
                   number: "5.4",
                   question:
                       "Did you have vertigo before therapy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q54BeforeTherapy,
                   isRequired: true,
                   showError: showErrors,
@@ -388,7 +388,7 @@ class _CentralNervousSLDScreenState
                 number: "6",
                 question:
                     "Have you experienced seizures?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q6Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -437,7 +437,7 @@ class _CentralNervousSLDScreenState
                   number: "6.3",
                   question:
                       "Did you have seizures before therapy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q63BeforeTherapy,
                   isRequired: true,
                   showError: showErrors,
@@ -450,7 +450,7 @@ class _CentralNervousSLDScreenState
                   number: "6.4",
                   question:
                       "Did symptoms improve after discontinuation?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q64Improved,
                   isRequired: true,
                   showError: showErrors,
@@ -463,7 +463,7 @@ class _CentralNervousSLDScreenState
                   number: "6.5",
                   question:
                       "Did symptoms reappear after restart?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q65Restarted,
                   isRequired: true,
                   showError: showErrors,

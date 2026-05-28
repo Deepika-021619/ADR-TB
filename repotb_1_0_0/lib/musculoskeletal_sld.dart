@@ -79,7 +79,7 @@ class _MusculoskeletalSLDScreenState
                 question:
                     "Have you experienced tendon pain during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes','No','Unknown'],
 
                 value: q24Answer,
 
@@ -129,7 +129,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did this problem start after anti-TB therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q242AfterTherapy,
 
@@ -149,7 +149,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did you have similar tendon pain before therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q243BeforeTherapy,
 
@@ -169,7 +169,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did the pain improve after stopping or adjusting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q244Improved,
 
@@ -189,7 +189,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did the pain return after restarting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q245Restarted,
 
@@ -214,7 +214,7 @@ class _MusculoskeletalSLDScreenState
                 question:
                     "Have you experienced generalized muscle pain during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes','No','Unknown'],
 
                 value: q25Answer,
 
@@ -264,7 +264,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did this symptom start after anti-TB therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q252AfterTherapy,
 
@@ -284,7 +284,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did you have similar muscle pain before therapy?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q253BeforeTherapy,
 
@@ -304,7 +304,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did the symptom improve after stopping or adjusting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q254Improved,
 
@@ -324,7 +324,7 @@ class _MusculoskeletalSLDScreenState
                   question:
                       "Did the symptom reappear after restarting the drug?",
 
-                  options: ['Yes', 'No'],
+                  options: ['Yes','No','Unknown'],
 
                   value: q255Restarted,
 

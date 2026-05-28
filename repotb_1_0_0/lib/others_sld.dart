@@ -321,7 +321,7 @@ TextButton(
                 question:
                     "Have you had pain, swelling, or hardness at the injection site?",
                 value: q401,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q401 = val;
@@ -334,7 +334,7 @@ TextButton(
                 question:
                     "Have you had a severe allergic reaction (sudden swelling, breathing difficulty, severe rash)?",
                 value: q402,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q402 = val;
@@ -347,7 +347,7 @@ TextButton(
                 question:
                     "Have you experienced sudden severe allergy with fainting or shock?",
                 value: q403,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q403 = val;
@@ -360,7 +360,7 @@ TextButton(
                 question:
                     "Have you been told that you have protein in your urine?",
                 value: q404,
-                options: ['Yes', 'No', 'Not tested'],
+                options: ['Yes', 'No','Unknown', 'Not tested'],
                 onChanged: (val) {
                   setState(() {
                     q404 = val;
@@ -373,7 +373,7 @@ TextButton(
                 question:
                     "Have you been diagnosed with lupus (SLE) after starting treatment?",
                 value: q405,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q405 = val;
@@ -386,7 +386,7 @@ TextButton(
                 question:
                     "Have you had rash with fever, facial swelling, or enlarged lymph nodes (DRESS)?",
                 value: q406,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q406 = val;
@@ -399,7 +399,7 @@ TextButton(
                 question:
                     "Have you experienced new or worsening tremors (shaking of hands/body)?",
                 value: q407,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q407 = val;
@@ -412,7 +412,7 @@ TextButton(
                 question:
                     "Have you had inflammation, swelling, or bleeding of the gums?",
                 value: q408,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q408 = val;
@@ -425,7 +425,7 @@ TextButton(
                 question:
                     "Have you had a change in your sense of taste?",
                 value: q409,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q409 = val;
@@ -438,7 +438,7 @@ TextButton(
                 question:
                     "Have you experienced excessive salivation?",
                 value: q4010,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4010 = val;
@@ -451,7 +451,7 @@ TextButton(
                 question:
                     "Have you had mouth sores or painful ulcers (stomatitis)?",
                 value: q4011,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4011 = val;
@@ -464,7 +464,7 @@ TextButton(
                 question:
                     "Have you developed skin changes with dark patches, scaling, or symptoms suggestive of pellagra?",
                 value: q4012,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4012 = val;
@@ -477,7 +477,7 @@ TextButton(
                 question:
                     "Have you been told that your blood clotting time (prothrombin time/INR) is increased?",
                 value: q4013,
-                options: ['Yes', 'No', 'Not tested'],
+                options: ['Yes', 'No','Unknown', 'Not tested'],
                 onChanged: (val) {
                   setState(() {
                     q4013 = val;
@@ -490,7 +490,7 @@ TextButton(
                 question:
                     "Have you experienced breast tenderness or enlargement (gynecomastia)?",
                 value: q4014,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4014 = val;
@@ -503,7 +503,7 @@ TextButton(
                 question:
                     "Have you experienced bloating (feeling of fullness or abdominal swelling)?",
                 value: q4015,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4015 = val;
@@ -516,7 +516,7 @@ TextButton(
                 question:
                     "Have you had loss of appetite after starting TB treatment?",
                 value: q4016,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4016 = val;
@@ -529,7 +529,7 @@ TextButton(
                 question:
                     "Have you experienced forgetfulness or changes in memory, concentration, or thinking?",
                 value: q4017,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4017 = val;
@@ -542,7 +542,7 @@ TextButton(
                 question:
                     "Have you noticed swelling of your legs or feet?",
                 value: q4018,
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 onChanged: (val) {
                   setState(() {
                     q4018 = val;

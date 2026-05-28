@@ -70,7 +70,7 @@ class _AuditorySLDScreenState
                 question:
                     "Have you noticed any change in your hearing during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q12Answer,
 
@@ -184,7 +184,7 @@ class _AuditorySLDScreenState
                 question:
                     "Have you experienced ringing, buzzing, or unusual sounds in your ears during TB treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q13Answer,
 
@@ -583,7 +583,7 @@ class _AuditorySLDScreenState
 
       question: question,
 
-      options: ['Yes', 'No'],
+      options: ['Yes', 'No','Unknown'],
 
       value: value,
 

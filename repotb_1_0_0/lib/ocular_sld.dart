@@ -99,7 +99,7 @@ class _OcularSLDScreenState
                 question:
                     "Have you experienced any blurring or decrease in vision since starting the treatment?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q14Answer,
 
@@ -159,7 +159,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure',
                   ],
 
@@ -191,7 +191,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -215,7 +215,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -258,7 +258,7 @@ class _OcularSLDScreenState
                 question:
                     "Have you noticed any change in your color vision or difficulty distinguishing colors?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q15Answer,
 
@@ -338,7 +338,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure',
                   ],
 
@@ -370,7 +370,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -394,7 +394,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -421,7 +421,7 @@ class _OcularSLDScreenState
                 question:
                     "Have you experienced any patchy or partial loss of vision?",
 
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
 
                 value: q16Answer,
 
@@ -506,7 +506,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not sure',
                   ],
 
@@ -538,7 +538,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -562,7 +562,7 @@ class _OcularSLDScreenState
 
                   options: [
                     'Yes',
-                    'No',
+                   'No','Unknown',
                     'Not applicable',
                   ],
 
@@ -1042,7 +1042,7 @@ class _OcularSLDScreenState
 
       question: question,
 
-      options: ['Yes', 'No'],
+      options: ['Yes', 'No','Unknown'],
 
       value: value,
 

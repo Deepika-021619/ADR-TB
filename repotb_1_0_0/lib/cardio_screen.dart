@@ -86,7 +86,7 @@ class _CardiovascularScreenState
                 number: "1",
                 question:
                     "Are you experiencing palpitations?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q1Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -154,7 +154,7 @@ class _CardiovascularScreenState
                   number: "1.3",
                   question:
                       "Did it start after therapy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q13Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -167,7 +167,7 @@ class _CardiovascularScreenState
                   number: "1.4",
                   question:
                       "Did you have this before treatment?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q14Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -180,7 +180,7 @@ class _CardiovascularScreenState
                   number: "1.5",
                   question:
                       "Did it improve after stopping drug?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q15Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -193,7 +193,7 @@ class _CardiovascularScreenState
                   number: "1.6",
                   question:
                       "Did it reappear after restarting?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q16Answer,
                   isRequired: true,
                   showError: showErrors,
@@ -230,7 +230,7 @@ class _CardiovascularScreenState
                 number: "2",
                 question:
                     "Have you experienced fainting (syncope)?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q2Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -286,7 +286,7 @@ class _CardiovascularScreenState
                   number: "2.3",
                   question:
                       "Did it start after therapy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q23Onset,
                   isRequired: true,
                   showError: showErrors,
@@ -299,7 +299,7 @@ class _CardiovascularScreenState
                   number: "2.4",
                   question:
                       "Did it exist before treatment?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q24PreExisting,
                   isRequired: true,
                   showError: showErrors,
@@ -312,7 +312,7 @@ class _CardiovascularScreenState
                   number: "2.5",
                   question:
                       "Did it improve after stopping drug?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q25Improved,
                   isRequired: true,
                   showError: showErrors,
@@ -325,7 +325,7 @@ class _CardiovascularScreenState
                   number: "2.6",
                   question:
                       "Did it reappear after restarting?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q26Reappeared,
                   isRequired: true,
                   showError: showErrors,
@@ -342,7 +342,7 @@ class _CardiovascularScreenState
                 number: "3",
                 question:
                     "Was QTc prolongation detected on ECG?",
-                options: ['Yes', 'No'],
+                options: ['Yes', 'No','Unknown'],
                 value: q3Answer,
                 isRequired: true,
                 showError: showErrors,
@@ -417,7 +417,7 @@ class _CardiovascularScreenState
                   number: "3.4",
                   question:
                       "Did it develop after therapy?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q34AfterTherapy,
                   isRequired: true,
                   showError: showErrors,
@@ -447,7 +447,7 @@ class _CardiovascularScreenState
                   number: "3.6",
                   question:
                       "Did QT improve after stopping drug?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q36Improved,
                   isRequired: true,
                   showError: showErrors,
@@ -460,7 +460,7 @@ class _CardiovascularScreenState
                   number: "3.7",
                   question:
                       "Did QT prolongation reappear after restart?",
-                  options: ['Yes', 'No'],
+                  options: ['Yes', 'No','Unknown'],
                   value: q37Restarted,
                   isRequired: true,
                   showError: showErrors,
