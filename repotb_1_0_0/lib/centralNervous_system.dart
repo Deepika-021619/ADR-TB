@@ -170,7 +170,7 @@ String normalizeSeverity(String? input) {
                 _buildRadioQuestion(number: "10.4", question: "Did the seizure occur after starting the medication?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q104Answer, onChanged: (val) => setState(() => q104Answer = val)),
                 _buildRadioQuestion(number: "10.5", question: "Did you have a history of seizures before starting treatment?", options: ['Yes', 'No','Unknown'], value: q105History, onChanged: (val) => setState(() => q105History = val)),
                 _buildRadioQuestion(number: "10.6", question: "Did seizures stop or improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q106Answer, onChanged: (val) => setState(() => q106Answer = val)),
-                _buildRadioQuestion(number: "10.7", question: "Did seizures recur after restarting the medication?", options: ['Yes', 'No','Unknown','Unknown', 'Not applicable'], value: q107Answer, onChanged: (val) => setState(() => q107Answer = val)),
+                _buildRadioQuestion(number: "10.7", question: "Did seizures recur after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q107Answer, onChanged: (val) => setState(() => q107Answer = val)),
               ],
               
               const SizedBox(height: 100), // Space for buttons

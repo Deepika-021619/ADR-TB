@@ -195,8 +195,8 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
                 _buildRadioQuestion(number: "4.4", question: "Did you have similar abdominal pain before starting treatment?", options: ['Yes', 'No','Unknown'], value: q44Answer, onChanged: (val) => setState(() => q44Answer = val)),
                 _buildRadioQuestion(number: "4.5", question: "Did the pain improve after stopping or reducing the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q45Answer, onChanged: (val) => setState(() => q45Answer = val)),
                 _buildRadioQuestion(number: "4.6", question: "Did the pain return after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q46Answer, onChanged: (val) => setState(() => q46Answer = val)),
-                _buildRadioQuestion(number: "4.7", question: "Do you have a history of gastrointestinal conditions such as ulcers, gastritis, or irritable bowel syndrome (IBS)?", options: ['Yes', 'No','Unknown', 'Unknown'], value: q47GIHistory, onChanged: (val) => setState(() => q47GIHistory = val)),
-                _buildRadioQuestion(number: "4.8", question: "Have you recently experienced significant stressful event?", options: ['Yes', 'No','Unknown', 'Unknown'], value: q48Stress, onChanged: (val) => setState(() => q48Stress = val)),
+                _buildRadioQuestion(number: "4.7", question: "Do you have a history of gastrointestinal conditions such as ulcers, gastritis, or irritable bowel syndrome (IBS)?", options: ['Yes', 'No','Unknown'], value: q47GIHistory, onChanged: (val) => setState(() => q47GIHistory = val)),
+                _buildRadioQuestion(number: "4.8", question: "Have you recently experienced significant stressful event?", options: ['Yes', 'No','Unknown'], value: q48Stress, onChanged: (val) => setState(() => q48Stress = val)),
               ],
 
               // 5. CONSTIPATION

@@ -272,13 +272,13 @@ appBar: AppBar(
             const SizedBox(height: 15),
 
             TextField(
-              controller: patientIdController,
-              decoration: InputDecoration(
-                label: requiredLabel("Patient ID"),
-                prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
-                border: OutlineInputBorder(),
-              ),
-            ),
+  controller: patientIdController,
+  decoration: InputDecoration(
+    labelText: "Patient ID",
+    prefixIcon: const Icon(Icons.person),
+    border: const OutlineInputBorder(),
+  ),
+),
 
             const SizedBox(height: 15),
 
