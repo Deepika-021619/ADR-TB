@@ -381,8 +381,8 @@ appBar: AppBar(
   items: const [
 
     DropdownMenuItem(
-      value: "Andra Pradesh",
-      child: Text("Andra Pradesh"),
+      value: "Andhra Pradesh",
+      child: Text("Andhra Pradesh"),
     ),
 
     DropdownMenuItem(
