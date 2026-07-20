@@ -309,12 +309,12 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
           style: TextStyle(fontWeight: FontWeight.bold)
         ),
         heroTag: "save_next",
-        onPressed: _isComplete() 
-            ? () {
-                _saveGastrointestinal();  // ✅ Fixed method name
-                widget.onSaveAndComplete();
-              } 
-            : null,
+        onPressed: _isComplete()
+    ? () async {
+        await _saveGastrointestinal();
+        Navigator.pop(context, true);
+      }
+    : null,
       ),
     );
   }
@@ -403,7 +403,7 @@ class _GastrointestinalScreenState extends State<GastrointestinalScreen> {
     return true;
   }
 
-void _saveGastrointestinal() async {
+Future<void> _saveGastrointestinal() async {
   print('🔥 GASTROINTESTINAL SAVE - reportId: ${widget.reportId}');
   
   List<Map<String, String>> yesSymptoms = [];

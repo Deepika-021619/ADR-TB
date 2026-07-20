@@ -143,20 +143,22 @@ class _PsychiatricScreenState extends State<PsychiatricScreen> {
 
   // ✅ FIXED: Safe async save with mounted check
   Future<void> _handleSaveAndNext() async {
-    if (!mounted) return;
-    setState(() => _isSaving = true);
-    
-    try {
-      await _savePsychiatric();
-      if (mounted) {
-        widget.onSaveAndComplete();
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSaving = false);
-      }
+  if (!mounted) return;
+
+  setState(() => _isSaving = true);
+
+  try {
+    await _savePsychiatric();
+
+    if (mounted) {
+      Navigator.pop(context, true);
+    }
+  } finally {
+    if (mounted) {
+      setState(() => _isSaving = false);
     }
   }
+}
 
   Widget _buildRadioQuestion({
     required String number,

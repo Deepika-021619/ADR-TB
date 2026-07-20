@@ -509,9 +509,9 @@ class _CardiovascularScreenState
 
           await _saveCardio();
 
-          if (!mounted) return;
+if (!mounted) return;
 
-          widget.onSaveAndComplete();
+Navigator.pop(context, true);
         },
       ),
     );

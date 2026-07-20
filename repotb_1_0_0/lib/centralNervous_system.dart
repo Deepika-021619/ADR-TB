@@ -188,9 +188,9 @@ String normalizeSeverity(String? input) {
         ),
         heroTag: "save_cns_next",
         onPressed: _isComplete() 
-            ? () {
-                _saveCentralNervousSystem();
-                widget.onSaveAndComplete();
+            ? () async {
+                await _saveCentralNervousSystem();
+                 Navigator.pop(context, true);
               } 
             : null,
       ),
@@ -279,7 +279,7 @@ String normalizeSeverity(String? input) {
   }
 
   // ✅ FIXED: Complete save implementation matching Respiratory
-  void _saveCentralNervousSystem() async {
+  Future<void> _saveCentralNervousSystem() async {
     print('🔥 CNS SAVE - reportId: ${widget.reportId}');
     
     List<Map<String, String>> yesSymptoms = [];

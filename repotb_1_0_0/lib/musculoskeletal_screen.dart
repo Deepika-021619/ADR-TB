@@ -157,7 +157,7 @@ class _MusculoskeletalScreenState extends State<MusculoskeletalScreen> {
     try {
       await _saveMusculoskeletal();
       if (mounted) {
-        widget.onSaveAndComplete();
+        Navigator.pop(context, true);
       }
     } finally {
       if (mounted) {

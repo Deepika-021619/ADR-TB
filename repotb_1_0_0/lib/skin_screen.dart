@@ -161,9 +161,9 @@ class _SkinSubcutaneousScreenState extends State<SkinSubcutaneousScreen> {
         foregroundColor: Colors.white,
         label: const Text('Save & Next System'),
         onPressed: _isComplete()
-            ? () {
-                _saveSkin();
-                widget.onSaveAndComplete();
+            ? () async {
+                await _saveSkin();
+                Navigator.pop(context, true);
               }
             : null,
       ),
@@ -247,7 +247,7 @@ Widget _buildRadioQuestion({
     return q14Answer != null && q15Answer != null && q16Answer != null;
   }
 
-   void _saveSkin() async {
+   Future<void> _saveSkin() async {
   print('SKIN SAVE - reportId: ${widget.reportId}');
   
   List<Map<String, String>> symptoms = [];

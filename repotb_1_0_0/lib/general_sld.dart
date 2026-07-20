@@ -1407,7 +1407,7 @@ if (q39Answer == 'Yes') ...[
               },
             );
 
-            widget.onSaveAndComplete();
+            Navigator.pop(context, true);
 
           } catch (e) {
 

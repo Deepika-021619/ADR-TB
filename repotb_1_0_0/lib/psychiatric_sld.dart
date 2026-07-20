@@ -578,7 +578,7 @@ class _PsychiatricSLDScreenState
 
           if (!mounted) return;
 
-          widget.onSaveAndComplete();
+          Navigator.pop(context, true);
         },
       ),
     );

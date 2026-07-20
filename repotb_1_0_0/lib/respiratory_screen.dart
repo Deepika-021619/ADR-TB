@@ -174,7 +174,7 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
           style: TextStyle(fontWeight: FontWeight.bold)
         ),
         heroTag: "save_next",
-        onPressed: () {
+        onPressed: () async {
 
   if (!_isComplete()) {
 
@@ -182,15 +182,9 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
       showErrors = true;
     });
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-
+    ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-
-        content: Text(
-          "Please answer all required questions",
-        ),
-
+        content: Text("Please answer all required questions"),
         backgroundColor: Colors.red,
       ),
     );
@@ -198,9 +192,9 @@ class _RespiratoryScreenState extends State<RespiratoryScreen> {
     return;
   }
 
-  _saveRespiratory();
+  await _saveRespiratory();
 
-  widget.onSaveAndComplete();
+  Navigator.pop(context, true);
 },
             
       ),
@@ -435,7 +429,7 @@ Widget _buildNumericQuestion({
 }
 
   // ✅ YES-ONLY SAVING: Only "Yes" answers go to DB
-  void _saveRespiratory() async {
+  Future<void> _saveRespiratory() async {
     print('🔥 RESPIRATORY SAVE - reportId: ${widget.reportId}');
     print('Q1 Answer: $q1Answer');
     

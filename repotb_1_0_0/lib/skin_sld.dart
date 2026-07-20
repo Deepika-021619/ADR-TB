@@ -416,7 +416,7 @@ class _SkinSubcutaneousSLDScreenState
 
           if (!mounted) return;
 
-          widget.onSaveAndComplete();
+          Navigator.pop(context, true);
         },
       ),
     );

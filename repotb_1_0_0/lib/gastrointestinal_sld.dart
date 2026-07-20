@@ -1007,7 +1007,7 @@ class _GastrointestinalSLDScreenState
     ),
   );
 
-  widget.onSaveAndComplete();
+  Navigator.pop(context, true);
 },
       ),
     );

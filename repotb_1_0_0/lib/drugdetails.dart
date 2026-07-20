@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'fld_questionnaire_screen.dart';
-import 'sld_questionnaire_screen.dart';
+import 'fld_system_selection.dart';
+import 'sld_system_selection.dart';
+
 import 'timer_widget.dart';
 
 
@@ -138,23 +139,22 @@ final String regimenType = selectedRegimen['regimen_type'];
 
 print("Selected regimen type: $regimenType"); // DEBUG
   
-  // 💙 NEW NAVIGATION - direct to FLD/SLD based on selection
-     if (regimenType == "FLD") {
+  //system page
+  if (regimenType == "FLD") {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => FLDQuestionnaireScreen(
-  reportId: widget.reportId,
-),
+      builder: (context) => FLDSystemSelectionScreen(
+        reportId: widget.reportId,
+      ),
     ),
   );
 } else if (regimenType == "SLD") {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => SLDQuestionnaireScreen(
+      builder: (context) => SLDSystemSelectionScreen(
         reportId: widget.reportId,
-        portal: widget.portal,
       ),
     ),
   );

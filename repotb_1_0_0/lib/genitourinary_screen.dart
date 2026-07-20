@@ -173,20 +173,22 @@ class _GenitourinaryScreenState extends State<GenitourinaryScreen> {
   }
 
   Future<void> _handleSaveAndNext() async {
-    if (!mounted) return;
-    setState(() => _isSaving = true);
-    
-    try {
-      await _saveGenitourinary();
-      if (mounted) {
-        widget.onSaveAndComplete();
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSaving = false);
-      }
+  if (!mounted) return;
+
+  setState(() => _isSaving = true);
+
+  try {
+    await _saveGenitourinary();
+
+    if (mounted) {
+      Navigator.pop(context, true);
+    }
+  } finally {
+    if (mounted) {
+      setState(() => _isSaving = false);
     }
   }
+}
 
   Widget _buildRadioQuestion({
     required String number,
@@ -295,8 +297,7 @@ class _GenitourinaryScreenState extends State<GenitourinaryScreen> {
     
     if (showHematuria && (
       q211Weeks == null || q212Severity == null || q213Answer == null ||
-      q214Answer == null || q215Answer == null || q216Answer == null || q217Notes == null
-    )) return false;
+      q214Answer == null || q215Answer == null || q216Answer == null )) return false;
     
     if (showFlankPain && (
       q221Weeks == null || q222Severity == null || q223Answer == null ||

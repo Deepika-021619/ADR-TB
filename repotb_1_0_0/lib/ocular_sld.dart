@@ -643,7 +643,7 @@ class _OcularSLDScreenState
             ),
           );
 
-          widget.onSaveAndComplete();
+          Navigator.pop(context, true);
         },
       ),
     );

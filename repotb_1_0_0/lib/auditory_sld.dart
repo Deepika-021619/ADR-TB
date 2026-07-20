@@ -339,7 +339,7 @@ class _AuditorySLDScreenState
             ),
           );
 
-          widget.onSaveAndComplete();
+          Navigator.pop(context, true);
         },
       ),
     );

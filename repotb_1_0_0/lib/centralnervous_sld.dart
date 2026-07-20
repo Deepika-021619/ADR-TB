@@ -516,7 +516,7 @@ class _CentralNervousSLDScreenState
 
           if (!mounted) return;
 
-          widget.onSaveAndComplete();
+         Navigator.pop(context, true);
         },
       ),
     );

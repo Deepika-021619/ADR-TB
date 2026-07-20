@@ -679,7 +679,9 @@ class _InvestigationsSLDScreenState
             },
           );
 
-          widget.onSaveAndComplete();
+          if (!mounted) return;
+
+Navigator.pop(context, true);
         },
       ),
     );

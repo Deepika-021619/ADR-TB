@@ -207,10 +207,7 @@ class _OcularInvolvementScreenState extends State<OcularInvolvementScreen> {
         onPressed: _isComplete()
     ? () async {
         await _saveOcular();
-
-        Future.delayed(const Duration(seconds: 1), () {
-          widget.onSaveAndComplete();
-        });
+        Navigator.pop(context, true);
       }
     : null,
       ),

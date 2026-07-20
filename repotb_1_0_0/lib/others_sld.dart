@@ -10,15 +10,16 @@ import '../services/questionnaire_timer.dart';
 class OtherSideEffectsScreen extends StatefulWidget {
 
   final String reportId;
-  final VoidCallback onSaveAndComplete;
+ 
 
   const OtherSideEffectsScreen({
 
     super.key,
 
     required this.reportId,
+    
 
-    required this.onSaveAndComplete,
+   
   });
 
   @override
@@ -103,18 +104,13 @@ class _OtherSideEffectsScreenState
 
           // CLOSE BUTTON
           TextButton(
-
-            onPressed: () {
-            if (mounted) {
-              Navigator.pop(context);
-            }
-
-              widget.onSaveAndComplete();
-            },
-
-            child: const Text("Close"),
-          ),
-
+  onPressed: () {
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  },
+  child: const Text("Close"),
+),
           // DOWNLOAD REPORT BUTTON
           ElevatedButton.icon(
 
