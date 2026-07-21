@@ -56,6 +56,8 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
   bool get showFatigue => q26Answer == 'Yes';
   bool get showDiscoloration => q27Answer == 'Yes';
 
+  bool _submitted = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,10 +69,11 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
             children: [
               // 24. MALAISE
               _buildRadioQuestion(
-                number: "24",
-                question: "Have you felt unusually unwell, weak, or generally uncomfortable (malaise) since starting the medication?",
-                options: ['Yes', 'No','Unknown'],
-                value: q24Answer,
+  number: "24",
+  question: "Have you felt unusually unwell, weak, or generally uncomfortable (malaise) since starting the medication?",
+  options: ['Yes','No','Unknown'],
+  value: q24Answer,
+  isRequired: _submitted && q24Answer == null,
                 onChanged: (val) => setState(() => q24Answer = val),
               ),
               if (showMalaise) ...[
@@ -88,12 +91,15 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                     'Severe – Feeling unwell or uneasy that limits self-care activities, e.g., bathing, dressing, eating.'
                   ],
                   value: q242Severity,
+                 isRequired: _submitted &&
+            showMalaise &&
+            q242Severity == null,
                   onChanged: (val) => setState(() => q242Severity = val),
                 ),
-                _buildRadioQuestion(number: "24.3", question: "Did this symptom begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q243Answer, onChanged: (val) => setState(() => q243Answer = val)),
-                _buildRadioQuestion(number: "24.4", question: "Did you experience similar symptoms before starting treatment?", options: ['Yes', 'No','Unknown'], value: q244Answer, onChanged: (val) => setState(() => q244Answer = val)),
-                _buildRadioQuestion(number: "24.5", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q245Answer, onChanged: (val) => setState(() => q245Answer = val)),
-                _buildRadioQuestion(number: "24.6", question: "Did the symptom reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q246Answer, onChanged: (val) => setState(() => q246Answer = val)),
+                _buildRadioQuestion(number: "24.3", question: "Did this symptom begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q243Answer, isRequired: _submitted && q243Answer == null, onChanged: (val) => setState(() => q243Answer = val)),
+                _buildRadioQuestion(number: "24.4", question: "Did you experience similar symptoms before starting treatment?", options: ['Yes', 'No','Unknown'], value: q244Answer, isRequired: _submitted && q244Answer == null, onChanged: (val) => setState(() => q244Answer = val)),
+                _buildRadioQuestion(number: "24.5", question: "Did the symptom improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q245Answer, isRequired: _submitted && q245Answer == null, onChanged: (val) => setState(() => q245Answer = val)),
+                _buildRadioQuestion(number: "24.6", question: "Did the symptom reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q246Answer, isRequired: _submitted && q246Answer == null, onChanged: (val) => setState(() => q246Answer = val)),
               ],
 
               // 25. FEVER
@@ -103,6 +109,7 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                 question: "Have you experienced a fever since starting the medication?",
                 options: ['Yes', 'No','Unknown'],
                 value: q25Answer,
+                isRequired: _submitted && q25Answer == null,
                 onChanged: (val) => setState(() => q25Answer = val),
               ),
               if (showFever) ...[
@@ -121,12 +128,13 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                     'Very high / Prolonged – Temperature >40.0 °C (>104.0 °F) lasting >24 hours.'
                   ],
                   value: q252Severity,
+                  isRequired: _submitted && showFever && q252Severity == null,
                   onChanged: (val) => setState(() => q252Severity = val),
                 ),
-                _buildRadioQuestion(number: "25.3", question: "Did this fever begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q253Answer, onChanged: (val) => setState(() => q253Answer = val)),
-                _buildRadioQuestion(number: "25.4", question: "Did you have similar fevers before starting treatment?", options: ['Yes', 'No','Unknown'], value: q254Answer, onChanged: (val) => setState(() => q254Answer = val)),
-                _buildRadioQuestion(number: "25.5", question: "Did the fever improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q255Answer, onChanged: (val) => setState(() => q255Answer = val)),
-                _buildRadioQuestion(number: "25.6", question: "Did the fever reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q256Answer, onChanged: (val) => setState(() => q256Answer = val)),
+                _buildRadioQuestion(number: "25.3", question: "Did this fever begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q253Answer, isRequired: _submitted && q253Answer == null, onChanged: (val) => setState(() => q253Answer = val)),
+                _buildRadioQuestion(number: "25.4", question: "Did you have similar fevers before starting treatment?", options: ['Yes', 'No','Unknown'], value: q254Answer, isRequired: _submitted && q254Answer == null, onChanged: (val) => setState(() => q254Answer = val)),
+                _buildRadioQuestion(number: "25.5", question: "Did the fever improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q255Answer, isRequired: _submitted && q255Answer == null, onChanged: (val) => setState(() => q255Answer = val)),
+                _buildRadioQuestion(number: "25.6", question: "Did the fever reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q256Answer, isRequired: _submitted && q256Answer == null, onChanged: (val) => setState(() => q256Answer = val)),
               ],
 
               // 26. FATIGUE
@@ -136,6 +144,7 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                 question: "Have you experienced unusual fatigue or weakness since starting the medication?",
                 options: ['Yes', 'No','Unknown'],
                 value: q26Answer,
+                isRequired: _submitted && q26Answer == null,
                 onChanged: (val) => setState(() => q26Answer = val),
               ),
               if (showFatigue) ...[
@@ -153,13 +162,14 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                     'Severe – Fatigue not relieved by rest; limits self-care activities (ADL) such as bathing, dressing, or eating.'
                   ],
                   value: q262Severity,
+                  isRequired: _submitted && showFatigue && q262Severity == null,
                   onChanged: (val) => setState(() => q262Severity = val),
                 ),
-                _buildRadioQuestion(number: "26.3", question: "Did this symptom begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q263Answer, onChanged: (val) => setState(() => q263Answer = val)),
-                _buildRadioQuestion(number: "26.4", question: "Did you experience similar fatigue or weakness before starting treatment?", options: ['Yes', 'No','Unknown'], value: q264Answer, onChanged: (val) => setState(() => q264Answer = val)),
-                _buildRadioQuestion(number: "26.5", question: "Did the fatigue improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q265Answer, onChanged: (val) => setState(() => q265Answer = val)),
-                _buildRadioQuestion(number: "26.6", question: "Did the fatigue reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q266Answer, onChanged: (val) => setState(() => q266Answer = val)),
-                _buildRadioQuestion(number: "26.7", question: "Have you been experiencing any significant lifestyle changes? (e.g., change in work hours, physical activity)", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q267Lifestyle, onChanged: (val) => setState(() => q267Lifestyle = val)),
+                _buildRadioQuestion(number: "26.3", question: "Did this symptom begin after starting the therapy?", options: ['Yes', 'No','Unknown', 'Not sure'], value: q263Answer, isRequired: _submitted && q263Answer == null, onChanged: (val) => setState(() => q263Answer = val)),
+                _buildRadioQuestion(number: "26.4", question: "Did you experience similar fatigue or weakness before starting treatment?", options: ['Yes', 'No','Unknown'], value: q264Answer, isRequired: _submitted && q264Answer == null, onChanged: (val) => setState(() => q264Answer = val)),
+                _buildRadioQuestion(number: "26.5", question: "Did the fatigue improve after stopping or adjusting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q265Answer, isRequired: _submitted && q265Answer == null, onChanged: (val) => setState(() => q265Answer = val)),
+                _buildRadioQuestion(number: "26.6", question: "Did the fatigue reappear after restarting the medication?", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q266Answer, isRequired: _submitted && q266Answer == null, onChanged: (val) => setState(() => q266Answer = val)),
+                _buildRadioQuestion(number: "26.7", question: "Have you been experiencing any significant lifestyle changes? (e.g., change in work hours, physical activity)", options: ['Yes', 'No','Unknown', 'Not applicable'], value: q267Lifestyle, isRequired: _submitted && q267Lifestyle == null, onChanged: (val) => setState(() => q267Lifestyle = val)),
                 _buildTextField(number: "26.8", question: "Are you currently dealing with any other health issues or taking other medications?", value: q268OtherIssues, onChanged: (val) => setState(() => q268OtherIssues = val)),
               ],
 
@@ -170,6 +180,7 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
                 question: "Have you noticed any orange discoloration of your bodily secretions (urine, sweat, saliva, or tears) since starting the medication?",
                 options: ['Yes', 'No','Unknown'],
                 value: q27Answer,
+                isRequired: _submitted && q27Answer == null,
                 onChanged: (val) => setState(() => q27Answer = val),
               ),
 
@@ -188,12 +199,30 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
         foregroundColor: Colors.white,
         label: const Text('Save & next', style: TextStyle(fontWeight: FontWeight.bold)),
         heroTag: "save_general_next",
-        onPressed: _isComplete() 
-            ? () {
-                _saveGeneral();
-                widget.onSaveAndComplete();
-              } 
-            : null,
+       onPressed: () async {
+
+  setState(() {
+    _submitted = true;
+  });
+
+  if (!_isComplete()) {
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Please answer all mandatory questions."),
+        backgroundColor: Colors.red,
+      ),
+    );
+
+    return;
+  }
+
+  await _saveGeneral();
+
+  if (!mounted) return;
+
+  Navigator.pop(context, true);
+}
       ),
     );
   }
@@ -203,19 +232,41 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
     required String question,
     required List<String> options,
     required String? value,
+    required bool isRequired,
     required Function(String) onChanged,
   }) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      elevation: 2,
-      color: Colors.white,
-      child: Padding(
+  margin: const EdgeInsets.only(bottom: 16),
+  elevation: 2,
+  color: isRequired ? Colors.red.shade50 : Colors.white,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12),
+    side: BorderSide(
+      color: isRequired ? Colors.red : Colors.grey.shade300,
+      width: isRequired ? 2 : 1,
+    ),
+  ),
+  child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("$number. $question", 
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            RichText(
+  text: TextSpan(
+    style: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+    children: [
+      TextSpan(text: "$number. $question "),
+      const TextSpan(
+        text: "*",
+        style: TextStyle(color: Colors.red),
+      ),
+    ],
+  ),
+),
             const SizedBox(height: 12),
             ...options.map((option) => RadioListTile<String>(
               title: Text(option, style: const TextStyle(fontSize: 14)),
@@ -304,12 +355,12 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
     if (q24Answer == null || q25Answer == null || q26Answer == null || q27Answer == null) return false;
     
     if (showMalaise && (
-      q241Weeks == null || q242Severity == null || q243Answer == null ||
+       q242Severity == null || q243Answer == null ||
       q244Answer == null || q245Answer == null || q246Answer == null
     )) return false;
     
     if (showFever && (
-      q251Duration == null || q252Severity == null || q253Answer == null ||
+      q252Severity == null || q253Answer == null ||
       q254Answer == null || q255Answer == null || q256Answer == null
     )) return false;
     
@@ -322,7 +373,7 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
     return true;
   }
 
-  void _saveGeneral() async {
+  Future<bool> _saveGeneral() async {
   print('🔥 GENERAL SAVE - reportId: ${widget.reportId}');
 
   final data = {
@@ -380,5 +431,6 @@ class _GeneralSymptomsScreenState extends State<GeneralSymptomsScreen> {
       ),
     );
   }
-  }
+  return success;
+}
 }
