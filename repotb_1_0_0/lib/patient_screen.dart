@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'reporter.dart';
 import 'timer_widget.dart';
+import 'required_label.dart';
 
 
 class StartPatientScreen extends StatefulWidget {
@@ -55,10 +56,7 @@ final treatmentDate =
       _showError("❌ Age is required!");
       return;
     }
-    if (height.isEmpty) {
-      _showError("❌ Height is required!");
-      return;
-    }
+    
     if (weight.isEmpty) {
       _showError("❌ Weight is required!");
       return;
@@ -83,8 +81,8 @@ final treatmentDate =
         },
         body: jsonEncode({
           "report_id": widget.reportId,
-          "age_years": int.parse(age),
-          "height_cm": double.parse(height),
+          "age_years": double.parse(age),
+          "height_cm": height.isEmpty ? null : double.parse(height),
           "weight_kg": double.parse(weight),
           "tb_treatment_sd": treatmentDate,
           "treatment_type_id": treatmentTypeId!,
@@ -180,9 +178,9 @@ final treatmentDate =
             // for age
             TextField(
               controller: ageController,
-              keyboardType: TextInputType.number,
+             keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: "Age (years) *",
+                label: requiredLabel("Age (years)"),
                 
                 border: OutlineInputBorder(),
               ),
@@ -194,7 +192,7 @@ final treatmentDate =
               controller: heightController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: "Height (cm) *",
+                labelText: "Height (cm)",
                 
                 border: OutlineInputBorder(),
               ),
@@ -206,7 +204,7 @@ final treatmentDate =
               controller: weightController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               decoration: InputDecoration(
-                labelText: "Weight (kg) *",
+                label: requiredLabel("Weight (kg)"),
                 
                 border: OutlineInputBorder(),
               ),
@@ -218,7 +216,7 @@ final treatmentDate =
             controller: treatmentStartDateController,
             readOnly: true,  // ✅ Prevents manual typing
   decoration: InputDecoration(
-    labelText: "Treatment Start Date (DD-MM-YYYY) *",
+    label: requiredLabel("Treatment Start Date"),
     border: OutlineInputBorder(),
     suffixIcon: const Icon(Icons.calendar_today), 
   ),
@@ -241,9 +239,9 @@ const SizedBox(height: 15),
             // the dropdown menu for TB-treatment type
             DropdownButtonFormField<int>(
               value: treatmentTypeId,
-              hint: const Text("Select TB Treatment Type *"),
+              hint: const Text("Select TB Treatment Type"),
               decoration: InputDecoration(
-                labelText: "TB Treatment Type",
+                label: requiredLabel("TB Treatment Type"),
                 
                 border: OutlineInputBorder(),
               ),

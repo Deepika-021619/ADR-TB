@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'portal_selection_screen.dart';
+import 'consent_screen.dart';
 class HomeScreen extends StatelessWidget{
     const HomeScreen({super.key});
 
@@ -69,13 +69,16 @@ class HomeScreen extends StatelessWidget{
                   elevation: 8,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                  MaterialPageRoute(
-                    builder: (context) => const PortalSelectionScreen(),
-                    ),
-                  );
-                },
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ConsentScreen(
+        portal: "Physician",
+      ),
+    ),
+  );
+},
+
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'drugdetails.dart';
 import 'timer_widget.dart';
+import 'required_label.dart';
 
 class StartReporterScreen extends StatefulWidget {
   final String portal;
@@ -21,11 +22,11 @@ class StartReporterScreen extends StatefulWidget {
 class _StartReporterScreenState extends State<StartReporterScreen> {
   final TextEditingController nameCtrl = TextEditingController();
   final TextEditingController hospitalCtrl = TextEditingController();
-  final TextEditingController otherPlaceController = TextEditingController();
   
+  final TextEditingController placeController = TextEditingController();
 
   String? reporterType;
-  String? rstate;
+
   bool isLoading = false;
 
   void _showError(String message) {
@@ -41,7 +42,7 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
   Future<void> createReporterDetails() async {
     final name = nameCtrl.text.trim();
     final hospital = hospitalCtrl.text.trim();
-
+    final place = placeController.text.trim();
     // this is for validation
     if (name.isEmpty) {
       _showError(" Reporter Name is required!");
@@ -51,16 +52,15 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
       _showError(" Hospital name is required!");
       return;
     }
+    if (place.isEmpty) {
+  _showError("❌ Place is required!");
+  return;
+}
     if (reporterType == null) {
       _showError(" Please select reporter type");
       return;
     }
-    if (rstate == null ||
-    (rstate == "Other" &&
-     otherPlaceController.text.trim().isEmpty)) {
-      _showError(" Please select Place");
-      return;
-    }
+   
     
 
     setState(() => isLoading = true);
@@ -73,14 +73,12 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
           "Accept": "application/json",
         },
         body: jsonEncode({
-          "report_id": widget.reportId,
-          "r_name": name,
-          "r_type": reporterType,
-          "hospital_address": hospital,
-          "r_state": rstate == "Other"
-    ? otherPlaceController.text.trim()
-    : rstate,
-        }),
+  "report_id": widget.reportId,
+  "r_name": name,
+  "r_type": reporterType,
+  "hospital_address": hospital,
+  "r_state": place,
+}),
       ).timeout(const Duration(seconds: 20));
 
       print("Reporter Status: ${reporterResponse.statusCode}");
@@ -100,12 +98,12 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
 
   // Optional: clear form
   nameCtrl.clear();
-  hospitalCtrl.clear();
+hospitalCtrl.clear();
+placeController.clear();
 
-  setState(() {
-    reporterType = null;
-    rstate = null;
-  });
+setState(() {
+  reporterType = null;
+});
 
 } else {
 
@@ -166,7 +164,7 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
               controller: nameCtrl,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: "Reporter Name *",              
+               label: requiredLabel("Reporter Name"),          
                 border: OutlineInputBorder(),
               ),
             ),
@@ -176,10 +174,10 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
             DropdownButtonFormField<String>(
               value: reporterType,
               hint: const Text ("Select Reporter Type *"),
-              decoration: const InputDecoration(
-                labelText: "Role of the reporter *",
-                border: OutlineInputBorder(),
-            ),
+              decoration: InputDecoration(
+  label: requiredLabel("Role of the Reporter"),
+  border: const OutlineInputBorder(),
+),
             items: const[
               DropdownMenuItem(value: "Physician", child: Text("Physician")),
               //DropdownMenuItem(value: "Pharmacist", child: Text("Pharmacist")),
@@ -198,205 +196,27 @@ class _StartReporterScreenState extends State<StartReporterScreen> {
               controller: hospitalCtrl,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                labelText: "Hospital/Institution *",
+                label: requiredLabel("Hospital/Institution"),
                 
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 15),
 
-            // for state
-DropdownButtonFormField<String>(
-
-  value: rstate,
-
-  hint: const Text("Select Place *"),
-
-  decoration: const InputDecoration(
-
-    labelText: "Place *",
-
-    border: OutlineInputBorder(),
+          
+// for Place
+TextField(
+  controller: placeController,
+  keyboardType: TextInputType.text,
+  decoration: InputDecoration(
+     label: requiredLabel("Place"),
+    border: const OutlineInputBorder(),
   ),
-
-  items: const [
-
-    DropdownMenuItem(
-      value: "Andhra Pradesh",
-      child: Text("Andhra Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Arunachal Pradesh",
-      child: Text("Arunachal Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Assam",
-      child: Text("Assam"),
-    ),
-
-    DropdownMenuItem(
-      value: "Bihar",
-      child: Text("Bihar"),
-    ),
-
-    DropdownMenuItem(
-      value: "Chhattisgarh",
-      child: Text("Chhattisgarh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Goa",
-      child: Text("Goa"),
-    ),
-
-    DropdownMenuItem(
-      value: "Gujarat",
-      child: Text("Gujarat"),
-    ),
-
-    DropdownMenuItem(
-      value: "Haryana",
-      child: Text("Haryana"),
-    ),
-
-    DropdownMenuItem(
-      value: "Himachal Pradesh",
-      child: Text("Himachal Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Jharkhand",
-      child: Text("Jharkhand"),
-    ),
-
-    DropdownMenuItem(
-      value: "Karnataka",
-      child: Text("Karnataka"),
-    ),
-
-    DropdownMenuItem(
-      value: "Kerala",
-      child: Text("Kerala"),
-    ),
-
-    DropdownMenuItem(
-      value: "Madhya Pradesh",
-      child: Text("Madhya Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Maharashtra",
-      child: Text("Maharashtra"),
-    ),
-
-    DropdownMenuItem(
-      value: "Manipur",
-      child: Text("Manipur"),
-    ),
-
-    DropdownMenuItem(
-      value: "Meghalaya",
-      child: Text("Meghalaya"),
-    ),
-
-    DropdownMenuItem(
-      value: "Mizoram",
-      child: Text("Mizoram"),
-    ),
-
-    DropdownMenuItem(
-      value: "Nagaland",
-      child: Text("Nagaland"),
-    ),
-
-    DropdownMenuItem(
-      value: "Odisha",
-      child: Text("Odisha"),
-    ),
-
-    DropdownMenuItem(
-      value: "Punjab",
-      child: Text("Punjab"),
-    ),
-
-    DropdownMenuItem(
-      value: "Rajasthan",
-      child: Text("Rajasthan"),
-    ),
-
-    DropdownMenuItem(
-      value: "Sikkim",
-      child: Text("Sikkim"),
-    ),
-
-    DropdownMenuItem(
-      value: "Tamil Nadu",
-      child: Text("Tamil Nadu"),
-    ),
-
-    DropdownMenuItem(
-      value: "Telangana",
-      child: Text("Telangana"),
-    ),
-
-    DropdownMenuItem(
-      value: "Tripura",
-      child: Text("Tripura"),
-    ),
-
-    DropdownMenuItem(
-      value: "Uttar Pradesh",
-      child: Text("Uttar Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Uttarakhand",
-      child: Text("Uttarakhand"),
-    ),
-
-    DropdownMenuItem(
-      value: "West Bengal",
-      child: Text("West Bengal"),
-    ),
-
-    DropdownMenuItem(
-      value: "Other",
-      child: Text("Other"),
-    ),
-  ],
-
-  onChanged: (value) {
-
-    setState(() {
-
-      rstate = value;
-
-      if (value != "Other") {
-        otherPlaceController.clear();
-      }
-    });
-  },
 ),
+const SizedBox(height: 15),
 
 // 🔹 SHOW TEXTBOX IF OTHER SELECTED
-if (rstate == "Other") ...[
 
-  const SizedBox(height: 15),
-
-  TextField(
-
-    controller: otherPlaceController,
-
-    decoration: const InputDecoration(
-
-      labelText: "Enter Place *",
-
-      border: OutlineInputBorder(),
-    ),
-  ),
-],
           
             const SizedBox(height: 25),
 

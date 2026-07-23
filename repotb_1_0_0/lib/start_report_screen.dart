@@ -29,12 +29,12 @@ class _StartReportScreenState extends State<StartReportScreen> {
   }
 
   final TextEditingController nikshayIdController = TextEditingController();
-  final TextEditingController patientIdController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController otherPlaceController = TextEditingController();
+  
+ 
+  final TextEditingController placeController = TextEditingController();
 
   String? gender = null;
-  String? state = null;
+  
   bool isLoading = false;
 
   Widget requiredLabel(String text) {
@@ -78,30 +78,24 @@ class _StartReportScreenState extends State<StartReportScreen> {
 
   Future<void> createPatientAndReport() async {
   final nikshayId = nikshayIdController.text.trim();
-  final patientName = nameController.text.trim();
+ 
   final selectedGender = gender;
-  final selectedState = state;
+ 
 
       if (nikshayId.isEmpty) {
     _showError("NIKSHAY ID is required!");
     return;
   }
   
-  if (patientName.isEmpty) {
-    _showError("Patient Name is required!");
-    return;
-  }
+ 
   
   if (selectedGender == null) {
     _showError("Please select Gender!");
     return;
   }
   
-  if (selectedState == null ||
-    (selectedState == "Other" &&
-     otherPlaceController.text.trim().isEmpty)) {
-
-  _showError(" Please select Place!");
+  if (placeController.text.trim().isEmpty) {
+  _showError("Please enter Place!");
   return;
 }
 
@@ -119,12 +113,10 @@ class _StartReportScreenState extends State<StartReportScreen> {
         },
         body: jsonEncode({
           "nik_id": nikshayIdController.text.trim(),
-          "p_id": patientIdController.text.trim().isEmpty ? "" : patientIdController.text.trim(),
-          "p_name": nameController.text.trim(),
+          "p_id": nikshayIdController.text.trim(),
+          "p_name": "",
           "gender": gender ?? "Not Specified",
-          "p_state": state == "Other"
-    ? otherPlaceController.text.trim()
-    : state ?? "Not Selected",
+          "p_state": placeController.text.trim(),
         }),
       ).timeout(const Duration(seconds: 5));
 
@@ -137,7 +129,7 @@ class _StartReportScreenState extends State<StartReportScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            " Nikshay ID '${nikshayIdController.text}' / Patient ID '${patientIdController.text}' already exists!\n"
+            " Nikshay ID '${nikshayIdController.text}' / Patient ID  already exists!\n"
             "Recheck or use a different Nikshay ID / Patient ID ",
           ),
           backgroundColor: Colors.orange.shade700,
@@ -262,8 +254,8 @@ appBar: AppBar(
             TextField(
               controller: nikshayIdController,
               decoration: InputDecoration(
-                label: requiredLabel("Nikshay ID"),
-                hintText: "Required",
+                label: requiredLabel("Nikshay ID/ Patient ID"),
+                hintText: "Enter Nikshay ID or Patient ID",
                 prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
                 border: OutlineInputBorder(),
               ),
@@ -271,27 +263,11 @@ appBar: AppBar(
 
             const SizedBox(height: 15),
 
-            TextField(
-  controller: patientIdController,
-  decoration: InputDecoration(
-    labelText: "Patient ID",
-    prefixIcon: const Icon(Icons.person),
-    border: const OutlineInputBorder(),
-  ),
-),
+           
 
             const SizedBox(height: 15),
 
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                label: requiredLabel("Patient Name"),
-                hintText: "Required",
-                prefixIcon: Icon(Icons.person, color: Colors.red.shade400),
-                border: OutlineInputBorder(),
-              ),
-            ),
-
+            
             const SizedBox(height: 15),
 
             DropdownButtonFormField<String>(
@@ -314,248 +290,21 @@ appBar: AppBar(
 
             const SizedBox(height: 15),
 
-            DropdownButtonFormField<String>(
-
-  value: state,
-
-  hint: RichText(
-
-    text: const TextSpan(
-
-      text: "Select Place",
-
-      style: TextStyle(
-        color: Colors.black54,
-        fontSize: 16,
-      ),
-
-      children: [
-
-        TextSpan(
-
-          text: " *",
-
-          style: TextStyle(
-            color: Colors.red,
-          ),
-        ),
-      ],
-    ),
-  ),
-
+            TextField(
+  controller: placeController,
   decoration: InputDecoration(
-
-    label: RichText(
-
-      text: const TextSpan(
-
-        text: "Place",
-
-        style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-        ),
-
-        children: [
-
-          TextSpan(
-
-            text: " *",
-
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
-        ],
-      ),
-    ),
-
+    label: requiredLabel("Place"),
+    hintText: "Enter Hospital / City / District",
     prefixIcon: Icon(
       Icons.location_on,
       color: Colors.red.shade400,
     ),
-
     border: const OutlineInputBorder(),
   ),
-
-  items: const [
-
-    DropdownMenuItem(
-      value: "Andhra Pradesh",
-      child: Text("Andhra Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Arunachal Pradesh",
-      child: Text("Arunachal Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Assam",
-      child: Text("Assam"),
-    ),
-
-    DropdownMenuItem(
-      value: "Bihar",
-      child: Text("Bihar"),
-    ),
-
-    DropdownMenuItem(
-      value: "Chhattisgarh",
-      child: Text("Chhattisgarh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Goa",
-      child: Text("Goa"),
-    ),
-
-    DropdownMenuItem(
-      value: "Gujarat",
-      child: Text("Gujarat"),
-    ),
-
-    DropdownMenuItem(
-      value: "Haryana",
-      child: Text("Haryana"),
-    ),
-
-    DropdownMenuItem(
-      value: "Himachal Pradesh",
-      child: Text("Himachal Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Jharkhand",
-      child: Text("Jharkhand"),
-    ),
-
-    DropdownMenuItem(
-      value: "Karnataka",
-      child: Text("Karnataka"),
-    ),
-
-    DropdownMenuItem(
-      value: "Kerala",
-      child: Text("Kerala"),
-    ),
-
-    DropdownMenuItem(
-      value: "Madhya Pradesh",
-      child: Text("Madhya Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Maharashtra",
-      child: Text("Maharashtra"),
-    ),
-
-    DropdownMenuItem(
-      value: "Manipur",
-      child: Text("Manipur"),
-    ),
-
-    DropdownMenuItem(
-      value: "Meghalaya",
-      child: Text("Meghalaya"),
-    ),
-
-    DropdownMenuItem(
-      value: "Mizoram",
-      child: Text("Mizoram"),
-    ),
-
-    DropdownMenuItem(
-      value: "Nagaland",
-      child: Text("Nagaland"),
-    ),
-
-    DropdownMenuItem(
-      value: "Odisha",
-      child: Text("Odisha"),
-    ),
-
-    DropdownMenuItem(
-      value: "Punjab",
-      child: Text("Punjab"),
-    ),
-
-    DropdownMenuItem(
-      value: "Rajasthan",
-      child: Text("Rajasthan"),
-    ),
-
-    DropdownMenuItem(
-      value: "Sikkim",
-      child: Text("Sikkim"),
-    ),
-
-    DropdownMenuItem(
-      value: "Tamil Nadu",
-      child: Text("Tamil Nadu"),
-    ),
-
-    DropdownMenuItem(
-      value: "Telangana",
-      child: Text("Telangana"),
-    ),
-
-    DropdownMenuItem(
-      value: "Tripura",
-      child: Text("Tripura"),
-    ),
-
-    DropdownMenuItem(
-      value: "Uttar Pradesh",
-      child: Text("Uttar Pradesh"),
-    ),
-
-    DropdownMenuItem(
-      value: "Uttarakhand",
-      child: Text("Uttarakhand"),
-    ),
-
-    DropdownMenuItem(
-      value: "West Bengal",
-      child: Text("West Bengal"),
-    ),
-
-    DropdownMenuItem(
-      value: "Other",
-      child: Text("Other"),
-    ),
-  ],
-
-  onChanged: (value) {
-
-    setState(() {
-
-      state = value;
-
-      if (value != "Other") {
-        otherPlaceController.clear();
-      }
-    });
-  },
 ),
 
 // 🔹 SHOW OTHER TEXTBOX
-if (state == "Other") ...[
 
-  const SizedBox(height: 15),
-
-  TextField(
-
-    controller: otherPlaceController,
-
-   decoration: InputDecoration(
-
-  label: requiredLabel("Enter Place"),
-
-  border: const OutlineInputBorder(),
-),
-  ),
-],
             const SizedBox(height: 25),
 
             isLoading
