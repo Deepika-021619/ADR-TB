@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'fld_system_selection.dart';
 import 'sld_system_selection.dart';
 
+
 import 'timer_widget.dart';
 
 
 class DrugDetailsScreen extends StatefulWidget {
   final String portal;
   final String reportId;
+  
 
   const DrugDetailsScreen({
     super.key,
@@ -45,6 +47,8 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
  
   final _prevDetailsController = TextEditingController();
   final _prevDurationController = TextEditingController();
+  final _otherRegimenController = TextEditingController();
+bool showOtherRegimen = false;
  
 
   final List<String> timeUnits = ['Days', 'Weeks', 'Months', 'Years'];
@@ -87,10 +91,24 @@ void initState() {
   }
 
   void _onRegimenSelected(int? id) {
-    setState(() {
-      selectedRegimenId = id;
-    });
-  }
+  setState(() {
+    selectedRegimenId = id;
+
+    final regimen = regimens.firstWhere(
+      (r) => r['regimen_id'] == id,
+    );
+
+    final regimenName = regimen['regimen_name'];
+
+    showOtherRegimen =
+        regimenName == "Other first line drug related regimen" ||
+        regimenName == "Other second line drug related regimen";
+
+    if (!showOtherRegimen) {
+      _otherRegimenController.clear();
+    }
+  });
+}
 
   Future<void> saveDrugDetails() async {
     if (!_formKey.currentState!.validate() || selectedRegimenId == null) {
@@ -122,6 +140,9 @@ void initState() {
         "previous_regimen_taken": _prevRegimenValue ?? "No",  
         "previous_regimen_details": _prevDetailsController.text ?? "",
         "duration_previous_regimen": int.tryParse(_prevDurationController.text ?? '') ?? 0,
+          "other_regimen": showOtherRegimen
+          ? _otherRegimenController.text.trim()
+      : null,
         }),
       ) 
      .timeout(const Duration(seconds: 10));
@@ -275,6 +296,24 @@ DropdownButtonFormField<int>(
   ),
 ),
 const SizedBox(height: 20),
+
+if (showOtherRegimen) ...[
+  TextFormField(
+    controller: _otherRegimenController,
+    decoration: const InputDecoration(
+      labelText: "Specify TB regimen*",
+      border: OutlineInputBorder(),
+    ),
+    validator: (value) {
+      if (showOtherRegimen &&
+          (value == null || value.trim().isEmpty)) {
+        return "Please specify the regimen";
+      }
+      return null;
+    },
+  ),
+  const SizedBox(height: 20),
+],
 
                     // 2. TIME SINCE FIELDS *
                     Text("• Time since the above combination/drug taken *", style: Theme.of(context).textTheme.titleMedium),
