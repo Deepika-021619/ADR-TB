@@ -26,7 +26,7 @@ class _StartPatientScreenState extends State<StartPatientScreen> {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController treatmentStartDateController = TextEditingController();
 
-  int? treatmentTypeId = null;
+  
   bool isLoading = false;
 
   void _showError(String message) {
@@ -65,16 +65,13 @@ final treatmentDate =
       _showError("❌ Treatment start date is required!");
       return;
     }
-    if (treatmentTypeId == null) {
-      _showError("❌ Please select TB treatment type!");
-      return;
-    }
+   
 
     setState(() => isLoading = true);
 
     try {
       final patientResponse = await http.post(
-        Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/reports/${widget.reportId}/event"),
+        Uri.parse( "https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/reports/${widget.reportId}/event"),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
@@ -85,7 +82,7 @@ final treatmentDate =
           "height_cm": height.isEmpty ? null : double.parse(height),
           "weight_kg": double.parse(weight),
           "tb_treatment_sd": treatmentDate,
-          "treatment_type_id": treatmentTypeId!,
+          "treatment_type_id": 1,
         }),
       ).timeout(const Duration(seconds: 10));
 
@@ -108,10 +105,7 @@ final treatmentDate =
         heightController.clear(); 
         weightController.clear();
         treatmentStartDateController.clear();
-        setState(() {
-          treatmentTypeId = null;
-        });
-      
+        
       } else {
         _showError("❌ Failed: ${patientResponse.statusCode}");
       }
@@ -237,27 +231,7 @@ final treatmentDate =
 const SizedBox(height: 15),
 
             // the dropdown menu for TB-treatment type
-            DropdownButtonFormField<int>(
-              value: treatmentTypeId,
-              hint: const Text("Select TB Treatment Type"),
-              decoration: InputDecoration(
-                label: requiredLabel("TB Treatment Type"),
-                
-                border: OutlineInputBorder(),
-              ),
-              items: const [
-                DropdownMenuItem(value: 1, child: Text("HRZE TB regimen")),
-                DropdownMenuItem(value: 2, child: Text("H-mono DR TB regimen")),
-                DropdownMenuItem(value: 3, child: Text("Shorter oral BDQ MDR TB regimen")),
-                DropdownMenuItem(value: 4, child: Text("Shorter injectable MDR TB regimen")),
-                DropdownMenuItem(value: 5, child: Text("Oral longer XDR TB regimen")),
-                DropdownMenuItem(value: 6, child: Text("TB preventive therapy")),
-                DropdownMenuItem(value: 7, child: Text("Tailored therapy")),
-              ],
-              onChanged: (value) {
-                setState(() => treatmentTypeId = value);
-              },
-            ),
+           
             const SizedBox(height: 25),
 
             isLoading

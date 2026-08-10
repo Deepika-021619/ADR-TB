@@ -1297,7 +1297,7 @@ No GI symptoms reported.
       if (t['tb_start_date'] != null && t['tb_start_date'].toString().isNotEmpty) {
        r.writeln('Date of TB treatment initiation: ${t['tb_start_date']}');
        }
-      r.writeln('Treatment type: ${t['treatment_name'] ?? ""}');
+     
       r.writeln('');
     }
 
@@ -1309,7 +1309,7 @@ No GI symptoms reported.
       r.writeln(centerText('DRUG DATA'));
       
       r.writeln('Drug regimen: ${d['drug_regimen'] ?? ""}');
-      r.writeln('Time since combination taken: ${d['time_since_value'] ?? ""} ${d['time_since_unit'] ?? ""}');
+     
       if (d['is_fdc'] != null && d['is_fdc'].toString().isNotEmpty) {
       r.writeln('Are you taking FDC? : ${d['is_fdc']}');
     }

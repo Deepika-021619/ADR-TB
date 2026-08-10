@@ -19,7 +19,7 @@ class DrugDetailsRequest(BaseModel):
     previous_regimen_taken: str             # ✅ Required
     previous_regimen_details: str | None = None
     duration_previous_regimen: int | None = None  # ✅ Allows null
-
+    other_regimen: str | None = None
 
 @router.get("/regimens")  
 def get_regimens():
@@ -34,6 +34,11 @@ def get_regimens():
 
 @router.post("/drug_details")  # ✅ Exact Flutter endpoint
 def save_drug_details(data: DrugDetailsRequest):
+
+    print("================================")
+    print("regimen_id:", data.regimen_id)
+    print("other_regimen:", data.other_regimen)
+    print("================================")
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -46,6 +51,11 @@ def save_drug_details(data: DrugDetailsRequest):
             raise HTTPException(status_code=404, detail="Regimen not found")
         
         regimen_name, regimen_type = regimen
+        print("Database regimen:", regimen_name)
+
+        if data.other_regimen is not None and data.other_regimen.strip() != "":
+             regimen_name = data.other_regimen.strip()
+             print("Final regimen to save:", regimen_name)
         
         # 2. Insert ALL 15 fields into drug_details (with defaults)
         cursor.execute("""

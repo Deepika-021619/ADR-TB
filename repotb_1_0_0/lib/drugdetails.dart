@@ -33,8 +33,7 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
   final _formKey = GlobalKey<FormState>();
   
   // Form Controllers - CLEAN
-  final _timeValueController = TextEditingController();
-  String? selectedTimeUnit;
+
   String? _oralOnlyValue;
   String? _prevRegimenValue;
   bool isFdc = false;
@@ -51,7 +50,7 @@ class _DrugDetailsScreenState extends State<DrugDetailsScreen> {
 bool showOtherRegimen = false;
  
 
-  final List<String> timeUnits = ['Days', 'Weeks', 'Months', 'Years'];
+  
 
 
 @override
@@ -70,6 +69,13 @@ void initState() {
 
   Future<void> loadRegimens() async {
     try {
+
+    print("========== DRUG DETAILS ==========");
+    print("Selected Regimen ID: $selectedRegimenId");
+    print("Show Other Regimen: $showOtherRegimen");
+    print("Other Regimen Text: '${_otherRegimenController.text}'");
+    print("==================================");
+
       final response = await http.get(
        Uri.parse("https://tb-adr-backend-baabb4bgecgebude.centralindia-01.azurewebsites.net/tb_regimen/regimens"),
         headers: {"Accept": "application/json"},
@@ -93,17 +99,24 @@ void initState() {
   void _onRegimenSelected(int? id) {
   setState(() {
     selectedRegimenId = id;
+    
+    print("Clicked regimen id: $id");
 
     final regimen = regimens.firstWhere(
-      (r) => r['regimen_id'] == id,
-    );
+  (r) => r['regimen_id'] == id,
+);
+
+     print("Regimen name: ${regimen['regimen_name']}");
+     print("Regimen type: ${regimen['regimen_type']}");
+
+    
 
     final regimenName = regimen['regimen_name'];
 
     showOtherRegimen =
         regimenName == "Other first line drug related regimen" ||
         regimenName == "Other second line drug related regimen";
-
+        print("showOtherRegimen = $showOtherRegimen");
     if (!showOtherRegimen) {
       _otherRegimenController.clear();
     }
@@ -112,6 +125,11 @@ void initState() {
 
   Future<void> saveDrugDetails() async {
     if (!_formKey.currentState!.validate() || selectedRegimenId == null) {
+      print("========== SAVE ==========");
+print("Selected Regimen ID: $selectedRegimenId");
+print("Show Other Regimen: $showOtherRegimen");
+print("Other Regimen Text: '${_otherRegimenController.text}'");
+print("==========================");
       _showError("Please fill all required fields and select regimen");
       return;
     }
@@ -125,16 +143,16 @@ void initState() {
         body: jsonEncode({
         "report_id": widget.reportId,
         "regimen_id": selectedRegimenId,
-        "time_since_value": int.tryParse(_timeValueController.text ?? '') ?? 0,
-        "time_since_unit": selectedTimeUnit ?? "Months",
+        "time_since_value": null,
+        "time_since_unit": null,
         "is_fdc": isFdc == true ? "Yes" : "No",
         "brand_name": _brandNameController.text ?? "",
         "batch_number": _batchNumberController.text ?? "",
         "dose_description": _doseController.text ?? "",
         "tablet_frequency":
-           _frequencyController.text.trim().isEmpty
+            _frequencyController.text.trim().isEmpty
         ? null
-        : int.parse(_frequencyController.text.trim()),
+        : _frequencyController.text.trim(),
         "oral_only": _oralOnlyValue ?? "Yes",           
         "injectable_details": _injectableController.text ?? "",
         "previous_regimen_taken": _prevRegimenValue ?? "No",  
@@ -145,6 +163,7 @@ void initState() {
       : null,
         }),
       ) 
+      
      .timeout(const Duration(seconds: 10));
      print("Status: ${response.statusCode}");
 print("Response: ${response.body}");
@@ -316,37 +335,7 @@ if (showOtherRegimen) ...[
 ],
 
                     // 2. TIME SINCE FIELDS *
-                    Text("• Time since the above combination/drug taken *", style: Theme.of(context).textTheme.titleMedium),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _timeValueController,
-                            keyboardType: TextInputType.number,
-                            validator: (v) => v?.isEmpty ?? true ? 'Required' : null,
-                            decoration: InputDecoration(
-                              hintText: "Value (e.g., 6)",
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            value: selectedTimeUnit,
-                            hint: const Text("Unit"),
-                            validator: (value) => value == null ? 'Required' : null,
-                            items: timeUnits.map((u) => 
-                                DropdownMenuItem(value: u, child: Text(u))).toList(),
-                            onChanged: (value) => setState(() => selectedTimeUnit = value),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
+                    
 
                     // 3. FDC SWITCH
                     SwitchListTile(
@@ -650,7 +639,7 @@ const SizedBox(height: 16),
     );
   }
 void dispose() {
-  _timeValueController.dispose();
+  
   _brandNameController.dispose();
   _batchNumberController.dispose();
   _doseController.dispose();

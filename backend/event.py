@@ -11,7 +11,7 @@ router = APIRouter(
 
 # -------- Request model --------
 class PatientEventCreate(BaseModel):
-    age_years: int
+    age_years: float
     height_cm: float | None = None
     weight_kg: float | None = None
     tb_treatment_sd: str   # YYYY-MM-DD
@@ -21,6 +21,9 @@ class PatientEventCreate(BaseModel):
 # -------- Add patient event details --------
 @router.post("/{report_id}/event")
 def add_patient_event(report_id: str, data: PatientEventCreate):
+
+    print("🔥🔥 LOCAL EVENT API WAS HIT 🔥🔥")
+    
     conn = get_db_connection()
     cursor = conn.cursor()
 

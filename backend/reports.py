@@ -181,7 +181,6 @@ def get_full_report(report_id: str):
         },
 
         "treatment": {
-            "treatment_name": first["treatment_name"],
             "age_years": first["age_years"],
             "height_cm": first["height_cm"],
             "weight_kg": first["weight_kg"],

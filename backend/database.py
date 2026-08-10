@@ -3,7 +3,7 @@ import mysql.connector
 
 
 def get_db_connection():
-
+        
     return mysql.connector.connect(
 
         host=os.getenv("AZURE_MYSQL_HOST"),
@@ -18,3 +18,6 @@ def get_db_connection():
 
         ssl_disabled=False,
     )
+
+ 
+   

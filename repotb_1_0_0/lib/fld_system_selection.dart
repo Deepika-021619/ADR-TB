@@ -137,7 +137,7 @@ final Map<String, bool> completedSystems = {
           children: [
 
             const Text(
-              "Select the affected organ systems.\nGeneral and Investigations are mandatory before generating the report.",
+              "Select only the affected organ systems.\nGeneral and Investigations are mandatory before generating the report.",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 15),
             ),
